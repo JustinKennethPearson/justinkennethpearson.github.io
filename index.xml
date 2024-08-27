@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Justin Pearson</title>
+    <link>https://justinkennethpearson.github.io/</link>
+    <description>Recent content on Justin Pearson</description>
+    <generator>Hugo</generator>
+    <language>en-uk</language>
+    <atom:link href="https://justinkennethpearson.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Artificial Intelligence.</title>
+      <link>https://justinkennethpearson.github.io/teaching/courses/ai/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://justinkennethpearson.github.io/teaching/courses/ai/</guid>
+      <description>This course is co-taught with Maria Andreina Francisco Rodriguez who is the main teacher. The course covers various aspects of AI that are not concerned with machine learning including heuristic search, planning and scheduling, statistical learning, Bayesian networks, AI in computer games.</description>
+    </item>
+    <item>
+      <title>Algorithms and Data Structures II</title>
+      <link>https://justinkennethpearson.github.io/teaching/courses/ad2/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://justinkennethpearson.github.io/teaching/courses/ad2/</guid>
+      <description>Useful links:&#xA;Slides and Assigments. Official Syllabus This is a second course in algorithms that topics such as&#xA;solving recursive equations that describe the algorithm&#39;s complexity dynamic programming greedy algorithms graph algorithms: minimum spanning trees, shortest paths string matching union find. </description>
+    </item>
+    <item>
+      <title>Introduction to Machine Learning</title>
+      <link>https://justinkennethpearson.github.io/teaching/courses/intro_ml/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://justinkennethpearson.github.io/teaching/courses/intro_ml/</guid>
+      <description>Useful links:&#xA;Slides and Assigments Official Syllabus This is a first course in machine learning. The course covers basic supervised and unsupervised methods (for example, regression, classification, decision trees, clustering), use of established tools for machine learning, application of the methods to real data, and practical aspects such as dimensionality reduction and cross validation. The course also introduces ethical aspects of bias in machine learning.</description>
+    </item>
+    <item>
+      <title></title>
+      <link>https://justinkennethpearson.github.io/links/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://justinkennethpearson.github.io/links/</guid>
+      <description>Our research group as a Github Page were we publish data and code for various papers. More links are coming soon.</description>
+    </item>
+    <item>
+      <title></title>
+      <link>https://justinkennethpearson.github.io/music/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://justinkennethpearson.github.io/music/</guid>
+      <description>In my spare time I compose music that is sometimes performed. In 2021 I wrote small piece Elegy for chamber orchestra at a memorial concert for Adrian Weddell. In 2024 the Choir La Cappella performed my piece Ecce vicit Leo. At the moment I haven&#39;t worked out how I am going to distribute scores.</description>
+    </item>
+    <item>
+      <title></title>
+      <link>https://justinkennethpearson.github.io/posts/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://justinkennethpearson.github.io/posts/</guid>
+      <description>Like many people, I had great ambitions to write a regular blog, and as many people I discovered that this was not a priority. I am slowly porting over posts from my old webpage. These will appear. If you are interested then they can be found via the Wayback Machine.</description>
+    </item>
+    <item>
+      <title></title>
+      <link>https://justinkennethpearson.github.io/pubs/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://justinkennethpearson.github.io/pubs/</guid>
+      <description>Coming soon. If you are interested then they can be found via the Wayback Machine.</description>
+    </item>
+  </channel>
+</rss>
