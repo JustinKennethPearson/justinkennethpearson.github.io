@@ -1,4 +1,43 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Teaching on Justin Pearson</title><link>https://justinkennethpearson.github.io/teaching/</link><description>Recent content in Teaching on Justin Pearson</description><generator>Hugo</generator><language>en-uk</language><atom:link href="https://justinkennethpearson.github.io/teaching/index.xml" rel="self" type="application/rss+xml"/><item><title>Artificial Intelligence.</title><link>https://justinkennethpearson.github.io/teaching/courses/ai/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://justinkennethpearson.github.io/teaching/courses/ai/</guid><description>Studium Page Official Syllabus This course is co-taught with Maria Andreina Francisco Rodriguez who is the main teacher. The course covers various aspects of AI that are not concerned with machine learning including heuristic search, planning and scheduling, statistical learning, Bayesian networks, AI in computer games.</description></item><item><title>Algorithms and Data Structures II</title><link>https://justinkennethpearson.github.io/teaching/courses/ad2/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://justinkennethpearson.github.io/teaching/courses/ad2/</guid><description>Useful links:
-Slides and Assigments. Official Syllabus This is a second course in algorithms that topics such as
-solving recursive equations that describe the algorithm's complexity dynamic programming greedy algorithms graph algorithms: minimum spanning trees, shortest paths string matching union find.</description></item><item><title>Introduction to Machine Learning</title><link>https://justinkennethpearson.github.io/teaching/courses/intro_ml/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://justinkennethpearson.github.io/teaching/courses/intro_ml/</guid><description>Useful links:
-Slides and Assigments Official Syllabus This is a first course in machine learning. The course covers basic supervised and unsupervised methods (for example, regression, classification, decision trees, clustering), use of established tools for machine learning, application of the methods to real data, and practical aspects such as dimensionality reduction and cross validation. The course also introduces ethical aspects of bias in machine learning.</description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Teaching on Justin Pearson</title><link>https://justinkennethpearson.github.io/teaching/</link><description>Recent content in Teaching on Justin Pearson</description><generator>Hugo</generator><language>en-uk</language><atom:link href="https://justinkennethpearson.github.io/teaching/index.xml" rel="self" type="application/rss+xml"/><item><title>Artificial Intelligence.</title><link>https://justinkennethpearson.github.io/teaching/courses/ai/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://justinkennethpearson.github.io/teaching/courses/ai/</guid><description>&lt;ul>
+&lt;li>&lt;a href="https://uppsala.instructure.com/courses/96372">Studium Page&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://www.uu.se/en/study/course?query=1DL340">Official Syllabus&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;p>This course is co-taught with &lt;a href="https://www.uu.se/kontakt-och-organisation/personal?query=N11-1772">Maria Andreina Francisco
+Rodriguez&lt;/a>
+who is the main teacher. The course covers various aspects of AI that
+are not concerned with machine learning including heuristic search,
+planning and scheduling, statistical learning, Bayesian networks, AI
+in computer games.&lt;/p></description></item><item><title>Category Theory for Programmers.</title><link>https://justinkennethpearson.github.io/teaching/courses/category_theory/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://justinkennethpearson.github.io/teaching/courses/category_theory/</guid><description>&lt;p>PhD reading course going through &lt;a href="https://github.com/BartoszMilewski">Bartosz
+Milewski&lt;/a>'s book on Category
+theory. Mostly organised by &lt;a href="https://www.uu.se/kontakt-och-organisation/personal?query=N19-2365">Nikolaus
+Huber&lt;/a>.&lt;/p>
+&lt;p>Information can be found on:&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="https://uu-ctfp.github.io">Information&lt;/a>&lt;/li>
+&lt;/ul></description></item><item><title>Algorithms and Data Structures II</title><link>https://justinkennethpearson.github.io/teaching/courses/ad2/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://justinkennethpearson.github.io/teaching/courses/ad2/</guid><description>&lt;p>Useful links:&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="https://ad2-uu-se.github.io/">Slides and Assigments&lt;/a>.&lt;/li>
+&lt;li>&lt;a href="https://www.uu.se/utbildning/kurs?query=1DL231">Official
+Syllabus&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;p>This is a second course in algorithms that topics such as&lt;/p>
+&lt;ul>
+&lt;li>solving recursive equations that describe the algorithm's complexity&lt;/li>
+&lt;li>dynamic programming&lt;/li>
+&lt;li>greedy algorithms&lt;/li>
+&lt;li>graph algorithms: minimum spanning trees, shortest paths&lt;/li>
+&lt;li>string matching&lt;/li>
+&lt;li>union find.&lt;/li>
+&lt;/ul></description></item><item><title>Introduction to Machine Learning</title><link>https://justinkennethpearson.github.io/teaching/courses/intro_ml/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://justinkennethpearson.github.io/teaching/courses/intro_ml/</guid><description>&lt;p>Useful links:&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="https://intro-ml-1dl034-uu-se.github.io/">Slides and Assigments&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://www.uu.se/utbildning/kurs?query=1DL034">Official
+Syllabus&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;p>This is a first course in machine learning. The course covers
+basic supervised and unsupervised methods (for example, regression,
+classification, decision trees, clustering), use of established tools
+for machine learning, application of the methods to real data, and
+practical aspects such as dimensionality reduction and cross
+validation. The course also introduces ethical aspects of bias in
+machine learning.&lt;/p></description></item></channel></rss>
