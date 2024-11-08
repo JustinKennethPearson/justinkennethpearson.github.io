@@ -1,0 +1,132 @@
+<!doctype html><html lang=en-uk class=h-100><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><link rel=stylesheet href=https://justinkennethpearson.github.io//css/main.css><title>Using the Haskell State Monad | Justin Pearson</title></head><body class="d-flex flex-column h-100"><header class="container d-flex flex-wrap align-items-center justify-content-center pt-3 pb-5 pe-0 ps-lg-3 ps-0"><div class="d-flex align-items-center mb-lg-0 me-lg-auto"><a class="navbar-brand me-0" href=../../../../../>Justin Pearson</a><br></div><div><ul id=main-nav role=navigaion class="nav col-12 col-lg-auto mb-2 justify-content-center mb-lg-0"><li class=ms-2><a class="nav-link fw-bolder text-uppercase pe-0" href=../../../../../ title>Home</a></li><li class=ms-2><a class="nav-link fw-bolder text-uppercase pe-0" href=../../../../../pubs/ title>Publications</a></li><li class=ms-2><a class="nav-link fw-bolder text-uppercase pe-0" href=../../../../../teaching/ title>Teaching</a></li><li class=ms-2><a class="nav-link fw-bolder text-uppercase pe-0" href=../../../../../posts/ title>Posts</a></li><li class=ms-2><a class="nav-link fw-bolder text-uppercase pe-0" href=../../../../../links/ title>links</a></li><li class=ms-2><a class="nav-link fw-bolder text-uppercase pe-0" href=../../../../../music/ title>Music</a></li></ul></div></header><main class=container><article class="post-item row mb-5"><header class="post-title col-12 col-lg-10 offset-lg-2"><h2><a class="text-uppercase inv-link" href=../../../../../post/2021/03/27/using-the-haskell-state-monad/>Using the Haskell State Monad</a></h2></header><aside class="post-aside col-12 col-lg-2 pr-5 pt-2 lh-lg"><ul class=list-unstyled><li><h4 class=text-uppercase>March 27, 2021</h4></li></ul></aside><div class="col-12 col-lg-10"><p>There are lots of tutorials on how to use the
+state monad in Haskell. A lot of them are out of date, or
+confusing, even worse the code that you type in does not work. You are
+then sent on an endless googling round to actually work out what is
+going on. For example, how exactly does the constructor work? Should I
+write <code>state blah</code> or <code>State $ blah</code> A good resource that I have been
+using recently is the <a href=https://en.wikibooks.org/wiki/Haskell>Haskell Wiki
+book</a><sup id=fnref:1><a href=#fn:1 class=footnote-ref role=doc-noteref>1</a></sup>, another good
+resource to try is <a href=http://dev.stephendiehl.com/hask/>What I wish I knew when learning
+haskell</a>. I assume that by the
+time somebody reads this post all of what I have written will be out
+of date, because they have found yet another way to factor the
+dependencies of the various type classes involved.</p><p>You have to make some choices. As far as I can work out in 2021, using
+the <a href=https://hackage.haskell.org/package/mtl>mtl</a> library is the way
+to go. It seems to be easier to use. There are other choice, but I do
+not really understand what the different options give you.</p><p>The important thing about the state monad is that it should take code
+like this</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-haskell data-lang=haskell><span style=display:flex><span><span style=color:#66d9ef>import</span> System.Random
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>threeCoins</span> <span style=color:#f92672>::</span> <span style=color:#66d9ef>StdGen</span> <span style=color:#f92672>-&gt;</span> (<span style=color:#66d9ef>Bool</span>, <span style=color:#66d9ef>Bool</span>, <span style=color:#66d9ef>Bool</span>)  
+</span></span><span style=display:flex><span><span style=color:#a6e22e>threeCoins</span> gen <span style=color:#f92672>=</span>   
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>let</span> (firstCoin, newGen) <span style=color:#f92672>=</span> random gen  
+</span></span><span style=display:flex><span>        (secondCoin, newGen&#39;) <span style=color:#f92672>=</span> random newGen  
+</span></span><span style=display:flex><span>        (thirdCoin, newGen&#39;&#39;) <span style=color:#f92672>=</span> random newGen&#39;  
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>in</span>  (firstCoin, secondCoin, thirdCoin)  
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>threeCoinsDemo</span> <span style=color:#f92672>=</span>
+</span></span><span style=display:flex><span>  threeCoins (mkStdGen <span style=color:#ae81ff>21</span>)
+</span></span></code></pre></div><p>and turn it into code that looks like this</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-haskell data-lang=haskell><span style=display:flex><span><span style=color:#66d9ef>import</span> System.Random
+</span></span><span style=display:flex><span><span style=color:#66d9ef>import</span> Control.Monad
+</span></span><span style=display:flex><span><span style=color:#66d9ef>import</span> Control.Monad.State
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>randomSt</span> <span style=color:#f92672>::</span> (<span style=color:#66d9ef>RandomGen</span> g, <span style=color:#66d9ef>Random</span>  a) <span style=color:#f92672>=&gt;</span> <span style=color:#66d9ef>State</span> g a
+</span></span><span style=display:flex><span><span style=color:#a6e22e>randomSt</span> <span style=color:#f92672>=</span> state random 
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>threeCoinsState</span> <span style=color:#f92672>::</span> <span style=color:#66d9ef>State</span> <span style=color:#66d9ef>StdGen</span> (<span style=color:#66d9ef>Bool</span>, <span style=color:#66d9ef>Bool</span> , <span style=color:#66d9ef>Bool</span>)
+</span></span><span style=display:flex><span><span style=color:#a6e22e>threeCoinsState</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>do</span>
+</span></span><span style=display:flex><span>  a <span style=color:#f92672>&lt;-</span> randomSt 
+</span></span><span style=display:flex><span>  b <span style=color:#f92672>&lt;-</span> randomSt
+</span></span><span style=display:flex><span>  c <span style=color:#f92672>&lt;-</span> randomSt
+</span></span><span style=display:flex><span>  return (a,b,c)
+</span></span></code></pre></div><p>Most monads do not do anything on their own, they are just sequences
+of actions. You need to do something to make those actions happen. The
+required magic for the state monad is <code>runState</code>. If you
+do <code>runState threeCoinsState (mkStdGen 21)</code> then you get:</p><pre tabindex=0><code>((True,False,False),StdGen {unStdGen = SMGen 5638754522534429640 489215147674969543})
+</code></pre><p>or if we do not want to see the state of the random number generator
+then we can do <code>evalState threeCoinsState (mkStdGen 21)</code> which equals</p><pre tabindex=0><code>(True,False,False)
+</code></pre><p>What if we want a list of random numbers? Well we can use the magic of
+the <code>do</code> notation. The type annotations inside the function are
+optional, and are just there to make the code more readable. It took
+me a long time to actually get this code working, mostly because I did
+not trust Haskell to get the types correct.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-haskell data-lang=haskell><span style=display:flex><span><span style=color:#a6e22e>coinList</span> <span style=color:#f92672>::</span> <span style=color:#66d9ef>Integer</span> <span style=color:#f92672>-&gt;</span> <span style=color:#66d9ef>State</span> <span style=color:#66d9ef>StdGen</span> [<span style=color:#66d9ef>Bool</span>]
+</span></span><span style=display:flex><span><span style=color:#a6e22e>coinList</span> <span style=color:#ae81ff>0</span> <span style=color:#f92672>=</span> return <span style=color:#66d9ef>[]</span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>coinList</span> n <span style=color:#f92672>=</span>
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>do</span>
+</span></span><span style=display:flex><span>    a <span style=color:#f92672>&lt;-</span> randomSt  <span style=color:#f92672>::</span> <span style=color:#66d9ef>State</span> <span style=color:#66d9ef>StdGen</span> <span style=color:#66d9ef>Bool</span>
+</span></span><span style=display:flex><span>    rest <span style=color:#f92672>&lt;-</span> coinList (n <span style=color:#f92672>-</span> <span style=color:#ae81ff>1</span>)  <span style=color:#f92672>::</span> <span style=color:#66d9ef>State</span> <span style=color:#66d9ef>StdGen</span> [<span style=color:#66d9ef>Bool</span>]
+</span></span><span style=display:flex><span>    return (a <span style=color:#66d9ef>:</span> rest)
+</span></span></code></pre></div><p>So what is going on? When you have a type <code>State StdGen Bool</code> one way
+of thinking about the elements of the type is that they are functions:</p><pre tabindex=0><code>StdGen -&gt; (Bool, StdGen)
+</code></pre><p>It takes a random number state, and produces a Boolean value and a new
+random number state. This is much like the <code>random</code> function in
+<code>System.Random</code>:</p><pre tabindex=0><code>:t random
+random :: (Random a, RandomGen g) =&gt; g -&gt; (a, g)
+</code></pre><p>The random function takes a random number state <code>g</code> and returns a
+pair that contains a value <code>a</code> and a new random state. If you want,
+for example, get a random Boolean value then you have to force the
+type:</p><pre tabindex=0><code>random (mkStdGen 21) :: (Bool, StdGen)
+(True,StdGen {unStdGen = SMGen 4660324227184490554 489215147674969543})
+</code></pre><p>So what is going on with</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-haskell data-lang=haskell><span style=display:flex><span><span style=color:#a6e22e>randomSt</span> <span style=color:#f92672>::</span> (<span style=color:#66d9ef>RandomGen</span> g, <span style=color:#66d9ef>Random</span>  a) <span style=color:#f92672>=&gt;</span> <span style=color:#66d9ef>State</span> g a
+</span></span><span style=display:flex><span><span style=color:#a6e22e>randomSt</span> <span style=color:#f92672>=</span> state random 
+</span></span></code></pre></div><p>We are using the <code>state</code> function from
+<a href=https://hackage.haskell.org/package/mtl>mtl</a>. This has the type <code>(s -> (a, s)) -> m a</code>. It takes a function, such as <code>random</code> and puts it
+into the Monad. If you are using a 2021 version of <code>mtl</code> then doing
+things like <code>State $ random</code> just won't work.</p><p>To really understand how a monad works you need to understand how the
+bind operator <code>(=&lt;&lt;) :: Monad m => (a -> m b) -> m a -> m b</code> actually works. You
+will find plenty of tutorials on the web. The reason that you want to
+use the state monad is to avoid all the plumbing and write clean
+looking code using the <code>do</code> notation.</p><p>Let's write two equivalent functions:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-haskell data-lang=haskell><span style=display:flex><span><span style=color:#a6e22e>oneCoin</span> <span style=color:#f92672>::</span> <span style=color:#66d9ef>State</span> <span style=color:#66d9ef>StdGen</span> <span style=color:#66d9ef>Bool</span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>oneCoin</span> <span style=color:#f92672>=</span>
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>do</span>
+</span></span><span style=display:flex><span>    v <span style=color:#f92672>&lt;-</span> randomSt
+</span></span><span style=display:flex><span>    return value
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>oneCoinEquiv</span> <span style=color:#f92672>::</span> <span style=color:#66d9ef>State</span> <span style=color:#66d9ef>StdGen</span> <span style=color:#66d9ef>Bool</span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>oneCoinEquiv</span> <span style=color:#f92672>=</span>  randomSt
+</span></span></code></pre></div><p>Running these two gives you the same first <code>runState oneCoin (mkStdGen 21)</code></p><pre tabindex=0><code>(True,StdGen {unStdGen = SMGen 4660324227184490554 489215147674969543})
+</code></pre><p>and then <code>runState oneCoinEquiv (mkStdGen 21)</code></p><pre tabindex=0><code>(True,StdGen {unStdGen = SMGen 4660324227184490554 489215147674969543})
+</code></pre><p>The function <code>randomSt</code> takes the current state and produces state
+which is a pair containing the new random state and the actual
+value. It is all wrapped up in the state monad. Doing</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-haskell data-lang=haskell><span style=display:flex><span><span style=color:#a6e22e>v</span> <span style=color:#f92672>&lt;-</span> randomSt
+</span></span></code></pre></div><p>Inside a <code>do</code> block binds the random value to <code>v</code>, but because of the
+way <code>do</code> blocks are transformed the state is transformed around. If
+you really want to understand what is going on, then you should go
+find some Haskell tutorial on desugaring the do notation. It is like
+lots of things in programming and mathematics. It is boring reading
+some explanation; you learn much more by working things out yourself.</p><p>Finally, the point of this (supposedly short) post. What is going on
+with</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-haskell data-lang=haskell><span style=display:flex><span><span style=color:#a6e22e>coinList</span> <span style=color:#f92672>::</span> <span style=color:#66d9ef>Integer</span> <span style=color:#f92672>-&gt;</span> <span style=color:#66d9ef>State</span> <span style=color:#66d9ef>StdGen</span> [<span style=color:#66d9ef>Bool</span>]
+</span></span><span style=display:flex><span><span style=color:#a6e22e>coinList</span> <span style=color:#ae81ff>0</span> <span style=color:#f92672>=</span> return <span style=color:#66d9ef>[]</span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>coinList</span> n <span style=color:#f92672>=</span>
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>do</span>
+</span></span><span style=display:flex><span>    a <span style=color:#f92672>&lt;-</span> randomSt  
+</span></span><span style=display:flex><span>    rest <span style=color:#f92672>&lt;-</span> coinList (n <span style=color:#f92672>-</span> <span style=color:#ae81ff>1</span>)  
+</span></span><span style=display:flex><span>    return (a <span style=color:#66d9ef>:</span> rest)
+</span></span></code></pre></div><p>The state type has two components, a state <code>StdGen</code> and the return
+type <code>[Bool]</code> which is a list of Boolean values. If you don't trust
+the type system to work everything out then you end up writing some
+pretty convoluted code, which I won't repeat here. The line <code>a &lt;- randomSt</code> extracts a random Boolean value. We know that it is a
+Boolean value because of the expression <code>return (a : rest)</code> and the
+return type <code>[Bool]</code>. In the expression <code>rest &lt;- coinList (n - 1)</code> we
+extract from expression <code>coinList (n - 1)</code> a value of type <code>[Bool]</code>
+because of the type of the whole function and the fact that <code>rest</code>
+also appears in <code>return (a : rest)</code>. It was honestly a surprise to
+me that you could have <code>a</code> with the type <code>Bool</code> and <code>rest</code> with
+the type <code>[Bool]</code>. On reflection is it no more surprising that in</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-haskell data-lang=haskell><span style=display:flex><span><span style=color:#a6e22e>threeCoinsState</span> <span style=color:#f92672>::</span> <span style=color:#66d9ef>State</span> <span style=color:#66d9ef>StdGen</span> (<span style=color:#66d9ef>Bool</span>, <span style=color:#66d9ef>Bool</span> , <span style=color:#66d9ef>Bool</span>)
+</span></span><span style=display:flex><span><span style=color:#a6e22e>threeCoinsState</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>do</span>
+</span></span><span style=display:flex><span>  a <span style=color:#f92672>&lt;-</span> randomSt <span style=color:#f92672>::</span> <span style=color:#66d9ef>State</span> <span style=color:#66d9ef>StdGen</span> <span style=color:#66d9ef>Bool</span> 
+</span></span><span style=display:flex><span>  b <span style=color:#f92672>&lt;-</span> randomSt
+</span></span><span style=display:flex><span>  c <span style=color:#f92672>&lt;-</span> randomSt
+</span></span><span style=display:flex><span>  return (a,b,c)
+</span></span></code></pre></div><p><code>a</code>, <code>b</code> and <code>c</code> are of type <code>Bool</code> while the whole return type is
+<code>(Bool, Bool, Bool)</code>.</p><p>None of this is really magic, but often people first meet the <code>do</code>
+notation when they are doing IO. The problem with examples using <code>IO</code>
+is that everything stays in same type<sup id=fnref:2><a href=#fn:2 class=footnote-ref role=doc-noteref>2</a></sup>. The three coins example is easy
+to grasp, as long as you don't think about it too much. The full type
+of <code>=&lt;&lt;</code> is <code>Monad m => (a -> m b) -> m a -> m b</code> where <code>a</code> and <code>b</code>
+can be different. You have to live inside the same monad <code>m</code>, but you
+can wrap different types inside the monad. So this means it is
+perfectly fine to have the types <code>State StdGen Bool</code> and <code>State StdGen [Bool]</code> in the same <code>do</code> block.</p><div class=footnotes role=doc-endnotes><hr><ol><li id=fn:1><p>Although in March 2021, some of the more advanced sections seem
+to be out of step with the latest version of the Haskell base
+library.&#160;<a href=#fnref:1 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p></li><li id=fn:2><p>That is not really true, so take this statement with a pinch of salt.&#160;<a href=#fnref:2 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p></li></ol></div></div></article></main><footer id=footer class="mt-auto mb-2"><section class="container text-end">Powered by <a href=https://gohugo.io>Hugo</a> using the
+<a href=https://github.com/dvladek/hugo-uppsala>hugo-Uppsala</a> theme.
+&nbsp; &copy; Justin Pearson 2021 &ndash;2024.</section></footer><script src=https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js integrity=sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p crossorigin=anonymous></script><script src=https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js integrity=sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF crossorigin=anonymous></script></body></html>

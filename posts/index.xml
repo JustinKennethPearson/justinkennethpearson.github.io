@@ -1,1 +1,43 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on Justin Pearson</title><link>https://justinkennethpearson.github.io/posts/</link><description>Recent content in Posts on Justin Pearson</description><generator>Hugo</generator><language>en-uk</language><lastBuildDate>Fri, 08 Nov 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://justinkennethpearson.github.io/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>Old Posts</title><link>https://justinkennethpearson.github.io/post/2024/11/08/old-posts/</link><pubDate>Fri, 08 Nov 2024 00:00:00 +0000</pubDate><guid>https://justinkennethpearson.github.io/post/2024/11/08/old-posts/</guid><description>Links to old posts</description></item><item><title>Writing</title><link>https://justinkennethpearson.github.io/post/2020/06/18/writing/</link><pubDate>Thu, 18 Jun 2020 07:39:13 +0200</pubDate><guid>https://justinkennethpearson.github.io/post/2020/06/18/writing/</guid><description>Links on how to write.</description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on Justin Pearson</title><link>https://justinkennethpearson.github.io/posts/</link><description>Recent content in Posts on Justin Pearson</description><generator>Hugo</generator><language>en-uk</language><lastBuildDate>Fri, 08 Nov 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://justinkennethpearson.github.io/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>Old Posts</title><link>https://justinkennethpearson.github.io/post/2024/11/08/old-posts/</link><pubDate>Fri, 08 Nov 2024 00:00:00 +0000</pubDate><guid>https://justinkennethpearson.github.io/post/2024/11/08/old-posts/</guid><description>Links to old posts</description></item><item><title>Links to CP Solvers</title><link>https://justinkennethpearson.github.io/post/2023/06/14/links-to-cp-solvers/</link><pubDate>Wed, 14 Jun 2023 11:51:34 +0200</pubDate><guid>https://justinkennethpearson.github.io/post/2023/06/14/links-to-cp-solvers/</guid><description>&lt;p>Links to various repositories of some maybe less well known constraint
+solvers. This is mainly so that I can find them again.&lt;/p>
+&lt;ul>
+&lt;li>
+&lt;p>A C++ version
+&lt;a href="https://bitbucket.org/constraint-programming/fzn-minicpp/src/main/">minicpp&lt;/a>
+of &lt;a href="http://www.minicp.org/">MiniCP&lt;/a> developed by &lt;a href="https://ldm.engr.uconn.edu/">Laurent
+Michel&lt;/a> and his students. It is mainly
+used for research. It has a FlatZinc parser.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Another version of
+&lt;a href="https://bitbucket.org/ldmbouge/minicpp/src/v1.1/">minicpp&lt;/a> that
+includes
+&lt;a href="https://dlnext.acm.org/doi/10.1007/978-3-030-58475-7_31">Haddock&lt;/a> a
+system for using MDDs for propagation.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;a href="https://github.com/ciaranm/glasgow-subgraph-solver">The Glasgow Subgraph
+Solver&lt;/a>
+developed my &lt;a href="https://ciaranm.github.io/">Ciaran McCreesh&lt;/a> that
+includes support for proof logging.&lt;/p>
+&lt;/li>
+&lt;/ul></description></item><item><title>Setting up Python notebooks locally for Machine Learning</title><link>https://justinkennethpearson.github.io/post/2022/01/28/setting-up-python-notebooks-locally-for-machine-learning/</link><pubDate>Fri, 28 Jan 2022 00:00:00 +0000</pubDate><guid>https://justinkennethpearson.github.io/post/2022/01/28/setting-up-python-notebooks-locally-for-machine-learning/</guid><description>&lt;p>This is mainly for students on my machine learning course. I use a lot
+of Python notebooks either for examples from lectures or for
+assignments. While there are many options for hosting python notebooks
+for free remotely, but I prefer to do things locally. If you wish to do
+the same then please read on. Note that I did home some problems
+installing &lt;code>skikit-image&lt;/code> on a new Apple with M1 silicon, but after
+upgrading the latest version of the operating system and doing and
+updating my &lt;code>homebrew&lt;/code> setup everything works. Note that these
+instructions are for using &lt;code>pip&lt;/code>. If you are using an alternative
+package manager such as &lt;code>Anaconda&lt;/code> then you are on your own. I know
+nothing about setting up Python on a windows machine.&lt;/p></description></item><item><title>Using the Haskell State Monad</title><link>https://justinkennethpearson.github.io/post/2021/03/27/using-the-haskell-state-monad/</link><pubDate>Sat, 27 Mar 2021 19:45:37 +0100</pubDate><guid>https://justinkennethpearson.github.io/post/2021/03/27/using-the-haskell-state-monad/</guid><description>A short tutorial on using the built in state monad. I promise you will not build your own state monad.</description></item><item><title>Creating and using Python Virtual Environments</title><link>https://justinkennethpearson.github.io/post/2020/12/10/creating-and-using-python-virtual-environments/</link><pubDate>Thu, 10 Dec 2020 13:51:33 +0100</pubDate><guid>https://justinkennethpearson.github.io/post/2020/12/10/creating-and-using-python-virtual-environments/</guid><description>&lt;p>In a lot of my courses I encourage students to use python virtual
+environments. Virtual environments are a great way of making sure
+that you have the correct version of packages installed.
+This is very short cheat sheet on how to set them up. I
+will assume that we are using Python 3. Luckily Python 3 has virtual
+environments set up. It is all in the
+&lt;a href="https://docs.python.org/3/library/venv.html">documentation&lt;/a>, but then
+sometimes people are too lazy to google, or do not know what to google
+for. Of course this assumes that you are a command line person. If you
+are using some IDE, then you are on your own.&lt;/p></description></item><item><title>Statistics, Probality and Category Theory</title><link>https://justinkennethpearson.github.io/post/2020/08/27/statistics-probality-and-category-theory/</link><pubDate>Thu, 27 Aug 2020 13:32:22 +0200</pubDate><guid>https://justinkennethpearson.github.io/post/2020/08/27/statistics-probality-and-category-theory/</guid><description>Links and references to Statistics, Probality and Category Theory</description></item><item><title>Sonic Writing</title><link>https://justinkennethpearson.github.io/post/2020/08/08/sonic-writing/</link><pubDate>Sat, 08 Aug 2020 09:36:18 +0200</pubDate><guid>https://justinkennethpearson.github.io/post/2020/08/08/sonic-writing/</guid><description>Short Review of Sonic Writing by Thor Magnusson.</description></item><item><title>Software for Music Composition</title><link>https://justinkennethpearson.github.io/post/2020/06/30/software-for-music-composition/</link><pubDate>Tue, 30 Jun 2020 15:01:10 +0200</pubDate><guid>https://justinkennethpearson.github.io/post/2020/06/30/software-for-music-composition/</guid><description>Links to systems for compositing and performing electornic music.</description></item><item><title>Writing</title><link>https://justinkennethpearson.github.io/post/2020/06/18/writing/</link><pubDate>Thu, 18 Jun 2020 07:39:13 +0200</pubDate><guid>https://justinkennethpearson.github.io/post/2020/06/18/writing/</guid><description>Links on how to write.</description></item><item><title>Edward Nelson's Radical Probability</title><link>https://justinkennethpearson.github.io/post/2020/06/18/edward-nelsons-radical-probability/</link><pubDate>Thu, 18 Jun 2020 07:24:24 +0200</pubDate><guid>https://justinkennethpearson.github.io/post/2020/06/18/edward-nelsons-radical-probability/</guid><description>Links to Nelson's publications.</description></item></channel></rss>

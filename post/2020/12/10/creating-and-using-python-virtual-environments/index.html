@@ -1,0 +1,28 @@
+<!doctype html><html lang=en-uk class=h-100><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><link rel=stylesheet href=https://justinkennethpearson.github.io//css/main.css><title>Creating and using Python Virtual Environments | Justin Pearson</title></head><body class="d-flex flex-column h-100"><header class="container d-flex flex-wrap align-items-center justify-content-center pt-3 pb-5 pe-0 ps-lg-3 ps-0"><div class="d-flex align-items-center mb-lg-0 me-lg-auto"><a class="navbar-brand me-0" href=../../../../../>Justin Pearson</a><br></div><div><ul id=main-nav role=navigaion class="nav col-12 col-lg-auto mb-2 justify-content-center mb-lg-0"><li class=ms-2><a class="nav-link fw-bolder text-uppercase pe-0" href=../../../../../ title>Home</a></li><li class=ms-2><a class="nav-link fw-bolder text-uppercase pe-0" href=../../../../../pubs/ title>Publications</a></li><li class=ms-2><a class="nav-link fw-bolder text-uppercase pe-0" href=../../../../../teaching/ title>Teaching</a></li><li class=ms-2><a class="nav-link fw-bolder text-uppercase pe-0" href=../../../../../posts/ title>Posts</a></li><li class=ms-2><a class="nav-link fw-bolder text-uppercase pe-0" href=../../../../../links/ title>links</a></li><li class=ms-2><a class="nav-link fw-bolder text-uppercase pe-0" href=../../../../../music/ title>Music</a></li></ul></div></header><main class=container><article class="post-item row mb-5"><header class="post-title col-12 col-lg-10 offset-lg-2"><h2><a class="text-uppercase inv-link" href=../../../../../post/2020/12/10/creating-and-using-python-virtual-environments/>Creating and using Python Virtual Environments</a></h2></header><aside class="post-aside col-12 col-lg-2 pr-5 pt-2 lh-lg"><ul class=list-unstyled><li><h4 class=text-uppercase>December 10, 2020</h4></li></ul></aside><div class="col-12 col-lg-10"><p>In a lot of my courses I encourage students to use python virtual
+environments. Virtual environments are a great way of making sure
+that you have the correct version of packages installed.
+This is very short cheat sheet on how to set them up. I
+will assume that we are using Python 3. Luckily Python 3 has virtual
+environments set up. It is all in the
+<a href=https://docs.python.org/3/library/venv.html>documentation</a>, but then
+sometimes people are too lazy to google, or do not know what to google
+for. Of course this assumes that you are a command line person. If you
+are using some IDE, then you are on your own.</p><p>To create a virtual environment in the current directory do the
+following</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>python3 -m venv env
+</span></span></code></pre></div><p>If you look in the directory you'll see a sub-directory <code>env</code> this
+contains all files that drive the virtual environment. In particular
+there is a sub-directory <code>env/bin/</code></p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>Justins-MacBook-Air-2:Example justin$ ls env/bin/ 
+</span></span><span style=display:flex><span>Activate.ps1		easy_install		pip3.9
+</span></span><span style=display:flex><span>activate		easy_install-3.9	python
+</span></span><span style=display:flex><span>activate.csh		pip			python3
+</span></span><span style=display:flex><span>activate.fish		pip3			python3.9
+</span></span></code></pre></div><p>The most important file is the <code>activate</code> script. To start your
+virtual environment you simply do</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span> source ./env/bin/activate
+</span></span></code></pre></div><p>This executes the activate script. Notice that you prompt has changed
+to <code>(env)</code></p><p>You are now free to install what ever packages want. For exampe</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>pip3 install panda
+</span></span><span style=display:flex><span>pip3 install numpy
+</span></span></code></pre></div><p>Once you have done all your Python goodness you should leave your
+virtual environment.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#f92672>(</span>env<span style=color:#f92672>)</span> Justins-MacBook-Air-2:Example justin$ deactivate 
+</span></span></code></pre></div></div></article></main><footer id=footer class="mt-auto mb-2"><section class="container text-end">Powered by <a href=https://gohugo.io>Hugo</a> using the
+<a href=https://github.com/dvladek/hugo-uppsala>hugo-Uppsala</a> theme.
+&nbsp; &copy; Justin Pearson 2021 &ndash;2024.</section></footer><script src=https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js integrity=sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p crossorigin=anonymous></script><script src=https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js integrity=sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF crossorigin=anonymous></script></body></html>
