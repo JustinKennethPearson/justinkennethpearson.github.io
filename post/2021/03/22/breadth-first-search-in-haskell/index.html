@@ -1,0 +1,455 @@
+<!doctype html><html lang=en-uk class=h-100><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><link rel=stylesheet href=https://justinkennethpearson.github.io//css/main.css><title>Breadth First Search in Haskell | Justin Pearson</title>
+<script id=MathJax-script async src=https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js></script><script>MathJax={tex:{displayMath:[["\\[","\\]"],["$$","$$"]],inlineMath:[["\\(","\\)"]]}}</script></head><body class="d-flex flex-column h-100"><header class="container d-flex flex-wrap align-items-center justify-content-center pt-3 pb-5 pe-0 ps-lg-3 ps-0"><div class="d-flex align-items-center mb-lg-0 me-lg-auto"><a class="navbar-brand me-0" href=../../../../../>Justin Pearson</a><br></div><div><ul id=main-nav role=navigaion class="nav col-12 col-lg-auto mb-2 justify-content-center mb-lg-0"><li class=ms-2><a class="nav-link fw-bolder text-uppercase pe-0" href=../../../../../ title>Home</a></li><li class=ms-2><a class="nav-link fw-bolder text-uppercase pe-0" href=../../../../../pubs/ title>Publications</a></li><li class=ms-2><a class="nav-link fw-bolder text-uppercase pe-0" href=../../../../../teaching/ title>Teaching</a></li><li class=ms-2><a class="nav-link fw-bolder text-uppercase pe-0" href=../../../../../posts/ title>Posts</a></li><li class=ms-2><a class="nav-link fw-bolder text-uppercase pe-0" href=../../../../../links/ title>links</a></li><li class=ms-2><a class="nav-link fw-bolder text-uppercase pe-0" href=../../../../../music/ title>Music</a></li></ul></div></header><main class=container><article class="post-item row mb-5"><header class="post-title col-12 col-lg-10 offset-lg-2"><h2><a class="text-uppercase inv-link" href=../../../../../post/2021/03/22/breadth-first-search-in-haskell/>Breadth First Search in Haskell</a></h2></header><aside class="post-aside col-12 col-lg-2 pr-5 pt-2 lh-lg"><ul class=list-unstyled><li><h4 class=text-uppercase>March 22, 2021</h4></li><li><a class=post-tag href=https://justinkennethpearson.github.io/tags/teaching-material>Teaching Material</a>,
+<a class=post-tag href=https://justinkennethpearson.github.io/tags/haskell>Haskell</a></li></ul></aside><div class="col-12 col-lg-10"><p><a href=https://www.haskell.org/>Haskell</a> is a really great programming
+language. It is elegant, the type system is beautiful, and nowadays
+the compiler is quite good. I've been using functional languages off
+and on for more than 30 years. I studied at the <a href=https://www.kent.ac.uk/>University of
+Kent</a> which is the home
+<a href=https://www.cs.kent.ac.uk/people/staff/dat/miranda/>Miranda</a> which
+is a precursor to Haskell. All this is a warning. I don't use
+Haskell that much. The language has changed a lot since I last used it
+regularly, and so my code might not be optimal or idiomatic Haskell.</p><p>On some of our programs we teach the first year students
+Haskell. This includes their first algorithms course where they learn
+such things as search trees, hash tables, and some elementary graph
+algorithms. Since I had to co-teach our Haskell course at rather
+short notice, I had to do get up to speed with Haskell again. The hard
+part about learning a language is getting up to sped on idioms, the
+standard library and what cool libraries there are out there. One
+thing that always seems to be true is that almost every problem can be
+solved with Monads.</p><p>There is a danger when trying to get things
+working in Haskell that you start googling. You find some
+Stack Exchange discussion where somebody says: "Your problem can be
+solved if you use multi-coloured Frobenius bi-applicative monad
+transformers. Here is a short piece of code that solves your problem,
+a link to a package and some academic paper, but don't forget to
+enable the Haskell extension that allows you to have colour coded
+syntax to semantic transformers." You then spend a
+good couple of days going down the rabbit hole of trying to understand
+everything. You eventually write your beautiful piece of code that
+nobody can understand unless they spend another two days trying to
+understand how everything works. Some people have trouble accepting
+the fact that verbose maintainable code is much better than short
+elegant one liners. As you can see in this post, I've made a rather
+simple piece of code more and more complicated and eventually ended up
+using monad transformers, but I have tried to stick to the standard
+Haskell libraries.</p><p>Some algorithms do not have natural functional implementations, and
+Breadth first search is one such algorithm. The way it is normally
+described involves picking a node, enqueuing it in a queue. Find
+all the neighbours explore the neighbours. Keep track of all the nodes
+that you have visited to avoid cycles. If you implement the algorithm
+naively in pure Haskell then you will need implement (or use the
+standard implementation) the visited set as some
+sort of search tree. You will then incur an \(O(n\log n)\) overhead. You
+can do various things to improve the performance: use the <code>IO Monad</code>
+or use some of the approaches to functional graphs. Here I have chosen to
+live with the overhead. Even so, there are some interesting challenges
+especially when you want to list all breadth first traversals of a
+graph, rather than just one.</p><p>Warning my Haskell is somewhat rusty, and if you have any suggestions
+or improvements to the code please contact me.</p><p>We will assume that we have a <code>Queue</code> and a <code>Graph</code> library with
+suitable functions (at the end of the post, I'll give a simple
+implementation of these modules).</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-haskell data-lang=haskell><span style=display:flex><span><span style=color:#66d9ef>import</span> <span style=color:#66d9ef>qualified</span> Queue_Seq <span style=color:#66d9ef>as</span> Q
+</span></span><span style=display:flex><span><span style=color:#66d9ef>import</span> <span style=color:#66d9ef>qualified</span>  Graph_Simple <span style=color:#66d9ef>as</span> G
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>G</span><span style=color:#f92672>.</span>fromEdges <span style=color:#f92672>::</span> <span style=color:#66d9ef>Ord</span> a <span style=color:#f92672>=&gt;</span> [(a, a)] <span style=color:#f92672>-&gt;</span> <span style=color:#66d9ef>G</span><span style=color:#f92672>.</span><span style=color:#66d9ef>Graph</span> a
+</span></span><span style=display:flex><span><span style=color:#66d9ef>G</span><span style=color:#f92672>.</span>neighbours <span style=color:#f92672>::</span> <span style=color:#66d9ef>Ord</span> a <span style=color:#f92672>=&gt;</span> <span style=color:#66d9ef>G</span><span style=color:#f92672>.</span><span style=color:#66d9ef>Graph</span> a <span style=color:#f92672>-&gt;</span> a <span style=color:#f92672>-&gt;</span> [a]
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>t1</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>G</span><span style=color:#f92672>.</span>fromEdges [(<span style=color:#ae81ff>1</span>,<span style=color:#ae81ff>2</span>) , (<span style=color:#ae81ff>1</span>,<span style=color:#ae81ff>3</span>) , (<span style=color:#ae81ff>2</span>,<span style=color:#ae81ff>4</span>) , (<span style=color:#ae81ff>2</span>,<span style=color:#ae81ff>5</span>),  (<span style=color:#ae81ff>3</span>,<span style=color:#ae81ff>6</span>) , (<span style=color:#ae81ff>3</span>,<span style=color:#ae81ff>7</span>) ]
+</span></span><span style=display:flex><span><span style=color:#a6e22e>t1_neighbour_fun</span> node <span style=color:#f92672>=</span> 
+</span></span><span style=display:flex><span>      <span style=color:#66d9ef>G</span><span style=color:#f92672>.</span>neighbours t1 node
+</span></span><span style=display:flex><span><span style=color:#66d9ef>Q</span><span style=color:#f92672>.</span>empty <span style=color:#f92672>::</span> <span style=color:#66d9ef>Q</span><span style=color:#f92672>.</span><span style=color:#66d9ef>Queue</span> a
+</span></span><span style=display:flex><span><span style=color:#66d9ef>Q</span><span style=color:#f92672>.</span>enqueue <span style=color:#f92672>::</span> <span style=color:#66d9ef>Q</span><span style=color:#f92672>.</span><span style=color:#66d9ef>Queue</span> a <span style=color:#f92672>-&gt;</span> a <span style=color:#f92672>-&gt;</span> <span style=color:#66d9ef>Q</span><span style=color:#f92672>.</span><span style=color:#66d9ef>Queue</span> a
+</span></span><span style=display:flex><span><span style=color:#66d9ef>Q</span><span style=color:#f92672>.</span>enqueue_fromList <span style=color:#f92672>::</span>  <span style=color:#66d9ef>Q</span><span style=color:#f92672>.</span><span style=color:#66d9ef>Queue</span> a <span style=color:#f92672>-&gt;</span> [a] <span style=color:#f92672>-&gt;</span> <span style=color:#66d9ef>Q</span><span style=color:#f92672>.</span><span style=color:#66d9ef>Queue</span> a
+</span></span><span style=display:flex><span><span style=color:#66d9ef>Q</span><span style=color:#f92672>.</span>dequeue <span style=color:#f92672>::</span> <span style=color:#66d9ef>Q</span><span style=color:#f92672>.</span>dequeue <span style=color:#f92672>::</span> <span style=color:#66d9ef>Q</span><span style=color:#f92672>.</span><span style=color:#66d9ef>Queue</span> a <span style=color:#f92672>-&gt;</span> (a, <span style=color:#66d9ef>Q</span><span style=color:#f92672>.</span><span style=color:#66d9ef>Queue</span> a)
+</span></span></code></pre></div><h2 id=imperative-style-breadth-first-search>Imperative Style Breadth First Search</h2><p>So now we can translate the imperative algorithm into Haskell. The
+state is maintained by passing it around. First the main loop:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-haskell data-lang=haskell><span style=display:flex><span><span style=color:#66d9ef>import</span> <span style=color:#66d9ef>qualified</span> Data.Set <span style=color:#66d9ef>as</span> S
+</span></span><span style=display:flex><span><span style=color:#a6e22e>bfs_loop</span> <span style=color:#f92672>::</span> (<span style=color:#66d9ef>G</span><span style=color:#f92672>.</span><span style=color:#66d9ef>Graph</span> <span style=color:#66d9ef>Integer</span>) <span style=color:#f92672>-&gt;</span>
+</span></span><span style=display:flex><span>            (<span style=color:#66d9ef>Q</span><span style=color:#f92672>.</span><span style=color:#66d9ef>Queue</span> <span style=color:#66d9ef>Integer</span>) <span style=color:#f92672>-&gt;</span> (<span style=color:#66d9ef>S</span><span style=color:#f92672>.</span><span style=color:#66d9ef>Set</span> <span style=color:#66d9ef>Integer</span>) <span style=color:#f92672>-&gt;</span> [<span style=color:#66d9ef>Integer</span>] <span style=color:#f92672>-&gt;</span> [<span style=color:#66d9ef>Integer</span>]
+</span></span><span style=display:flex><span><span style=color:#a6e22e>bfs_loop</span> g c_queue c_visited c_path
+</span></span><span style=display:flex><span>          <span style=color:#f92672>|</span>  (<span style=color:#66d9ef>Q</span><span style=color:#f92672>.</span>isempty c_queue)     <span style=color:#f92672>=</span>  c_path
+</span></span><span style=display:flex><span>          <span style=color:#f92672>|</span>  otherwise               <span style=color:#f92672>=</span> 
+</span></span><span style=display:flex><span> <span style=color:#66d9ef>let</span> (next_node, c_dequed) <span style=color:#f92672>=</span> <span style=color:#66d9ef>Q</span><span style=color:#f92672>.</span>dequeue c_queue
+</span></span><span style=display:flex><span>     new_neighbours <span style=color:#f92672>=</span> <span style=color:#66d9ef>G</span><span style=color:#f92672>.</span>neighbours g next_node
+</span></span><span style=display:flex><span> <span style=color:#66d9ef>in</span>
+</span></span><span style=display:flex><span>   <span style=color:#66d9ef>if</span> not (next_node `<span style=color:#66d9ef>S</span><span style=color:#f92672>.</span>member` c_visited)
+</span></span><span style=display:flex><span>   <span style=color:#66d9ef>then</span> 
+</span></span><span style=display:flex><span>     <span style=color:#66d9ef>let</span> 
+</span></span><span style=display:flex><span>       new_visited <span style=color:#f92672>=</span> <span style=color:#66d9ef>S</span><span style=color:#f92672>.</span>insert next_node c_visited
+</span></span><span style=display:flex><span>       new_path <span style=color:#f92672>=</span> next_node <span style=color:#66d9ef>:</span> c_path
+</span></span><span style=display:flex><span>       new_queue <span style=color:#f92672>=</span> <span style=color:#66d9ef>Q</span><span style=color:#f92672>.</span>enqueue_fromList c_dequed new_neighbours
+</span></span><span style=display:flex><span>     <span style=color:#66d9ef>in</span>
+</span></span><span style=display:flex><span>       bfs_loop g new_queue new_visited new_path
+</span></span><span style=display:flex><span>   <span style=color:#66d9ef>else</span> 
+</span></span><span style=display:flex><span>     bfs_loop g c_dequed c_visited c_path
+</span></span></code></pre></div><p>There are probably better ways of writing the code. I tend to use lots
+of named expressions using <code>let</code> or <code>where</code> this makes the code a bit
+more verbose, but you actually know what is going on. If our queue is
+empty then there is nothing to do. Otherwise each time around
+the loop we dequeue an element, check if we have seen it before. If we
+have not seen it before, then look at the neighbours and enqueue them.</p><p>We then wrap the code up with a driver to make it more userfriendly</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-haskell data-lang=haskell><span style=display:flex><span><span style=color:#a6e22e>bfs</span> g start_node <span style=color:#f92672>=</span>
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>let</span> initial_queue <span style=color:#f92672>=</span> <span style=color:#66d9ef>Q</span><span style=color:#f92672>.</span>enqueue <span style=color:#66d9ef>Q</span><span style=color:#f92672>.</span>empty start_node
+</span></span><span style=display:flex><span>      initial_visited <span style=color:#f92672>=</span> <span style=color:#66d9ef>S</span><span style=color:#f92672>.</span>empty
+</span></span><span style=display:flex><span>      initial_path <span style=color:#f92672>=</span> <span style=color:#66d9ef>[]</span>
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>in</span>
+</span></span><span style=display:flex><span>    reverse (bfs_loop g initial_queue initial_visited initial_path)
+</span></span></code></pre></div><p>For example</p><pre tabindex=0><code>&gt; bfs g1 1
+[1,3,2,5,6,4]
+</code></pre><h2 id=finding-all-breadth-first-paths-the-level-algorithm>Finding all Breadth First Paths (The Level Algorithm)</h2><p>I am not sure how you would modify an imperative implementation to
+list all bread first paths. Essentially you want some
+non-determinism. When you <code>enqueue</code> the neighbours of a node you need
+to consider all possible orders that you can <code>enqueue</code> them. I spent
+quite a lot of time look at various libraries that support
+non-determinism. Surely I could do something clever with
+<a href=https://hackage.haskell.org/package/logict-0.7.1.0/docs/Control-Monad-Logic.html>Control.Monad.Logic</a>. I
+started to write a version using <a href=https://en.wikipedia.org/wiki/Continuation-passing_style>Continuation-passing
+style</a> to
+have a list of non-deterministic continuations of the computation. All
+of this was too hard for me.</p><p>A simple approach is to to construct breadth first traversal level by
+level. If you have a partial \([n_1,\ldots, n_k]\) breadth first
+traversal, then you find the first node \(n_i\) in the list that does
+not have all of its neighbours in the list, and then explore the
+neighbours of that node. This gives you a set of possible
+continuations of that path. This made me think about paths as an
+abstract data type. The set <code>visited</code> in the above code it really to
+keep track if you are going to loop back on the path, and so it really
+should be part of your path datatype. This gives you code something
+like:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-haskell data-lang=haskell><span style=display:flex><span><span style=color:#66d9ef>data</span> <span style=color:#66d9ef>Path</span> a <span style=color:#f92672>=</span> <span style=color:#66d9ef>Path</span> [a] (<span style=color:#66d9ef>S</span><span style=color:#f92672>.</span><span style=color:#66d9ef>Set</span> a)  
+</span></span><span style=display:flex><span><span style=color:#66d9ef>instance</span> (<span style=color:#66d9ef>Show</span> a) <span style=color:#f92672>=&gt;</span>  <span style=color:#66d9ef>Show</span> (<span style=color:#66d9ef>Path</span> a) <span style=color:#66d9ef>where</span>
+</span></span><span style=display:flex><span>  show (<span style=color:#66d9ef>Path</span> l <span style=color:#66d9ef>_</span>) <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;Path = &#34;</span> <span style=color:#f92672>++</span> (show (reverse l))
+</span></span><span style=display:flex><span><span style=color:#75715e>-- Insert the next node.</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>empty_path</span> <span style=color:#f92672>::</span> <span style=color:#66d9ef>Path</span> a 
+</span></span><span style=display:flex><span><span style=color:#a6e22e>empty_path</span> <span style=color:#f92672>=</span> (<span style=color:#66d9ef>Path</span>  <span style=color:#66d9ef>[]</span>  <span style=color:#66d9ef>S</span><span style=color:#f92672>.</span>empty)
+</span></span><span style=display:flex><span><span style=color:#75715e>-- Insert a node into the path. Note that</span>
+</span></span><span style=display:flex><span><span style=color:#75715e>-- paths are stored backwards.</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>insert_node</span> <span style=color:#f92672>::</span>(<span style=color:#66d9ef>Ord</span> a) <span style=color:#f92672>=&gt;</span>  <span style=color:#66d9ef>Path</span> a <span style=color:#f92672>-&gt;</span> a <span style=color:#f92672>-&gt;</span> <span style=color:#66d9ef>Path</span> a
+</span></span><span style=display:flex><span><span style=color:#a6e22e>insert_node</span> (<span style=color:#66d9ef>Path</span> p_l p_s)  n <span style=color:#f92672>=</span>
+</span></span><span style=display:flex><span>  (<span style=color:#66d9ef>Path</span> new_path  new_set)
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>where</span>
+</span></span><span style=display:flex><span>    new_path <span style=color:#f92672>=</span> n<span style=color:#66d9ef>:</span>p_l
+</span></span><span style=display:flex><span>    new_set  <span style=color:#f92672>=</span> <span style=color:#66d9ef>S</span><span style=color:#f92672>.</span>insert n p_s
+</span></span><span style=display:flex><span><span style=color:#a6e22e>last_node</span> <span style=color:#f92672>::</span> <span style=color:#66d9ef>Path</span> a <span style=color:#f92672>-&gt;</span> a
+</span></span><span style=display:flex><span><span style=color:#a6e22e>last_node</span> (<span style=color:#66d9ef>Path</span> p_l  <span style=color:#66d9ef>_</span> ) <span style=color:#f92672>=</span> head p_l
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>-- tells you if the second argument has been seen.</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>visited</span> <span style=color:#f92672>::</span> (<span style=color:#66d9ef>Ord</span> a) <span style=color:#f92672>=&gt;</span>  <span style=color:#66d9ef>Path</span> a <span style=color:#f92672>-&gt;</span> a <span style=color:#f92672>-&gt;</span> <span style=color:#66d9ef>Bool</span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>visited</span> (<span style=color:#66d9ef>Path</span> <span style=color:#66d9ef>_</span> p_s) n <span style=color:#f92672>=</span> n `<span style=color:#66d9ef>S</span><span style=color:#f92672>.</span>member` p_s
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>visited_set</span> <span style=color:#f92672>::</span> (<span style=color:#66d9ef>Ord</span> a) <span style=color:#f92672>=&gt;</span> <span style=color:#66d9ef>Path</span> a <span style=color:#f92672>-&gt;</span> (<span style=color:#66d9ef>S</span><span style=color:#f92672>.</span><span style=color:#66d9ef>Set</span> a) <span style=color:#f92672>-&gt;</span> <span style=color:#66d9ef>Bool</span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>visited_set</span>  (<span style=color:#66d9ef>Path</span> <span style=color:#66d9ef>_</span> p_s) s <span style=color:#f92672>=</span> s `<span style=color:#66d9ef>S</span><span style=color:#f92672>.</span>isSubsetOf` p_s
+</span></span><span style=display:flex><span><span style=color:#a6e22e>visited_list</span> <span style=color:#f92672>::</span> (<span style=color:#66d9ef>Ord</span> a) <span style=color:#f92672>=&gt;</span> <span style=color:#66d9ef>Path</span> a <span style=color:#f92672>-&gt;</span> [a] <span style=color:#f92672>-&gt;</span> <span style=color:#66d9ef>Bool</span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>visited_list</span>  (<span style=color:#66d9ef>Path</span> <span style=color:#66d9ef>_</span> p_s) l <span style=color:#f92672>=</span> (<span style=color:#66d9ef>S</span><span style=color:#f92672>.</span>fromList l) `<span style=color:#66d9ef>S</span><span style=color:#f92672>.</span>isSubsetOf` p_s
+</span></span><span style=display:flex><span><span style=color:#a6e22e>path_list</span> <span style=color:#f92672>::</span> <span style=color:#66d9ef>Path</span> a <span style=color:#f92672>-&gt;</span> [a]
+</span></span><span style=display:flex><span><span style=color:#a6e22e>path_list</span> (<span style=color:#66d9ef>Path</span> l <span style=color:#66d9ef>_</span>) <span style=color:#f92672>=</span> reverse l
+</span></span></code></pre></div><p>You really should package this up in a module.</p><p>You can then write a function that extends a path</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-haskell data-lang=haskell><span style=display:flex><span><span style=color:#a6e22e>new_paths</span> <span style=color:#f92672>::</span> (<span style=color:#66d9ef>Ord</span> a) <span style=color:#f92672>=&gt;</span> (a <span style=color:#f92672>-&gt;</span> [a]) <span style=color:#f92672>-&gt;</span> (<span style=color:#66d9ef>Path</span> a) <span style=color:#f92672>-&gt;</span>  [<span style=color:#66d9ef>Path</span> a]
+</span></span><span style=display:flex><span><span style=color:#a6e22e>new_paths</span>  <span style=color:#66d9ef>_</span> (<span style=color:#66d9ef>Path</span> <span style=color:#66d9ef>[]</span> <span style=color:#66d9ef>_</span>)  <span style=color:#f92672>=</span> <span style=color:#66d9ef>[]</span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>new_paths</span>  neighbour_fun current_path    <span style=color:#f92672>=</span>
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>let</span> nodes <span style=color:#f92672>=</span> path_list current_path
+</span></span><span style=display:flex><span>      all_neighbours_not_present <span style=color:#f92672>=</span> 
+</span></span><span style=display:flex><span>        filter  (<span style=color:#a6e22e>\</span>n <span style=color:#f92672>-&gt;</span> not (visited_list current_path (neighbour_fun n)) )
+</span></span><span style=display:flex><span>        nodes
+</span></span><span style=display:flex><span>   
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>in</span>
+</span></span><span style=display:flex><span>   <span style=color:#66d9ef>if</span> null all_neighbours_not_present
+</span></span><span style=display:flex><span>   <span style=color:#66d9ef>then</span>
+</span></span><span style=display:flex><span>     <span style=color:#66d9ef>[]</span>
+</span></span><span style=display:flex><span>   <span style=color:#66d9ef>else</span>
+</span></span><span style=display:flex><span>     paths_from_n neighbour_fun current_path (head all_neighbours_not_present)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>-- paths_from_n :: (Ord a) =&gt; (a -&gt; [a]) -&gt; (Path a) -&gt; a -&gt; [Path a]</span>
+</span></span><span style=display:flex><span><span style=color:#75715e>-- n has to be a node which does not have all neighbours. You do that</span>
+</span></span><span style=display:flex><span><span style=color:#75715e>-- in new_paths not paths_from_n</span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>paths_from_n</span> neighbour_fun current_path n <span style=color:#f92672>=</span>
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>let</span> new_neighbours <span style=color:#f92672>=</span>  (neighbour_fun n)
+</span></span><span style=display:flex><span>      neighbours_not_in_path <span style=color:#f92672>=</span>
+</span></span><span style=display:flex><span>        filter (<span style=color:#a6e22e>\</span>n <span style=color:#f92672>-&gt;</span> not (visited current_path n)) new_neighbours
+</span></span><span style=display:flex><span>      new_paths <span style=color:#f92672>=</span> map (insert_node current_path ) neighbours_not_in_path
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>in</span>
+</span></span><span style=display:flex><span>    new_paths
+</span></span></code></pre></div><p>The argument <code>neighbour_fun</code> tells the neighbours of the current
+graph. The fact that we are working with the graph function is not
+really important.</p><p>Writing the recursion to get to the fixed point.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-haskell data-lang=haskell><span style=display:flex><span><span style=color:#a6e22e>all_new_paths_next_lvl</span> <span style=color:#f92672>::</span> (<span style=color:#66d9ef>Ord</span> a) <span style=color:#f92672>=&gt;</span> (a <span style=color:#f92672>-&gt;</span> [a]) <span style=color:#f92672>-&gt;</span> [<span style=color:#66d9ef>Path</span> a] <span style=color:#f92672>-&gt;</span>  [<span style=color:#66d9ef>Path</span> a]
+</span></span><span style=display:flex><span><span style=color:#a6e22e>all_new_paths_next_lvl</span> <span style=color:#66d9ef>_</span> <span style=color:#66d9ef>[]</span>  <span style=color:#f92672>=</span> <span style=color:#66d9ef>[]</span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>all_new_paths_next_lvl</span> neighbour_fun path_list  <span style=color:#f92672>=</span>
+</span></span><span style=display:flex><span>  concat (map (new_paths neighbour_fun) path_list)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>all_new_paths</span> <span style=color:#f92672>::</span> (<span style=color:#66d9ef>Ord</span> a) <span style=color:#f92672>=&gt;</span> (a <span style=color:#f92672>-&gt;</span> [a]) <span style=color:#f92672>-&gt;</span> [<span style=color:#66d9ef>Path</span> a] <span style=color:#f92672>-&gt;</span> [<span style=color:#66d9ef>Path</span> a] 
+</span></span><span style=display:flex><span><span style=color:#a6e22e>all_new_paths</span> neighbour_fun path_list <span style=color:#f92672>=</span>
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>let</span> next_lvl <span style=color:#f92672>=</span> all_new_paths_next_lvl neighbour_fun path_list
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>in</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>if</span> null next_lvl
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>then</span>
+</span></span><span style=display:flex><span>      path_list
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>else</span>
+</span></span><span style=display:flex><span>      all_new_paths neighbour_fun next_lvl
+</span></span><span style=display:flex><span>      
+</span></span></code></pre></div><p>Finally the wrapper. Notice that we take our graph and construct the
+neighbourhood function.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-haskell data-lang=haskell><span style=display:flex><span><span style=color:#a6e22e>bfs_level_algo</span> g start_node <span style=color:#f92672>=</span>
+</span></span><span style=display:flex><span>  all_new_paths neighbour_fun  [initial_path]
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>where</span>
+</span></span><span style=display:flex><span>    initial_path <span style=color:#f92672>=</span> insert_node empty_path start_node
+</span></span><span style=display:flex><span>    neighbour_fun node <span style=color:#f92672>=</span>
+</span></span><span style=display:flex><span>      <span style=color:#66d9ef>G</span><span style=color:#f92672>.</span>neighbours g node
+</span></span><span style=display:flex><span>  
+</span></span></code></pre></div><h2 id=breath-first-search-again-but-with--paths>Breath First Search again but with Paths.</h2><p>Now we have a Path datatype we can rewrite our original
+implementation. This is a step to making a non-deterministic breadth
+first search.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-haskell data-lang=haskell><span style=display:flex><span><span style=color:#a6e22e>bfs_path</span> g start_node <span style=color:#f92672>=</span>
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>let</span> initial_queue <span style=color:#f92672>=</span> <span style=color:#66d9ef>Q</span><span style=color:#f92672>.</span>enqueue <span style=color:#66d9ef>Q</span><span style=color:#f92672>.</span>empty start_node
+</span></span><span style=display:flex><span>      initial_path <span style=color:#f92672>=</span> empty_path
+</span></span><span style=display:flex><span>      neighbour_fun node <span style=color:#f92672>=</span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>G</span><span style=color:#f92672>.</span>neighbours g node
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>in</span>
+</span></span><span style=display:flex><span>    (bfs_path_loop neighbour_fun initial_queue initial_path)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>bfs_path_loop</span> <span style=color:#f92672>::</span> (<span style=color:#66d9ef>Ord</span> a) <span style=color:#f92672>=&gt;</span> ( a <span style=color:#f92672>-&gt;</span> [a]) <span style=color:#f92672>-&gt;</span>(<span style=color:#66d9ef>Q</span><span style=color:#f92672>.</span><span style=color:#66d9ef>Queue</span> a)  <span style=color:#f92672>-&gt;</span>
+</span></span><span style=display:flex><span>                            (<span style=color:#66d9ef>Path</span> a) <span style=color:#f92672>-&gt;</span> (<span style=color:#66d9ef>Path</span> a)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>         
+</span></span><span style=display:flex><span><span style=color:#a6e22e>bfs_path_loop</span> neighbour_fun c_queue  c_path
+</span></span><span style=display:flex><span>          <span style=color:#f92672>|</span>  (<span style=color:#66d9ef>Q</span><span style=color:#f92672>.</span>isempty c_queue)     <span style=color:#f92672>=</span>  c_path
+</span></span><span style=display:flex><span>          <span style=color:#f92672>|</span>  otherwise               <span style=color:#f92672>=</span> 
+</span></span><span style=display:flex><span> <span style=color:#66d9ef>let</span> (next_node, c_dequed) <span style=color:#f92672>=</span> <span style=color:#66d9ef>Q</span><span style=color:#f92672>.</span>dequeue c_queue
+</span></span><span style=display:flex><span>     new_neighbours <span style=color:#f92672>=</span> neighbour_fun next_node
+</span></span><span style=display:flex><span> <span style=color:#66d9ef>in</span>
+</span></span><span style=display:flex><span>   <span style=color:#66d9ef>if</span> not (visited c_path next_node)
+</span></span><span style=display:flex><span>   <span style=color:#66d9ef>then</span> <span style=color:#75715e>-- We have visited the node</span>
+</span></span><span style=display:flex><span>     <span style=color:#66d9ef>let</span> 
+</span></span><span style=display:flex><span>       new_path <span style=color:#f92672>=</span> insert_node c_path next_node 
+</span></span><span style=display:flex><span>       new_queue <span style=color:#f92672>=</span> <span style=color:#66d9ef>Q</span><span style=color:#f92672>.</span>enqueue_fromList c_dequed new_neighbours
+</span></span><span style=display:flex><span>     <span style=color:#66d9ef>in</span>
+</span></span><span style=display:flex><span>       bfs_path_loop neighbour_fun new_queue new_path
+</span></span><span style=display:flex><span>   <span style=color:#66d9ef>else</span> <span style=color:#75715e>-- We have visited the node , but we still have to deque</span>
+</span></span><span style=display:flex><span>     bfs_path_loop neighbour_fun  c_dequed  c_path
+</span></span><span style=display:flex><span>    
+</span></span></code></pre></div><h2 id=refactoring-breadth-first-search>Refactoring Breadth First Search</h2><p>We are going to use lists as a monad. Lists can be used to model
+non-determinism. Suppose you have a function <code>f = \v -> [v, (-1)*v]</code>
+this takes an number <code>v</code> and returns <code>v</code> and <code>-v</code>. The list gives you
+the two options. If you have a list, say <code>[1,2]</code> then applying <code>f</code> to
+that list should give you the list <code>[1,-1,2,-2]</code>. It is not hard to
+write the correct function. But this is built into Haskell via the
+List monad. For example:</p><pre tabindex=0><code>Prelude&gt; let f = \x -&gt; [x, (-1)*x ] Prelude&gt; [1,2]
+&gt;&gt;= f [1,-1,2,-2] 
+</code></pre><p>There are a lot of tutorials on using Moands and
+the List monad, and I'm not going to repeat things here.</p><p>Before we get to non-determinism we are going to refactor our code a
+bit. We need a type to represent the current state of a compuation.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-haskell data-lang=haskell><span style=display:flex><span><span style=color:#66d9ef>type</span> <span style=color:#66d9ef>BFS_State</span> a <span style=color:#f92672>=</span> ( (a <span style=color:#f92672>-&gt;</span> [a] ) ,  (<span style=color:#66d9ef>Q</span><span style=color:#f92672>.</span><span style=color:#66d9ef>Queue</span> a), (<span style=color:#66d9ef>Path</span> a) )  
+</span></span></code></pre></div><p>Then <code>next_path</code> dequeues a node from the <code>current_queue</code> and
+constructs the next path.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-haskell data-lang=haskell><span style=display:flex><span><span style=color:#a6e22e>next_path</span> <span style=color:#f92672>::</span> (<span style=color:#66d9ef>Ord</span> a) <span style=color:#f92672>=&gt;</span>  <span style=color:#66d9ef>BFS_State</span> a <span style=color:#f92672>-&gt;</span> <span style=color:#66d9ef>BFS_State</span> a
+</span></span><span style=display:flex><span><span style=color:#a6e22e>next_path</span> (neighbour_fun , current_queue , current_path) <span style=color:#f92672>=</span> 
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>if</span> <span style=color:#66d9ef>Q</span><span style=color:#f92672>.</span>isempty current_queue
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>then</span>
+</span></span><span style=display:flex><span>    (neighbour_fun, current_queue,  current_path) <span style=color:#75715e>-- The fixpoint of the function.</span>
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>else</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>let</span> (next_node, c_dequed) <span style=color:#f92672>=</span> <span style=color:#66d9ef>Q</span><span style=color:#f92672>.</span>dequeue current_queue
+</span></span><span style=display:flex><span>        new_neighbours <span style=color:#f92672>=</span> neighbour_fun next_node
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>in</span>
+</span></span><span style=display:flex><span>      <span style=color:#66d9ef>if</span> not (visited current_path  next_node)
+</span></span><span style=display:flex><span>      <span style=color:#66d9ef>then</span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>let</span> 
+</span></span><span style=display:flex><span>          new_path <span style=color:#f92672>=</span> insert_node current_path next_node 
+</span></span><span style=display:flex><span>          new_queue <span style=color:#f92672>=</span> <span style=color:#66d9ef>Q</span><span style=color:#f92672>.</span>enqueue_fromList c_dequed new_neighbours
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>in</span>
+</span></span><span style=display:flex><span>          (neighbour_fun , new_queue , new_path)
+</span></span><span style=display:flex><span>      <span style=color:#66d9ef>else</span>
+</span></span><span style=display:flex><span>        (neighbour_fun ,  c_dequed ,  current_path)
+</span></span></code></pre></div><p>We can then wrap this up in an iterator. At the moment we are just
+doing some re-factoring of the code to make it easier to use monads
+for non-determinism.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-haskell data-lang=haskell><span style=display:flex><span><span style=color:#a6e22e>bfs_next_path_loop</span> <span style=color:#f92672>::</span> (<span style=color:#66d9ef>Ord</span> a) <span style=color:#f92672>=&gt;</span>  <span style=color:#66d9ef>BFS_State</span> a <span style=color:#f92672>-&gt;</span> <span style=color:#66d9ef>BFS_State</span> a
+</span></span><span style=display:flex><span><span style=color:#a6e22e>bfs_next_path_loop</span> state  <span style=color:#f92672>=</span>
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>let</span> 
+</span></span><span style=display:flex><span>    (new_fun, new_queue , new_path) <span style=color:#f92672>=</span> next_path state
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>in</span>
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>if</span> not (<span style=color:#66d9ef>Q</span><span style=color:#f92672>.</span>isempty new_queue) 
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>then</span>
+</span></span><span style=display:flex><span>    bfs_next_path_loop (new_fun, new_queue , new_path)
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>else</span>
+</span></span><span style=display:flex><span>    (new_fun, new_queue , new_path)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>bfs_with_next_path</span> g start_node <span style=color:#f92672>=</span>
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>let</span> initial_queue <span style=color:#f92672>=</span> <span style=color:#66d9ef>Q</span><span style=color:#f92672>.</span>enqueue <span style=color:#66d9ef>Q</span><span style=color:#f92672>.</span>empty start_node
+</span></span><span style=display:flex><span>      initial_path <span style=color:#f92672>=</span> empty_path
+</span></span><span style=display:flex><span>      neighbour_fun node <span style=color:#f92672>=</span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>G</span><span style=color:#f92672>.</span>neighbours g node
+</span></span><span style=display:flex><span>      (<span style=color:#66d9ef>_</span>,<span style=color:#66d9ef>_</span>,path) <span style=color:#f92672>=</span>
+</span></span><span style=display:flex><span>        bfs_next_path_loop (neighbour_fun , initial_queue , initial_path)
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>in</span>
+</span></span><span style=display:flex><span>    path
+</span></span></code></pre></div><h2 id=using-the-list-monad-for-non-determinism>Using the list Monad for non-determinism.</h2><p>So the key idea is that we are going to write a function that takes
+the current state and returns all possible continuations. When look at
+the neighbours of a node you have to consider all the possible
+permutations of <code>enqueue</code> operations. In <code>Data.List</code> there is a handy
+<code>permutations</code> function.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-haskell data-lang=haskell><span style=display:flex><span><span style=color:#66d9ef>import</span> Data.List
+</span></span><span style=display:flex><span><span style=color:#a6e22e>all_next_path</span> <span style=color:#f92672>::</span> (<span style=color:#66d9ef>Ord</span> a) <span style=color:#f92672>=&gt;</span>  <span style=color:#66d9ef>BFS_State</span> a <span style=color:#f92672>-&gt;</span> [<span style=color:#66d9ef>BFS_State</span> a]
+</span></span><span style=display:flex><span><span style=color:#a6e22e>all_next_path</span> (neighbour_fun , current_queue , current_path) <span style=color:#f92672>=</span>
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>if</span> <span style=color:#66d9ef>Q</span><span style=color:#f92672>.</span>isempty current_queue
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>then</span>
+</span></span><span style=display:flex><span>    [(neighbour_fun, current_queue,  current_path)]
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>else</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>let</span> (next_node, c_dequed) <span style=color:#f92672>=</span> <span style=color:#66d9ef>Q</span><span style=color:#f92672>.</span>dequeue current_queue
+</span></span><span style=display:flex><span>        new_neighbours <span style=color:#f92672>=</span> neighbour_fun next_node
+</span></span><span style=display:flex><span>        all_permutations <span style=color:#f92672>=</span> permutations new_neighbours
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>in</span>
+</span></span><span style=display:flex><span>      <span style=color:#66d9ef>if</span> not (visited current_path  next_node)
+</span></span><span style=display:flex><span>      <span style=color:#66d9ef>then</span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>let</span> 
+</span></span><span style=display:flex><span>          new_path <span style=color:#f92672>=</span> insert_node current_path next_node
+</span></span><span style=display:flex><span>          new_queues <span style=color:#f92672>=</span> map (<span style=color:#a6e22e>\</span>x <span style=color:#f92672>-&gt;</span>  <span style=color:#66d9ef>Q</span><span style=color:#f92672>.</span>enqueue_fromList c_dequed x)
+</span></span><span style=display:flex><span>                           all_permutations
+</span></span><span style=display:flex><span>          new_states <span style=color:#f92672>=</span> map (<span style=color:#a6e22e>\</span>x <span style=color:#f92672>-&gt;</span> (neighbour_fun, x , new_path) )
+</span></span><span style=display:flex><span>                           new_queues
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>in</span>
+</span></span><span style=display:flex><span>          new_states
+</span></span><span style=display:flex><span>      <span style=color:#66d9ef>else</span>
+</span></span><span style=display:flex><span>        [(neighbour_fun ,  c_dequed ,  current_path)]
+</span></span></code></pre></div><p>The type signature of <code>>>=</code> when specialised to lists is <code>[a] -> (a -> [b]) -> [b]</code> (<code>a</code> can equal <code>b</code>). We have that <code>all_next_path :: (Ord a) => BFS_State a -> [BFS_State a]</code> so this means that we can
+use <code>>>=</code>. Again we can wrap up <code>all_next_path</code> into a function that
+does the iteration. To make sure that our algorithm terminates we
+stop trying to expand states where the queues are empty. This gives us
+some code that looks like:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-haskell data-lang=haskell><span style=display:flex><span><span style=color:#a6e22e>bfs_all_paths_loop</span> <span style=color:#f92672>::</span> (<span style=color:#66d9ef>Ord</span> a) <span style=color:#f92672>=&gt;</span>  [<span style=color:#66d9ef>BFS_State</span> a] <span style=color:#f92672>-&gt;</span> [<span style=color:#66d9ef>BFS_State</span> a]
+</span></span><span style=display:flex><span><span style=color:#a6e22e>bfs_all_paths_loop</span> state_list <span style=color:#f92672>=</span>
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>if</span> (null state_list) <span style=color:#66d9ef>then</span> <span style=color:#66d9ef>[]</span>
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>else</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>let</span> next_paths <span style=color:#f92672>=</span> 
+</span></span><span style=display:flex><span>          state_list <span style=color:#f92672>&gt;&gt;=</span> all_next_path
+</span></span><span style=display:flex><span>        (empty_queues , non_empty_queues ) <span style=color:#f92672>=</span>
+</span></span><span style=display:flex><span>          partition state_queue_empty next_paths
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>in</span>
+</span></span><span style=display:flex><span>      (bfs_all_paths_loop non_empty_queues) <span style=color:#f92672>++</span> empty_queues
+</span></span></code></pre></div><p>The use of <code>++</code> might be inefficient. I don't know without some
+profiling and in a lazy complied language it is hard to know. If it is
+inefficient then you should probably use difference lists. I spent a
+long time trying to come up with a nice short equivalent formulation
+using the <code>do</code> notation. I'm not sure if there is. If anybody finds
+one, then please contact me. Again you will need to wrap the loop up
+in a more user friendly way.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-haskell data-lang=haskell><span style=display:flex><span><span style=color:#a6e22e>bfs_with_all_paths</span>  g start_node <span style=color:#f92672>=</span>
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>let</span>
+</span></span><span style=display:flex><span>    initial_queue <span style=color:#f92672>=</span> <span style=color:#66d9ef>Q</span><span style=color:#f92672>.</span>enqueue <span style=color:#66d9ef>Q</span><span style=color:#f92672>.</span>empty start_node
+</span></span><span style=display:flex><span>    initial_path <span style=color:#f92672>=</span> empty_path
+</span></span><span style=display:flex><span>    neighbour_fun node <span style=color:#f92672>=</span>
+</span></span><span style=display:flex><span>      <span style=color:#66d9ef>G</span><span style=color:#f92672>.</span>neighbours g node
+</span></span><span style=display:flex><span>    state_list <span style=color:#f92672>=</span>
+</span></span><span style=display:flex><span>      bfs_all_paths_loop  [(neighbour_fun , initial_queue , initial_path)]
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>in</span>
+</span></span><span style=display:flex><span>    map (<span style=color:#a6e22e>\</span>(a,b,c) <span style=color:#f92672>-&gt;</span> c) state_list
+</span></span></code></pre></div><h2 id=using-the-writer-monad>Using the writer monad.</h2><p>With our above code we are iterating until a fixed point. States
+with an empty queue are saved as completed path. The above code mixes
+these together. Haskell's Writer monad is designed for computations
+where you also want to log information. We can use this to record the
+complete path. Again there are lots of tutorials on the writer monad,
+and this post has gone on far to long. So here is the code.</p><p>The type deceleration</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-haskell data-lang=haskell><span style=display:flex><span><span style=color:#a6e22e>bfs_all_paths_loop_writer</span> <span style=color:#f92672>::</span> (<span style=color:#66d9ef>Ord</span> a) <span style=color:#f92672>=&gt;</span>
+</span></span><span style=display:flex><span>  [<span style=color:#66d9ef>BFS_State</span> a] <span style=color:#f92672>-&gt;</span> <span style=color:#66d9ef>Writer</span> [<span style=color:#66d9ef>BFS_State</span> a] [<span style=color:#66d9ef>BFS_State</span> a]
+</span></span></code></pre></div><p>Gives you a new Monad on top of the list monad <code>[BFS_State a]</code> where
+you use the list monad <code>[BFS_State a]</code>. Given an element <code>x</code> of this
+monad the function <code>runWriter a</code> gives you a pair <code>(r,v)</code> where <code>r</code> is
+an element of the recording type and <code>v</code> is an element of the writer
+class. In this code <code>writer(v,r)</code> allows you to construct an element of the
+writer monad where <code>v</code> is the value and <code>r</code> is the record. The writer
+monad does all the book keeping of gluing together the record logs.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-haskell data-lang=haskell><span style=display:flex><span><span style=color:#66d9ef>import</span> Control.Monad.Trans.Writer
+</span></span><span style=display:flex><span><span style=color:#66d9ef>import</span> Control.Monad 
+</span></span><span style=display:flex><span><span style=color:#a6e22e>bfs_all_paths_loop_writer</span> <span style=color:#f92672>::</span> (<span style=color:#66d9ef>Ord</span> a) <span style=color:#f92672>=&gt;</span>
+</span></span><span style=display:flex><span>  [<span style=color:#66d9ef>BFS_State</span> a] <span style=color:#f92672>-&gt;</span> <span style=color:#66d9ef>Writer</span> [<span style=color:#66d9ef>BFS_State</span> a] [<span style=color:#66d9ef>BFS_State</span> a]
+</span></span><span style=display:flex><span><span style=color:#a6e22e>bfs_all_paths_loop_writer</span> state_list <span style=color:#f92672>=</span>
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>if</span> (null state_list) <span style=color:#66d9ef>then</span> writer (<span style=color:#66d9ef>[]</span>,<span style=color:#66d9ef>[]</span>)
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>else</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>let</span> next_paths <span style=color:#f92672>=</span> 
+</span></span><span style=display:flex><span>          state_list <span style=color:#f92672>&gt;&gt;=</span> all_next_path
+</span></span><span style=display:flex><span>        (empty_queues , non_empty_queues ) <span style=color:#f92672>=</span>
+</span></span><span style=display:flex><span>          partition state_queue_empty next_paths
+</span></span><span style=display:flex><span>        (new_states, history) <span style=color:#f92672>=</span>
+</span></span><span style=display:flex><span>          runWriter (bfs_all_paths_loop_writer non_empty_queues)
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>in</span>
+</span></span><span style=display:flex><span>      writer(new_states, history `mappend` empty_queues) 
+</span></span></code></pre></div><p>The <code>mappend</code> function in this case is a fancy generic way of writing
+<code>++</code> for lists. There are lots of ways of improving the above code,
+and it could probably be written in more idiomatic Haskell. The
+expression <code>writer ([],[])</code> could be rewritten using <code>return</code>. Using
+<code>++</code> on lists can be inefficient, and you might want to replace the
+type recording type <code>[BFS_State a]</code> with <a href=https://hackage.haskell.org/package/dlist-1.0/docs/Data-DList.html>difference
+lists</a>.</p><p>Again you want to wrap this up in something more user friendly.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-haskell data-lang=haskell><span style=display:flex><span><span style=color:#a6e22e>bfs_with_all_paths_writer</span>  g start_node <span style=color:#f92672>=</span>
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>let</span>
+</span></span><span style=display:flex><span>    initial_queue <span style=color:#f92672>=</span> <span style=color:#66d9ef>Q</span><span style=color:#f92672>.</span>enqueue <span style=color:#66d9ef>Q</span><span style=color:#f92672>.</span>empty start_node
+</span></span><span style=display:flex><span>    initial_path <span style=color:#f92672>=</span> empty_path
+</span></span><span style=display:flex><span>    neighbour_fun node <span style=color:#f92672>=</span>
+</span></span><span style=display:flex><span>      <span style=color:#66d9ef>G</span><span style=color:#f92672>.</span>neighbours g node
+</span></span><span style=display:flex><span>    state_list <span style=color:#f92672>=</span>
+</span></span><span style=display:flex><span>      snd (runWriter (bfs_all_paths_loop_writer  [(neighbour_fun , initial_queue , initial_path)]))
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>in</span>
+</span></span><span style=display:flex><span>    map (<span style=color:#a6e22e>\</span>(a,b,c) <span style=color:#f92672>-&gt;</span> c) state_list
+</span></span></code></pre></div><p>Again I tried to come up with something elegant using <code>do</code> blocks and
+guards, but failed. The problem with Monad transformers is that you
+often require nested do blocks to get the types right. There is a lift
+function <code>lift</code> that allows you get do down inside your tower of monad
+transformers.</p><h2 id=extra-libraries>Extra Libraries</h2><p>These are not meant to be efficient. I just wanted to check that I
+still understood how modules worked.</p><p>First <code>Graph_Simple.hs</code></p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-haskell data-lang=haskell><span style=display:flex><span><span style=color:#66d9ef>module</span> Graph_Simple (<span style=color:#a6e22e>fromEdges</span>, <span style=color:#a6e22e>neighbours</span> , <span style=color:#66d9ef>Graph</span> (<span style=color:#f92672>..</span>) )  <span style=color:#66d9ef>where</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>import</span> <span style=color:#66d9ef>qualified</span> Data.Set <span style=color:#66d9ef>as</span> S
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>data</span> <span style=color:#66d9ef>Graph</span> a <span style=color:#f92672>=</span> <span style=color:#66d9ef>G</span> (<span style=color:#66d9ef>S</span><span style=color:#f92672>.</span><span style=color:#66d9ef>Set</span> a , <span style=color:#66d9ef>S</span><span style=color:#f92672>.</span><span style=color:#66d9ef>Set</span> (a,a) )  <span style=color:#66d9ef>deriving</span> (<span style=color:#66d9ef>Show</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>allnodes</span> <span style=color:#66d9ef>[]</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>S</span><span style=color:#f92672>.</span>empty
+</span></span><span style=display:flex><span><span style=color:#a6e22e>allnodes</span> ((v,w) <span style=color:#66d9ef>:</span> xs) <span style=color:#f92672>=</span>
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>let</span> nodes_of_rest <span style=color:#f92672>=</span> (allnodes xs)
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>in</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>S</span><span style=color:#f92672>.</span>insert w (<span style=color:#66d9ef>S</span><span style=color:#f92672>.</span>insert v nodes_of_rest)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>fromEdges</span> <span style=color:#f92672>::</span> (<span style=color:#66d9ef>Ord</span> a) <span style=color:#f92672>=&gt;</span>  [(a,a)] <span style=color:#f92672>-&gt;</span> <span style=color:#66d9ef>Graph</span> a
+</span></span><span style=display:flex><span><span style=color:#a6e22e>fromEdges</span> edge_list <span style=color:#f92672>=</span>
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>let</span> nodes <span style=color:#f92672>=</span> allnodes  edge_list
+</span></span><span style=display:flex><span>      edges <span style=color:#f92672>=</span> <span style=color:#66d9ef>S</span><span style=color:#f92672>.</span>fromList edge_list
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>in</span>
+</span></span><span style=display:flex><span>     <span style=color:#66d9ef>G</span> (nodes, edges)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>neighbours</span> <span style=color:#f92672>::</span> (<span style=color:#66d9ef>Ord</span> a) <span style=color:#f92672>=&gt;</span> <span style=color:#66d9ef>Graph</span> a <span style=color:#f92672>-&gt;</span> a <span style=color:#f92672>-&gt;</span> [a]
+</span></span><span style=display:flex><span><span style=color:#a6e22e>neighbours</span> (<span style=color:#66d9ef>G</span> (nodes, edges) ) n <span style=color:#f92672>=</span>
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>if</span> n `<span style=color:#66d9ef>S</span><span style=color:#f92672>.</span>member` nodes
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>then</span>
+</span></span><span style=display:flex><span>    [ y <span style=color:#f92672>|</span> (x,y) <span style=color:#f92672>&lt;-</span> <span style=color:#66d9ef>S</span><span style=color:#f92672>.</span>toList (edges) , x <span style=color:#f92672>==</span> n]
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>else</span>
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>error</span> <span style=color:#e6db74>&#34;Node not a member of the graph.&#34;</span>
+</span></span></code></pre></div><p>Then <code>Queue_Seq.hs</code> that implements queues using Haskell's sequence
+data type.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-haskell data-lang=haskell><span style=display:flex><span><span style=color:#66d9ef>module</span> Queue_Seq (<span style=color:#a6e22e>empty</span>,
+</span></span><span style=display:flex><span>                  <span style=color:#a6e22e>singelton</span>,
+</span></span><span style=display:flex><span>                  <span style=color:#a6e22e>enqueue</span>,
+</span></span><span style=display:flex><span>                  <span style=color:#a6e22e>dequeue</span>,
+</span></span><span style=display:flex><span>                  <span style=color:#a6e22e>isempty</span>,
+</span></span><span style=display:flex><span>                  <span style=color:#a6e22e>enqueue_fromList</span>,
+</span></span><span style=display:flex><span>                  <span style=color:#66d9ef>Queue</span> (<span style=color:#f92672>..</span>) )  <span style=color:#66d9ef>where</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>import</span> <span style=color:#66d9ef>qualified</span> Data.Sequence <span style=color:#66d9ef>as</span> Seq
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>--- More efficient Queue data type.</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>data</span>  <span style=color:#66d9ef>Queue</span> a  <span style=color:#f92672>=</span> <span style=color:#66d9ef>Q</span> (<span style=color:#66d9ef>Seq</span><span style=color:#f92672>.</span><span style=color:#66d9ef>Seq</span> a) <span style=color:#66d9ef>deriving</span> (<span style=color:#66d9ef>Eq</span>,<span style=color:#66d9ef>Show</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>empty</span>  <span style=color:#f92672>=</span> <span style=color:#66d9ef>Q</span> <span style=color:#66d9ef>Seq</span><span style=color:#f92672>.</span>empty
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>isempty</span> <span style=color:#f92672>::</span> <span style=color:#66d9ef>Queue</span> a <span style=color:#f92672>-&gt;</span> <span style=color:#66d9ef>Bool</span> 
+</span></span><span style=display:flex><span><span style=color:#a6e22e>isempty</span> (<span style=color:#66d9ef>Q</span> q)  <span style=color:#f92672>=</span> <span style=color:#66d9ef>case</span> q <span style=color:#66d9ef>of</span>
+</span></span><span style=display:flex><span>                   <span style=color:#66d9ef>Seq</span><span style=color:#f92672>.</span><span style=color:#66d9ef>Empty</span> <span style=color:#f92672>-&gt;</span> <span style=color:#66d9ef>True</span>
+</span></span><span style=display:flex><span>                   otherwise <span style=color:#f92672>-&gt;</span> <span style=color:#66d9ef>False</span>
+</span></span><span style=display:flex><span>                   
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>singelton</span> <span style=color:#f92672>::</span> a <span style=color:#f92672>-&gt;</span> <span style=color:#66d9ef>Queue</span> a
+</span></span><span style=display:flex><span><span style=color:#a6e22e>singelton</span> e <span style=color:#f92672>=</span> <span style=color:#66d9ef>Q</span> (<span style=color:#66d9ef>Seq</span><span style=color:#f92672>.</span>singleton e) 
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>enqueue</span> <span style=color:#f92672>::</span> <span style=color:#66d9ef>Queue</span> a <span style=color:#f92672>-&gt;</span> a <span style=color:#f92672>-&gt;</span> <span style=color:#66d9ef>Queue</span> a
+</span></span><span style=display:flex><span><span style=color:#a6e22e>enqueue</span> (<span style=color:#66d9ef>Q</span> q)  a <span style=color:#f92672>=</span>
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>Q</span> (a <span style=color:#66d9ef>Seq</span><span style=color:#f92672>.&lt;|</span> q) 
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>dequeue</span> <span style=color:#f92672>::</span> <span style=color:#66d9ef>Queue</span> a <span style=color:#f92672>-&gt;</span> ( a , <span style=color:#66d9ef>Queue</span> a)
+</span></span><span style=display:flex><span><span style=color:#a6e22e>dequeue</span> (<span style=color:#66d9ef>Q</span> (new_q <span style=color:#66d9ef>Seq</span><span style=color:#f92672>.:|&gt;</span> elem))  <span style=color:#f92672>=</span>  (elem, (<span style=color:#66d9ef>Q</span> new_q)) 
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>enqueue_fromList</span> <span style=color:#f92672>::</span> <span style=color:#66d9ef>Queue</span> a <span style=color:#f92672>-&gt;</span> [a] <span style=color:#f92672>-&gt;</span> <span style=color:#66d9ef>Queue</span> a
+</span></span><span style=display:flex><span><span style=color:#a6e22e>enqueue_fromList</span> q <span style=color:#66d9ef>[]</span> <span style=color:#f92672>=</span> q
+</span></span><span style=display:flex><span><span style=color:#a6e22e>enqueue_fromList</span> q (x <span style=color:#66d9ef>:</span> xs) <span style=color:#f92672>=</span>
+</span></span><span style=display:flex><span>  (enqueue qs x)
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>where</span>
+</span></span><span style=display:flex><span>    qs <span style=color:#f92672>=</span> enqueue_fromList q xs 
+</span></span></code></pre></div><p>You probably want to rewrite <code>enqueue_fromList</code> using <code>foldl</code> or one
+of its strict versions.</p></div></article></main><footer id=footer class="mt-auto mb-2"><section class="container text-end">Powered by <a href=https://gohugo.io>Hugo</a> using the
+<a href=https://github.com/dvladek/hugo-uppsala>hugo-Uppsala</a> theme.
+&nbsp; &copy; Justin Pearson 2021 &ndash;2024.</section></footer><script src=https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js integrity=sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p crossorigin=anonymous></script><script src=https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js integrity=sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF crossorigin=anonymous></script></body></html>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Teaching Material on Justin Pearson</title><link>https://justinkennethpearson.github.io/tags/teaching-material/</link><description>Recent content in Teaching Material on Justin Pearson</description><generator>Hugo</generator><language>en-uk</language><lastBuildDate>Mon, 22 Mar 2021 15:09:45 +0100</lastBuildDate><atom:link href="https://justinkennethpearson.github.io/tags/teaching-material/index.xml" rel="self" type="application/rss+xml"/><item><title>Breadth First Search in Haskell</title><link>https://justinkennethpearson.github.io/post/2021/03/22/breadth-first-search-in-haskell/</link><pubDate>Mon, 22 Mar 2021 15:09:45 +0100</pubDate><guid>https://justinkennethpearson.github.io/post/2021/03/22/breadth-first-search-in-haskell/</guid><description>&lt;p>&lt;a href="https://www.haskell.org/">Haskell&lt;/a> is a really great programming
+language. It is elegant, the type system is beautiful, and nowadays
+the compiler is quite good. I've been using functional languages off
+and on for more than 30 years. I studied at the &lt;a href="https://www.kent.ac.uk/">University of
+Kent&lt;/a> which is the home
+&lt;a href="https://www.cs.kent.ac.uk/people/staff/dat/miranda/">Miranda&lt;/a> which
+is a precursor to Haskell. All this is a warning. I don't use
+Haskell that much. The language has changed a lot since I last used it
+regularly, and so my code might not be optimal or idiomatic Haskell.&lt;/p></description></item></channel></rss>
