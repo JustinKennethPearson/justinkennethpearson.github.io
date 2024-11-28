@@ -22,39 +22,7 @@ upgrading the latest version of the operating system and doing and
 updating my <code>homebrew</code> setup everything works. Note that these
 instructions are for using <code>pip</code>. If you are using an alternative
 package manager such as <code>Anaconda</code> then you are on your own. I know
-nothing about setting up Python on a windows machine.</p><h1 id=setting-up-the-virtual-environment>Setting up the Virtual Environment</h1><p>First it is better set up a virtual environment (see <a href=https://justinkennethpearson.github.io/post/2020/12/10/creating-and-using-python-virtual-environments/>Creating and
-Using Virtual Environments in Python</a>. In a suitable place on your machine do:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>python3 -m venv env
-</span></span><span style=display:flex><span>source ./env/bin/activate
-</span></span></code></pre></div><p>Note that you might be prompted to upgrade <code>pip</code>. If you are, then
-follow the instructions. You are only upgrading the version in your
-local virtual environment.</p><h1 id=installing-the-relevant-packages>Installing the relevant packages</h1><p>When you prompt changes to <code>(env)</code> you are inside your virtual
-environment. You can now use <code>pip</code> to install packages. For reasons
-that I'm not going to explain your life is made a little easier if you
-install <code>wheel</code></p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>pip install wheel
-</span></span></code></pre></div><p>You can now install various useful packages for machine learning</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span> pip install numpy  scipy matplotlib scikit-learn pandas scikit-image
-</span></span><span style=display:flex><span> treelib nltk
-</span></span></code></pre></div><p>This might take a while. The package <code>jupyter</code> drives the
-notebooks, so install that</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>pip install jupyter
-</span></span></code></pre></div><h1 id=emacs-key-bindings>Emacs key bindings</h1><p>I have been using the editor
-<a href=https://www.gnu.org/software/emacs/>Emacs</a> for over 30 years. The
-key binding are hardwired into my brain. If you are like me then
-installing the <code>jupyter-emacskeys</code> package will make your life a
-little less frustrating.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>pip install jupyter-emacskeys
-</span></span></code></pre></div><h1 id=launching-notebooks>Launching notebooks</h1><p>You talk to Python notebooks using the web browser when you are
-running them locally you start your own little server</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>jupyter notebook
-</span></span></code></pre></div><p>If you have thing configured then a web browser might open up. If not
-then look at the output on the terminal and you will see something
-like:</p><pre tabindex=0><code>[I 09:47:31.185 NotebookApp] Use Control-C to stop this server and shut down all kernels (twice to skip confirmation).
-[C 09:47:31.216 NotebookApp] 
-    
-    To access the notebook, open this file in a browser:
-        file:///Users/justin/Library/Jupyter/runtime/nbserver-49899-open.html
-    Or copy and paste one of these URLs:
-        http://localhost:8888/?token=83e4ad6deece18a89f8c244f28bb3268d115a4a047764f36
-     or http://127.0.0.1:8888/?token=83e4ad6deece18a89f8c244f28bb3268d115a4a047764f36
-</code></pre><p>So in this case you can point your browser at
-<code>http://127.0.0.1:8888/?token=83e4ad6deece18a89f8c244f28bb3268d115a4a047764f36</code>
-and you are ready to go.</p></div></article><article class="post-item row mb-5"><header class="post-title col-12 col-lg-10 offset-lg-2"><h2><a class="text-uppercase inv-link" href=../post/2021/03/27/using-the-haskell-state-monad/>Using the Haskell State Monad</a></h2></header><aside class="post-aside col-12 col-lg-2 pr-5 pt-2 lh-lg"><ul class=list-unstyled><li><h4 class=text-uppercase>March 27, 2021</h4></li><li><a class=post-tag href=https://justinkennethpearson.github.io/tags/programming>Programming</a>,
+nothing about setting up Python on a windows machine.</p></div></article><article class="post-item row mb-5"><header class="post-title col-12 col-lg-10 offset-lg-2"><h2><a class="text-uppercase inv-link" href=../post/2021/03/27/using-the-haskell-state-monad/>Using the Haskell State Monad</a></h2></header><aside class="post-aside col-12 col-lg-2 pr-5 pt-2 lh-lg"><ul class=list-unstyled><li><h4 class=text-uppercase>March 27, 2021</h4></li><li><a class=post-tag href=https://justinkennethpearson.github.io/tags/programming>Programming</a>,
 <a class=post-tag href=https://justinkennethpearson.github.io/tags/how-to>How To</a></li></ul></aside><div class="col-12 col-lg-10">A short tutorial on using the built in state monad. I promise you will not build your own state monad.</div></article><article class="post-item row mb-5"><header class="post-title col-12 col-lg-10 offset-lg-2"><h2><a class="text-uppercase inv-link" href=../post/2021/03/22/breadth-first-search-in-haskell/>Breadth First Search in Haskell</a></h2></header><aside class="post-aside col-12 col-lg-2 pr-5 pt-2 lh-lg"><ul class=list-unstyled><li><h4 class=text-uppercase>March 22, 2021</h4></li><li><a class=post-tag href=https://justinkennethpearson.github.io/tags/teaching-material>Teaching Material</a>,
 <a class=post-tag href=https://justinkennethpearson.github.io/tags/haskell>Haskell</a></li></ul></aside><div class="col-12 col-lg-10"><p><a href=https://www.haskell.org/>Haskell</a> is a really great programming
 language. It is elegant, the type system is beautiful, and nowadays
