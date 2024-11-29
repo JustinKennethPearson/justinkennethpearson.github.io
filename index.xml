@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Justin Pearson</title><link>https://justinkennethpearson.github.io/</link><description>Recent content on Justin Pearson</description><generator>Hugo</generator><language>en-uk</language><lastBuildDate>Fri, 08 Nov 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://justinkennethpearson.github.io/index.xml" rel="self" type="application/rss+xml"/><item><title>Artificial Intelligence.</title><link>https://justinkennethpearson.github.io/teaching/courses/ai/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://justinkennethpearson.github.io/teaching/courses/ai/</guid><description>&lt;ul>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Justin Pearson</title><link>https://justinkennethpearson.github.io/</link><description>Recent content on Justin Pearson</description><generator>Hugo</generator><language>en-uk</language><lastBuildDate>Fri, 29 Nov 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://justinkennethpearson.github.io/index.xml" rel="self" type="application/rss+xml"/><item><title>Artificial Intelligence.</title><link>https://justinkennethpearson.github.io/teaching/courses/ai/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://justinkennethpearson.github.io/teaching/courses/ai/</guid><description>&lt;ul>
 &lt;li>&lt;a href="https://uppsala.instructure.com/courses/96372">Studium Page&lt;/a>&lt;/li>
 &lt;li>&lt;a href="https://www.uu.se/en/study/course?query=1DL340">Official Syllabus&lt;/a>&lt;/li>
 &lt;/ul>
@@ -68,18 +68,13 @@ machine learning.&lt;/p></description></item><item><title>Old Posts</title><link
 solvers. This is mainly so that I can find them again.&lt;/p>
 &lt;ul>
 &lt;li>
-&lt;p>A C++ version
-&lt;a href="https://bitbucket.org/constraint-programming/fzn-minicpp/src/main/">minicpp&lt;/a>
-of &lt;a href="http://www.minicp.org/">MiniCP&lt;/a> developed by &lt;a href="https://ldm.engr.uconn.edu/">Laurent
-Michel&lt;/a> and his students. It is mainly
-used for research. It has a FlatZinc parser.&lt;/p>
+&lt;p>&lt;a href="https://nucs.readthedocs.io/en/latest/">NuCS&lt;/a>: A native Python
+solver that uses numpy for speed.&lt;/p>
 &lt;/li>
 &lt;li>
-&lt;p>Another version of
-&lt;a href="https://bitbucket.org/ldmbouge/minicpp/src/v1.1/">minicpp&lt;/a> that
-includes
-&lt;a href="https://dlnext.acm.org/doi/10.1007/978-3-030-58475-7_31">Haddock&lt;/a> a
-system for using MDDs for propagation.&lt;/p>
+&lt;p>&lt;a href="https://github.com/ciaranm/glasgow-constraint-solver">The Glasgow Constraint
+Solver&lt;/a> a
+proof logging constraint solver.&lt;/p>
 &lt;/li>
 &lt;li>
 &lt;p>&lt;a href="https://github.com/ciaranm/glasgow-subgraph-solver">The Glasgow Subgraph
@@ -87,7 +82,12 @@ Solver&lt;/a>
 developed my &lt;a href="https://ciaranm.github.io/">Ciaran McCreesh&lt;/a> that
 includes support for proof logging.&lt;/p>
 &lt;/li>
-&lt;/ul></description></item><item><title>Setting up Python notebooks locally for Machine Learning</title><link>https://justinkennethpearson.github.io/post/2022/01/28/setting-up-python-notebooks-locally-for-machine-learning/</link><pubDate>Fri, 28 Jan 2022 00:00:00 +0000</pubDate><guid>https://justinkennethpearson.github.io/post/2022/01/28/setting-up-python-notebooks-locally-for-machine-learning/</guid><description>&lt;p>This is mainly for students on my machine learning course. I use a lot
+&lt;li>
+&lt;p>A C++ version
+&lt;a href="https://bitbucket.org/constraint-programming/fzn-minicpp/src/main/">minicpp&lt;/a>
+of &lt;a href="http://www.minicp.org/">MiniCP&lt;/a> developed by &lt;a href="https://ldm.engr.uconn.edu/">Laurent
+Michel&lt;/a> and his students. It is mainly
+used for research. It has a FlatZinc parser.&lt;/p></description></item><item><title>Setting up Python notebooks locally for Machine Learning</title><link>https://justinkennethpearson.github.io/post/2022/01/28/setting-up-python-notebooks-locally-for-machine-learning/</link><pubDate>Fri, 28 Jan 2022 00:00:00 +0000</pubDate><guid>https://justinkennethpearson.github.io/post/2022/01/28/setting-up-python-notebooks-locally-for-machine-learning/</guid><description>&lt;p>This is mainly for students on my machine learning course. I use a lot
 of Python notebooks either for examples from lectures or for
 assignments. While there are many options for hosting python notebooks
 for free remotely, but I prefer to do things locally. If you wish to do
