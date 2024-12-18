@@ -2,11 +2,11 @@
 <script id=MathJax-script async src=https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js></script><script>MathJax={tex:{displayMath:[["\\[","\\]"],["$$","$$"]],inlineMath:[["\\(","\\)"]]}}</script></head><body class="d-flex flex-column h-100"><header class="container d-flex flex-wrap align-items-center justify-content-center pt-3 pb-5 pe-0 ps-lg-3 ps-0"><div class="d-flex align-items-center mb-lg-0 me-lg-auto"><a class="navbar-brand me-0" href=../../../../../>Justin Pearson</a><br></div><div><ul id=main-nav role=navigaion class="nav col-12 col-lg-auto mb-2 justify-content-center mb-lg-0"><li class=ms-2><a class="nav-link fw-bolder text-uppercase pe-0" href=../../../../../ title>Home</a></li><li class=ms-2><a class="nav-link fw-bolder text-uppercase pe-0" href=../../../../../pubs/ title>Publications</a></li><li class=ms-2><a class="nav-link fw-bolder text-uppercase pe-0" href=../../../../../teaching/ title>Teaching</a></li><li class=ms-2><a class="nav-link fw-bolder text-uppercase pe-0" href=../../../../../posts/ title>Posts</a></li><li class=ms-2><a class="nav-link fw-bolder text-uppercase pe-0" href=../../../../../links/ title>links</a></li><li class=ms-2><a class="nav-link fw-bolder text-uppercase pe-0" href=../../../../../music/ title>Music</a></li></ul></div></header><main class=container><article class="post-item row mb-5"><header class="post-title col-12 col-lg-10 offset-lg-2"><h2><a class="text-uppercase inv-link" href=../../../../../post/2021/03/22/breadth-first-search-in-haskell/>Breadth First Search in Haskell</a></h2></header><aside class="post-aside col-12 col-lg-2 pr-5 pt-2 lh-lg"><ul class=list-unstyled><li><h4 class=text-uppercase>March 22, 2021</h4></li><li><a class=post-tag href=https://justinkennethpearson.github.io/tags/teaching-material>Teaching Material</a>,
 <a class=post-tag href=https://justinkennethpearson.github.io/tags/haskell>Haskell</a></li></ul></aside><div class="col-12 col-lg-10"><p><a href=https://www.haskell.org/>Haskell</a> is a really great programming
 language. It is elegant, the type system is beautiful, and nowadays
-the compiler is quite good. I've been using functional languages off
+the compiler is quite good. I&rsquo;ve been using functional languages off
 and on for more than 30 years. I studied at the <a href=https://www.kent.ac.uk/>University of
 Kent</a> which is the home
 <a href=https://www.cs.kent.ac.uk/people/staff/dat/miranda/>Miranda</a> which
-is a precursor to Haskell. All this is a warning. I don't use
+is a precursor to Haskell. All this is a warning. I don&rsquo;t use
 Haskell that much. The language has changed a lot since I last used it
 regularly, and so my code might not be optimal or idiomatic Haskell.</p><p>On some of our programs we teach the first year students
 Haskell. This includes their first algorithms course where they learn
@@ -18,18 +18,18 @@ standard library and what cool libraries there are out there. One
 thing that always seems to be true is that almost every problem can be
 solved with Monads.</p><p>There is a danger when trying to get things
 working in Haskell that you start googling. You find some
-Stack Exchange discussion where somebody says: "Your problem can be
+Stack Exchange discussion where somebody says: &ldquo;Your problem can be
 solved if you use multi-coloured Frobenius bi-applicative monad
 transformers. Here is a short piece of code that solves your problem,
-a link to a package and some academic paper, but don't forget to
+a link to a package and some academic paper, but don&rsquo;t forget to
 enable the Haskell extension that allows you to have colour coded
-syntax to semantic transformers." You then spend a
+syntax to semantic transformers.&rdquo; You then spend a
 good couple of days going down the rabbit hole of trying to understand
 everything. You eventually write your beautiful piece of code that
 nobody can understand unless they spend another two days trying to
 understand how everything works. Some people have trouble accepting
 the fact that verbose maintainable code is much better than short
-elegant one liners. As you can see in this post, I've made a rather
+elegant one liners. As you can see in this post, I&rsquo;ve made a rather
 simple piece of code more and more complicated and eventually ended up
 using monad transformers, but I have tried to stick to the standard
 Haskell libraries.</p><p>Some algorithms do not have natural functional implementations, and
@@ -46,7 +46,7 @@ live with the overhead. Even so, there are some interesting challenges
 especially when you want to list all breadth first traversals of a
 graph, rather than just one.</p><p>Warning my Haskell is somewhat rusty, and if you have any suggestions
 or improvements to the code please contact me.</p><p>We will assume that we have a <code>Queue</code> and a <code>Graph</code> library with
-suitable functions (at the end of the post, I'll give a simple
+suitable functions (at the end of the post, I&rsquo;ll give a simple
 implementation of these modules).</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-haskell data-lang=haskell><span style=display:flex><span><span style=color:#66d9ef>import</span> <span style=color:#66d9ef>qualified</span> Queue_Seq <span style=color:#66d9ef>as</span> Q
 </span></span><span style=display:flex><span><span style=color:#66d9ef>import</span> <span style=color:#66d9ef>qualified</span>  Graph_Simple <span style=color:#66d9ef>as</span> G
 </span></span><span style=display:flex><span>
@@ -231,7 +231,7 @@ write the correct function. But this is built into Haskell via the
 List monad. For example:</p><pre tabindex=0><code>Prelude&gt; let f = \x -&gt; [x, (-1)*x ] Prelude&gt; [1,2]
 &gt;&gt;= f [1,-1,2,-2] 
 </code></pre><p>There are a lot of tutorials on using Moands and
-the List monad, and I'm not going to repeat things here.</p><p>Before we get to non-determinism we are going to refactor our code a
+the List monad, and I&rsquo;m not going to repeat things here.</p><p>Before we get to non-determinism we are going to refactor our code a
 bit. We need a type to represent the current state of a compuation.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-haskell data-lang=haskell><span style=display:flex><span><span style=color:#66d9ef>type</span> <span style=color:#66d9ef>BFS_State</span> a <span style=color:#f92672>=</span> ( (a <span style=color:#f92672>-&gt;</span> [a] ) ,  (<span style=color:#66d9ef>Q</span><span style=color:#f92672>.</span><span style=color:#66d9ef>Queue</span> a), (<span style=color:#66d9ef>Path</span> a) )  
 </span></span></code></pre></div><p>Then <code>next_path</code> dequeues a node from the <code>current_queue</code> and
 constructs the next path.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-haskell data-lang=haskell><span style=display:flex><span><span style=color:#a6e22e>next_path</span> <span style=color:#f92672>::</span> (<span style=color:#66d9ef>Ord</span> a) <span style=color:#f92672>=&gt;</span>  <span style=color:#66d9ef>BFS_State</span> a <span style=color:#f92672>-&gt;</span> <span style=color:#66d9ef>BFS_State</span> a
@@ -315,11 +315,11 @@ some code that looks like:</p><div class=highlight><pre tabindex=0 style=color:#
 </span></span><span style=display:flex><span>          partition state_queue_empty next_paths
 </span></span><span style=display:flex><span>    <span style=color:#66d9ef>in</span>
 </span></span><span style=display:flex><span>      (bfs_all_paths_loop non_empty_queues) <span style=color:#f92672>++</span> empty_queues
-</span></span></code></pre></div><p>The use of <code>++</code> might be inefficient. I don't know without some
+</span></span></code></pre></div><p>The use of <code>++</code> might be inefficient. I don&rsquo;t know without some
 profiling and in a lazy complied language it is hard to know. If it is
 inefficient then you should probably use difference lists. I spent a
 long time trying to come up with a nice short equivalent formulation
-using the <code>do</code> notation. I'm not sure if there is. If anybody finds
+using the <code>do</code> notation. I&rsquo;m not sure if there is. If anybody finds
 one, then please contact me. Again you will need to wrap the loop up
 in a more user friendly way.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-haskell data-lang=haskell><span style=display:flex><span><span style=color:#a6e22e>bfs_with_all_paths</span>  g start_node <span style=color:#f92672>=</span>
 </span></span><span style=display:flex><span>  <span style=color:#66d9ef>let</span>
@@ -333,7 +333,7 @@ in a more user friendly way.</p><div class=highlight><pre tabindex=0 style=color
 </span></span><span style=display:flex><span>    map (<span style=color:#a6e22e>\</span>(a,b,c) <span style=color:#f92672>-&gt;</span> c) state_list
 </span></span></code></pre></div><h2 id=using-the-writer-monad>Using the writer monad.</h2><p>With our above code we are iterating until a fixed point. States
 with an empty queue are saved as completed path. The above code mixes
-these together. Haskell's Writer monad is designed for computations
+these together. Haskell&rsquo;s Writer monad is designed for computations
 where you also want to log information. We can use this to record the
 complete path. Again there are lots of tutorials on the writer monad,
 and this post has gone on far to long. So here is the code.</p><p>The type deceleration</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-haskell data-lang=haskell><span style=display:flex><span><span style=color:#a6e22e>bfs_all_paths_loop_writer</span> <span style=color:#f92672>::</span> (<span style=color:#66d9ef>Ord</span> a) <span style=color:#f92672>=&gt;</span>
@@ -405,7 +405,7 @@ still understood how modules worked.</p><p>First <code>Graph_Simple.hs</code></p
 </span></span><span style=display:flex><span>    [ y <span style=color:#f92672>|</span> (x,y) <span style=color:#f92672>&lt;-</span> <span style=color:#66d9ef>S</span><span style=color:#f92672>.</span>toList (edges) , x <span style=color:#f92672>==</span> n]
 </span></span><span style=display:flex><span>  <span style=color:#66d9ef>else</span>
 </span></span><span style=display:flex><span>    <span style=color:#a6e22e>error</span> <span style=color:#e6db74>&#34;Node not a member of the graph.&#34;</span>
-</span></span></code></pre></div><p>Then <code>Queue_Seq.hs</code> that implements queues using Haskell's sequence
+</span></span></code></pre></div><p>Then <code>Queue_Seq.hs</code> that implements queues using Haskell&rsquo;s sequence
 data type.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-haskell data-lang=haskell><span style=display:flex><span><span style=color:#66d9ef>module</span> Queue_Seq (<span style=color:#a6e22e>empty</span>,
 </span></span><span style=display:flex><span>                  <span style=color:#a6e22e>singelton</span>,
 </span></span><span style=display:flex><span>                  <span style=color:#a6e22e>enqueue</span>,

@@ -72,11 +72,11 @@ type:</p><pre tabindex=0><code>random (mkStdGen 21) :: (Bool, StdGen)
 </span></span></code></pre></div><p>We are using the <code>state</code> function from
 <a href=https://hackage.haskell.org/package/mtl>mtl</a>. This has the type <code>(s -> (a, s)) -> m a</code>. It takes a function, such as <code>random</code> and puts it
 into the Monad. If you are using a 2021 version of <code>mtl</code> then doing
-things like <code>State $ random</code> just won't work.</p><p>To really understand how a monad works you need to understand how the
+things like <code>State $ random</code> just won&rsquo;t work.</p><p>To really understand how a monad works you need to understand how the
 bind operator <code>(=&lt;&lt;) :: Monad m => (a -> m b) -> m a -> m b</code> actually works. You
 will find plenty of tutorials on the web. The reason that you want to
 use the state monad is to avoid all the plumbing and write clean
-looking code using the <code>do</code> notation.</p><p>Let's write two equivalent functions:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-haskell data-lang=haskell><span style=display:flex><span><span style=color:#a6e22e>oneCoin</span> <span style=color:#f92672>::</span> <span style=color:#66d9ef>State</span> <span style=color:#66d9ef>StdGen</span> <span style=color:#66d9ef>Bool</span>
+looking code using the <code>do</code> notation.</p><p>Let&rsquo;s write two equivalent functions:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-haskell data-lang=haskell><span style=display:flex><span><span style=color:#a6e22e>oneCoin</span> <span style=color:#f92672>::</span> <span style=color:#66d9ef>State</span> <span style=color:#66d9ef>StdGen</span> <span style=color:#66d9ef>Bool</span>
 </span></span><span style=display:flex><span><span style=color:#a6e22e>oneCoin</span> <span style=color:#f92672>=</span>
 </span></span><span style=display:flex><span>  <span style=color:#66d9ef>do</span>
 </span></span><span style=display:flex><span>    v <span style=color:#f92672>&lt;-</span> randomSt
@@ -103,9 +103,9 @@ with</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-colo
 </span></span><span style=display:flex><span>    rest <span style=color:#f92672>&lt;-</span> coinList (n <span style=color:#f92672>-</span> <span style=color:#ae81ff>1</span>)  
 </span></span><span style=display:flex><span>    return (a <span style=color:#66d9ef>:</span> rest)
 </span></span></code></pre></div><p>The state type has two components, a state <code>StdGen</code> and the return
-type <code>[Bool]</code> which is a list of Boolean values. If you don't trust
+type <code>[Bool]</code> which is a list of Boolean values. If you don&rsquo;t trust
 the type system to work everything out then you end up writing some
-pretty convoluted code, which I won't repeat here. The line <code>a &lt;- randomSt</code> extracts a random Boolean value. We know that it is a
+pretty convoluted code, which I won&rsquo;t repeat here. The line <code>a &lt;- randomSt</code> extracts a random Boolean value. We know that it is a
 Boolean value because of the expression <code>return (a : rest)</code> and the
 return type <code>[Bool]</code>. In the expression <code>rest &lt;- coinList (n - 1)</code> we
 extract from expression <code>coinList (n - 1)</code> a value of type <code>[Bool]</code>
@@ -122,7 +122,7 @@ the type <code>[Bool]</code>. On reflection is it no more surprising that in</p>
 <code>(Bool, Bool, Bool)</code>.</p><p>None of this is really magic, but often people first meet the <code>do</code>
 notation when they are doing IO. The problem with examples using <code>IO</code>
 is that everything stays in same type<sup id=fnref:2><a href=#fn:2 class=footnote-ref role=doc-noteref>2</a></sup>. The three coins example is easy
-to grasp, as long as you don't think about it too much. The full type
+to grasp, as long as you don&rsquo;t think about it too much. The full type
 of <code>=&lt;&lt;</code> is <code>Monad m => (a -> m b) -> m a -> m b</code> where <code>a</code> and <code>b</code>
 can be different. You have to live inside the same monad <code>m</code>, but you
 can wrap different types inside the monad. So this means it is

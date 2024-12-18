@@ -8,7 +8,7 @@ who is the main teacher. The course covers various aspects of AI that
 are not concerned with machine learning including heuristic search,
 planning and scheduling, statistical learning, Bayesian networks, AI
 in computer games.&lt;/p></description></item><item><title>Category Theory for Programmers.</title><link>https://justinkennethpearson.github.io/teaching/courses/category_theory/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://justinkennethpearson.github.io/teaching/courses/category_theory/</guid><description>&lt;p>PhD reading course going through &lt;a href="https://github.com/BartoszMilewski">Bartosz
-Milewski&lt;/a>'s book on Category
+Milewski&lt;/a>&amp;rsquo;s book on Category
 theory. Mostly organised by &lt;a href="https://www.uu.se/kontakt-och-organisation/personal?query=N19-2365">Nikolaus
 Huber&lt;/a>.&lt;/p>
 &lt;p>Information can be found on:&lt;/p>
@@ -23,16 +23,16 @@ Huber&lt;/a>.&lt;/p>
 theory.&lt;/p>
 &lt;/li>
 &lt;li>
-&lt;p>Tom Leinster's excellent &lt;a href="https://www.maths.ed.ac.uk/~tl/bct/">book&lt;/a>
+&lt;p>Tom Leinster&amp;rsquo;s excellent &lt;a href="https://www.maths.ed.ac.uk/~tl/bct/">book&lt;/a>
 is available free online.&lt;/p>
 &lt;/li>
 &lt;li>
 &lt;p>Some &lt;a href="https://arxiv.org/abs/1910.05172">notes&lt;/a> that might be
-useful. If you don't read the notes, then a look at the references,
+useful. If you don&amp;rsquo;t read the notes, then a look at the references,
 which has pointers to a lot of good resources.&lt;/p>
 &lt;/li>
 &lt;li>
-&lt;p>&lt;a href="http://www.math.jhu.edu/~eriehl/">Emily Riehl&lt;/a>'s
+&lt;p>&lt;a href="http://www.math.jhu.edu/~eriehl/">Emily Riehl&lt;/a>&amp;rsquo;s
 &lt;a href="http://www.math.jhu.edu/~eriehl/context.pdf">Book&lt;/a> Category Theory
 in Context contains lots of examples of common constructions in
 category theory. Some of the examples might require some background
@@ -46,7 +46,7 @@ Syllabus&lt;/a>&lt;/li>
 &lt;/ul>
 &lt;p>This is a second course in algorithms that topics such as&lt;/p>
 &lt;ul>
-&lt;li>solving recursive equations that describe the algorithm's complexity&lt;/li>
+&lt;li>solving recursive equations that describe the algorithm&amp;rsquo;s complexity&lt;/li>
 &lt;li>dynamic programming&lt;/li>
 &lt;li>greedy algorithms&lt;/li>
 &lt;li>graph algorithms: minimum spanning trees, shortest paths&lt;/li>
