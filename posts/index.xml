@@ -39,7 +39,12 @@ Kent&lt;/a> which is the home
 &lt;a href="https://www.cs.kent.ac.uk/people/staff/dat/miranda/">Miranda&lt;/a> which
 is a precursor to Haskell. All this is a warning. I don&amp;rsquo;t use
 Haskell that much. The language has changed a lot since I last used it
-regularly, and so my code might not be optimal or idiomatic Haskell.&lt;/p></description></item><item><title>Creating and using Python Virtual Environments</title><link>https://justinkennethpearson.github.io/post/2020/12/10/creating-and-using-python-virtual-environments/</link><pubDate>Thu, 10 Dec 2020 13:51:33 +0100</pubDate><guid>https://justinkennethpearson.github.io/post/2020/12/10/creating-and-using-python-virtual-environments/</guid><description>&lt;p>In a lot of my courses I encourage students to use python virtual
+regularly, and so my code might not be optimal or idiomatic Haskell.&lt;/p></description></item><item><title>Naive Bayes for Spam Classification</title><link>https://justinkennethpearson.github.io/post/2020/12/22/naive-bayes-for-spam-classification/</link><pubDate>Tue, 22 Dec 2020 09:53:02 +0100</pubDate><guid>https://justinkennethpearson.github.io/post/2020/12/22/naive-bayes-for-spam-classification/</guid><description>&lt;p>There are a lot of tutorials and youtube videos out there on using
+Naive Bayes for document classification. None of these tutorials are
+wrong, but they often hide some subtle points that if you think too
+hard about you will get confused. In this posts I want to explain what
+is really going on in Naive Bayes for spam classification.&lt;/p>
+&lt;p>This post assumes that you are already familiar with &lt;a href="https://en.wikipedia.org/wiki/Bayes%27_theorem">Bayes&amp;rsquo; theorem&lt;/a>.&lt;/p></description></item><item><title>Creating and using Python Virtual Environments</title><link>https://justinkennethpearson.github.io/post/2020/12/10/creating-and-using-python-virtual-environments/</link><pubDate>Thu, 10 Dec 2020 13:51:33 +0100</pubDate><guid>https://justinkennethpearson.github.io/post/2020/12/10/creating-and-using-python-virtual-environments/</guid><description>&lt;p>In a lot of my courses I encourage students to use python virtual
 environments. Virtual environments are a great way of making sure
 that you have the correct version of packages installed.
 This is very short cheat sheet on how to set them up. I

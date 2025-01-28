@@ -1,0 +1,216 @@
+<!doctype html><html lang=en-uk class=h-100><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><link rel=stylesheet href=https://justinkennethpearson.github.io//css/main.css><title>Naive Bayes for Spam Classification | Justin Pearson</title>
+<script id=MathJax-script async src=https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js></script><script>MathJax={tex:{displayMath:[["\\[","\\]"],["$$","$$"]],inlineMath:[["\\(","\\)"]]}}</script></head><body class="d-flex flex-column h-100"><header class="container d-flex flex-wrap align-items-center justify-content-center pt-3 pb-5 pe-0 ps-lg-3 ps-0"><div class="d-flex align-items-center mb-lg-0 me-lg-auto"><a class="navbar-brand me-0" href=../../../../../>Justin Pearson</a><br></div><div><ul id=main-nav role=navigaion class="nav col-12 col-lg-auto mb-2 justify-content-center mb-lg-0"><li class=ms-2><a class="nav-link fw-bolder text-uppercase pe-0" href=../../../../../ title>Home</a></li><li class=ms-2><a class="nav-link fw-bolder text-uppercase pe-0" href=../../../../../pubs/ title>Publications</a></li><li class=ms-2><a class="nav-link fw-bolder text-uppercase pe-0" href=../../../../../teaching/ title>Teaching</a></li><li class=ms-2><a class="nav-link fw-bolder text-uppercase pe-0" href=../../../../../posts/ title>Posts</a></li><li class=ms-2><a class="nav-link fw-bolder text-uppercase pe-0" href=../../../../../links/ title>links</a></li><li class=ms-2><a class="nav-link fw-bolder text-uppercase pe-0" href=../../../../../music/ title>Music</a></li></ul></div></header><main class=container><article class="post-item row mb-5"><header class="post-title col-12 col-lg-10 offset-lg-2"><h2><a class="text-uppercase inv-link" href=../../../../../post/2020/12/22/naive-bayes-for-spam-classification/>Naive Bayes for Spam Classification</a></h2></header><aside class="post-aside col-12 col-lg-2 pr-5 pt-2 lh-lg"><ul class=list-unstyled><li><h4 class=text-uppercase>December 22, 2020</h4></li></ul></aside><div class="col-12 col-lg-10"><p>There are a lot of tutorials and youtube videos out there on using
+Naive Bayes for document classification. None of these tutorials are
+wrong, but they often hide some subtle points that if you think too
+hard about you will get confused. In this posts I want to explain what
+is really going on in Naive Bayes for spam classification.</p><p>This post assumes that you are already familiar with <a href=https://en.wikipedia.org/wiki/Bayes%27_theorem>Bayes&rsquo; theorem</a>.</p><p>Rather foolishly I did all the calculations in the post by hand. If
+you find any errors the please report them to me.</p><h2 id=our-data-set>Our data set</h2><p>To make things more concrete we will work on a very small data set
+where we can do the calculations directly. We are classifying
+micro-tweets of exactly 3 words. Our training set is as
+follows. \(S\) indicates that a message is spam and \(\overline{S}\)
+indicates that a message is not spam.</p><table><thead><tr><th>Number</th><th>Tweet</th><th>Spam (\(S\) or \(\overline{S}\))</th></tr></thead><tbody><tr><td>1</td><td>money aardvark boondoggle</td><td>\(S\)</td></tr><tr><td>2</td><td>money money money</td><td>\(S\)</td></tr><tr><td>3</td><td>money money world</td><td>\(S\)</td></tr><tr><td>4</td><td>money world world</td><td>\(S\)</td></tr><tr><td>5</td><td>viagra money back</td><td>\(S\)</td></tr><tr><td>6</td><td>viagra heart honey</td><td>\(S\)</td></tr><tr><td>7</td><td>aardvark boondoggle world</td><td>\(\overline{S}\) (not spam)</td></tr><tr><td>8</td><td>honey honey honey</td><td>\(\overline{S}\) (not spam)</td></tr><tr><td>9</td><td>viagra heart money</td><td>\(\overline{S}\) (not spam)</td></tr><tr><td>10</td><td>money honey now</td><td>\(\overline{S}\) (not spam)</td></tr></tbody></table><h2 id=background-classifying-with-only-one-word>Background: Classifying with only one word.</h2><p>As a warm up let&rsquo;s just build a classifier that uses one particular
+word \(w = \mathrm{money}\).</p>$$
+P(S|w) = \frac{P(w|S)P(S)}{P(w)}
+$$<p>\(P(S|w)\) is the even that an email is Spam given that the word \(w\)
+occurs in it. Using Bayes theorem we can calculate the probability
+that a message containing the word \(w\) is spam. We can estimate the
+values \(P(w|S)\), \(P(S)\) and \(P(w)\) from out data set.</p>$$
+P(S) = \frac{\mathrm{number\ spam}}{\mathrm{total\ messages}} = \frac{6}{10}
+$$$$
+P(\mathrm{money}|S) = \frac{5}{6}
+$$$$
+P(\mathrm{money}) = \frac{7}{10}
+$$$$ P(S|\mathrm{money}) =
+\frac{P(w|S)P(S)}{P(w)} = \frac{\frac{5}{6}\frac{6}{10}}{\frac{7}{10}}
+= \frac{5}{10}\frac{10}{7} = \frac{5}{7} \approx 0.71 $$$$
+P(\mathrm{money}) = P(\mathrm{money}|S)P(S) +
+P(\mathrm{money}|\overline{S})P(\overline{S}) $$$$
+P(\mathrm{money})= \frac{5}{6}\frac{6}{10} + \frac{2}{4}\frac{4}{10} =
+\frac{7}{10} $$<h2 id=first-pitfall-estimating-the-probabilities>First Pitfall: Estimating the probabilities</h2><p>So how to we estimate the probabilities \(P(w|S)\) , \(P(S)\) and \(P(w)\)?
+What do they really mean? The probabilities \(P(S)\) and \(P(\overline{S}\)) are
+unambiguous. They are just the probability that a tweet is spam or
+not. But \(P(w|S)\), \(P(w|\overline{S})\), and \(P(w)\) can mean different things
+depending exactly which model we use to calculate the probabilities.</p><p>There are two models:</p><ul><li><p>(A): To calculate \(P(\mathrm{money}|S)\). There are 6 messages that
+are spam and in those 6 messages 5 of them (1,2,3,4,5) contain the word money so
+\(P(\mathrm{money}|S) = 5/6\), and of the 10 messages 7 of them
+(1,2,3,4,5,9,10)contain the word &lsquo;money&rsquo; so \(P(\mathrm{money}) =
+7/10\). This is exactly what we did above.</p></li><li>$$P(\mathrm{money}) = 10/30.$$$$
+P(\mathrm{money} | S) = \frac{8}{3 \times 6} = \frac{8}{18} =
+\frac{4}{9} $$$$ P(S|\mathrm{money}) =
+\frac{P(\mathrm{money}|S)P(S)}{P(\mathrm{money})} =
+\frac{{\frac{8}{3 \times 6}\times \frac{6}{10}}}{ \frac{10}{30}} =
+\frac{8}{10} $$<p>It seems that if spammers are prone to repeat words in their
+message then this increases the probability that a message
+containing that word is spam.</p></li></ul><p>So how do you calculate the probability that the message &lsquo;money money
+mammon&rsquo; is spam? In model (A) it does not matter how many times &lsquo;money&rsquo;
+appears in a message: you only count the number of messages &lsquo;money&rsquo;
+appears in. While in model (B) there is some weighting of the number
+of times that a word appears. But to calculate
+\(P(S|\mathrm{money}^2)\) (where is short hand for &lsquo;money appearing
+twice) we have calculate \(P(\mathrm{money}^2|S)\). How you do this
+depends a bit on your model and the assumptions underlying the
+model. We&rsquo;ll get to that later.</p><h2 id=take-home-message>Take home message</h2><p>So the first take home message is be careful how you count the words
+and how you calculate the probabilities. If you confuse model (A) and
+model (B) while writing your code you will get strange answers (as I
+did at one point).</p><h2 id=naive-bayes-first-version>Naive Bayes: first version</h2><p>We are going to use model (A). That is we going to ignore how many
+times a word appears in a message. We are only interested if the word
+appears on the message or not.
+One word is not going to much of a spam classifier. Even in our little
+data set above, the word &lsquo;money&rsquo; can appear in spam and non spam
+messages. We will get a better classifier if we take into account more
+words. Our data set is quite small and for each word we can count the
+number of times it appears in a spam tweet and the number of times it
+appears in a non-spam tweet.</p><table><thead><tr><th>Word</th><th>occurrences in spam</th><th>occurrences in non spam</th></tr></thead><tbody><tr><td>\(w_1 = \mathrm{money}\)</td><td>5</td><td>2</td></tr><tr><td>\(w_2 = \mathrm{world}\)</td><td>2</td><td>1</td></tr><tr><td>\(w_3 = \mathrm{viagra}\)</td><td>2</td><td>1</td></tr><tr><td>\(w_4 = \mathrm{aardvark}\)</td><td>1</td><td>1</td></tr><tr><td>\(w_5 = \mathrm{heart}\)</td><td>1</td><td>1</td></tr><tr><td>\(w_6 = \mathrm{boondoggle}\)</td><td>1</td><td>1</td></tr><tr><td>\(w_7 = \mathrm{honey}\)</td><td>1</td><td>2</td></tr><tr><td>\(w_8 = \mathrm{back}\)</td><td>1</td><td>0</td></tr><tr><td>\(w_9 = \mathrm{now}\)</td><td>0</td><td>1</td></tr></tbody></table><p>You can turn these counts into probabilities, and thus you can
+calculate quantities like \(P(\mathrm{money}|S) = 5/6\),
+\(P(\mathrm{money}|\overline{S}) = 2/4\).</p>$$P(\mathrm{viagra} \land \mathrm{money} \land
+\mathrm{boondoggle}|S)$$$$\mathrm{viagra} \land \mathrm{money}
+\land \mathrm{boondoggle}$$<p>is the event that the words &lsquo;viagra&rsquo;,
+&lsquo;money&rsquo; and &lsquo;boondoggle&rsquo; appears in a message.</p><h2 id=the-naive-in-naive-bayes>The Naive in Naive Bayes</h2>$$
+P(w_1 \land w_2 \land \cdots \land w_n | S) = P(w_1|S)P(w_1|S) \cdots
+P(w_n|S)
+$$$$
+P(w_1 \land w_2 \land \cdots \land w_n | \overline{S}) = P(w_1|\overline{S})P(w_1|\overline{S}) \cdots
+P(w_n|\overline{S})
+$$$$
+P(w_1 \cdots w_n) = \prod_{1\leq i \leq n} P(w_i)
+$$<h2 id=take-home-message-1>Take home message</h2>$$P(w_1 \land w_2
+\land \cdots \land w_n | S) =
+\prod_{i=1}^n P(w_i|S)$$$$P(w_1 \land w_2 \land \cdots \land w_n | S) =
+\prod_{i=1}^n P(w_i|S)$$$$
+P(w_1 \cdots w_n|S)P(S) + P(w_1 \cdots w_n|\overline{S})P(\overline{S})
+$$<p>The independence assumption is why Naive Bayes is referred to as
+naive. Although this model could be improved. It seems that the
+probability of one word appearing in a message should not be
+independent of another word. If a spammer write &lsquo;money&rsquo; then he is
+likely to also include &lsquo;viagra&rsquo; in the message. Even so, assuming
+independence works very well in practice.</p><h2 id=calculating-the-spam-probability>Calculating the spam probability.</h2>$$ \frac{
+P(\mathrm{viagra} \land \mathrm{money} \land \mathrm{boondoggle}|S)
+P(S)}{P(\mathrm{viagra} \land \mathrm{money} \land
+\mathrm{boondoggle})} $$$$ \frac{
+P(\mathrm{viagra}|S)P(\mathrm{money}|S)P(\mathrm{boondoggle}|S)P(S)}
+{P(\mathrm{viagra} \land \mathrm{money} \land \mathrm{boondoggle})} $$$$P(\mathrm{viagra})P(\mathrm{money})P(\mathrm{boondoggle})$$<p>is the wrong answer.</p><p>So instead we get that \(P(\mathrm{viagra} \land \mathrm{money} \land
+\mathrm{boondoggle})\) equals
+\(P(\mathrm{viagra} \land \mathrm{money} \land
+\mathrm{boondoggle}|S)P(S)\) plus \(P(\mathrm{viagra} \land \mathrm{money} \land
+\mathrm{boondoggle}|\overline{S})P(\overline{S})\).</p><p>The by the independence assumption
+\(P(\mathrm{viagra} \land \mathrm{money} \land \mathrm{boondoggle}|S)\) equals</p>$$
+P(\mathrm{viagra}|S)P(\mathrm{money}|S)P(\mathrm{boondoggle}|S) =
+\frac{2}{6}\frac{5}{6}\frac{1}{6} = \frac{5}{108}
+$$$$ \left(\frac{2}{6}\cdot \frac{5}{6}\cdot
+\frac{1}{6}\right)\frac{6}{10} + \left(\frac{1}{4}\cdot
+\frac{2}{4}\cdot \frac{1}{4}\right)\frac{4}{10} \approx 0.08
+$$<p>So \(P(S|\mathrm{viagra} \land
+\mathrm{money} \land \mathrm{boondoggle})\) equals</p>$$
+\frac{\frac{5}{108}\frac{6}{10}}{0.08} \approx 0.35
+$$<h2 id=not-calculating-the-whole-probability>Not calculating the whole probability.</h2><p>When implementing the spam filter we do not actually need to calculate
+the denominators. We just compare the expressions
+\(P(\mathrm{viagra}|S)P(\mathrm{money}|S)P(\mathrm{boondoggle}|S)P(S)\)
+and
+\(P(\mathrm{viagra}|\overline{S})P(\mathrm{money}|\overline{S})P(\mathrm{boondoggle}|\overline{S})P(\overline{S})\)
+and see which one is bigger. This is also important because some of
+the numbers start getting smaller and smaller and you end up with
+floating point underflow errors. If the numbers get too small then you
+have to calculate with the logarithm of the probability and do
+additions rather than subtraction.</p><h2 id=laplacian-smoothing>Laplacian Smoothing</h2>$$
+\frac{P(\mathrm{now}|S)P(\mathrm{money}|S)P(\mathrm{viagra}|S)P(S)}{P(\mathrm{now}\land\mathrm{money}\land\mathrm{viagra})}
+$$$$\frac{0 \cdot \frac{5}{6} \cdot
+\frac{2}{6}\frac{6}{10}}{P(\mathrm{now}\land\mathrm{money}\land\mathrm{viagra})}
+$$<p>So even though the words &lsquo;money&rsquo; and &lsquo;viagra&rsquo; are pretty good
+indicators of a message being spam we get probability 0.</p>$$
+\frac{0 + 1}{6 + 1}
+$$$$
+\frac{0}{6}
+$$<p>If you had a word that appeared in all 6 of the spam tweets then you
+would get an estimate \(\frac{6+1}{6+1}\) which would be \(1\).</p><p>I leave it an exercise to work out the correct thing to do in model
+(B).</p><h2 id=feature-modelling>Feature Modelling</h2><p>All most all machine learning algorithms require numbers and vectors as
+inputs. Our Naive Bayes classifier does not really work with words,
+but feature vectors. There are different possible models, but we use
+something similar to model (A). First we take our data set and find
+the first \(n\) most popular words. The most popular word a data set
+consisting of English messages is typically the word &rsquo;the&rsquo;. You can
+improve things by filtering out the most popular words that don&rsquo;t
+contribute much a message being (referred to as stop words). We will
+not worry about that here. But a word like &rsquo;the&rsquo; is equally likely to
+appear in a spam tweet or a non spam tweet, so it is better to ignore
+it.</p>$$ f = (f_1, \ldots ,
+f_i, \ldots, f_n) $$<p>Where \(f_i\) is \(1\) if the \(i\)th most popular word
+\(w_i\) occurs in the message and \(0\) otherwise.</p><p>It is easy to write a function takes a message and turns it into our
+feature vector. Given our training set we can estimate two
+probabilities for our two classes \(S\) and \(\overline{S}\), \(P(w_i|S)\), \(P(\overline{w}_i|S)\), \(P(w_i| \overline{S})\) and \(P(\overline{w}_i |
+\overline{S})\), where \(w_i\) is the even that word \(i\) occurs in the
+message and \(\overline{w}_i\) is the event that word \(i\) does not occur
+in the message.</p>$$ f = (1,0,0,1,0,0,0,0,1) $$$$
+w_1\overline{w}_2\overline{w}_3w_4\overline{w}_5\overline{w}_6\overline{w}_7w_8
+$$$$
+\frac{P(w_1\overline{w}_2\overline{w}_3w_4\overline{w}_5\overline{w}_6\overline{w}_7\overline{w}_8|S)P(S)}{P(w_1\overline{w}_2\overline{w}_3w_4\overline{w}_5\overline{w}_6\overline{w}_7\overline{w}_8
+w_9)}
+$$<p>Calculating
+\(P(w_1\overline{w}_2\overline{w}_3w_4\overline{w}_5\overline{w}_6\overline{w}_7\overline{w}_8|S)\)
+is easily done by the independence assumption. It is the product of
+the terms
+\(P(w_1|S)\),\(P(\overline{w}_2|S)\),\(P(\overline{w}_3|S)\),\(P(w_4|S)\),\(P(\overline{w}_5|S)\),\(P(\overline{w}_6|S)\),\(P(\overline{w}_7|S)\)
+and \(P(\overline{w}_8|S)\). All these values are easily estimated from
+our data set. For example \(P(\overline{w}_3|S)\) is the probability
+that the word &lsquo;money&rsquo; does not appear in a spam tweet. We had 6 spam
+tweets and 5 of them contained the word money and so we get that
+\(P(\overline{w}_3|S)\) equals \(1/6\).</p><h2 id=model-a-and-feature-vectors>Model (A) and Feature Vectors</h2>$$
+\frac{P(w_1|S)(w_4|S)P(w_9|S)P(S)}{P(w_1\land w_w \land w_3)}
+$$<p>since \(w_1\) is &lsquo;money&rsquo;, \(w_4\) is &lsquo;aardvark&rsquo; and \(w_9\) is &rsquo;now&rsquo;. We
+are throwing away information about the words that do not occur in the
+tweet. Does this matter? More importantly is this calculation
+incorrect.</p><p>To simply things imagine that we only had two words in our feature
+vector \(W_1\) and \(W_2\). Then given a message there are 4 possible
+atomic events:</p>$$ W_1 W_2, W_1 \overline{W}_2, \overline{W}_1 W_2, \overline{W}_1
+\overline{W_2}$$$$
+P( W_1 W_2 \lor W_1\overline{W}_2|S)
+$$$$
+P(W_1|S)P(W_2|S) +
+P(W_1|S)P(\overline{W}_2|S)$$$$P(W_1|S)(P(W_2|S) +
+P(\overline{W}_2|S))
+$$<p>and since \(P(W_2|S) + P(\overline{W}_2|S)\) equals \(1\) we get
+\(P(W_1|S)\).</p><p>So if we ignore any information about \(W_2\) then we get a factor of
+\(1\). If we use what information we have about \(W_2\) then we get a
+better estimate for the probability. You can show that the same
+applies if you have lots of words in your feature vector. So our
+original model (A) is not wrong, but the feature vector model where we
+take into account if a word appears or not when we are estimating the
+probabilities and gives a better estimate if the word is spam or
+not. Note the above argument depends on our independence assumption
+(the naive in Naive Bayes).</p><p>If you did not look at any words then the only information that you
+would have is \(P(S)\) or \(P(\overline{S})\) as you look at more words in
+your feature you get a better estimate of the probability that the
+message is spam or not.</p><h2 id=model-b-with--multiple-words>Model (B) with multiple words</h2>$$
+P(w^k|S) = P(w|S)^k
+$$<p>That is each occurrence is independent, then we can calculate the
+probability that a message containing the multiple occurrences of a
+word is spam or not, but only if you use model (B) to calculate the
+probabilities. You should not mix up model (A) and model (B). It does
+not make sense in model (A) to ask what the probability of a word
+occurring \(k\) times in a spam message is. We can only ask if a m
+message contains the word or not.</p><p>If you want to take into account multiple words then do not use model
+(A) to calculate your probabilities.</p><h2 id=model-b-with-multiple-words-and-feature-vectors>Model (B) with multiple words and feature vectors.</h2><p>The feature vector approach for model (A) considered vectors where the
+entries are \(0\) or \(1\). Given a feature vector \(f\) the entry \(i\)th
+entry is \(1\) if the word appears in the message and \(0\) otherwise.</p>$$
+(2,0,0,0,0,1,0,0,0)
+$$<p>Again it is not hard to use the information that a word appears \(0\)
+times.</p><h2 id=take-home-messages>Take home messages</h2><ul><li><p>Are you using model (A) or model (B). Don&rsquo;t get them confused,
+especially when you are estimating the probabilities \(P(w_i|S)\) from
+the training data.</p></li><li><p>Are you using the negative information, the information that a word
+does not occur? It does not matter your maths is correct, but you
+are not using all the information that you have.</p></li><li><p>To understand how this is related to other machine learning
+algorithms, then you have to understand that we take a message and
+construct a feature vector. Depending on if you are using model (A)
+or (B) your feature vector either has \(0\) or \(1\) entries or positive
+integer that tells you how many times a word occurs in a
+message. Feature vectors is an example modelling that you often have
+to do in machine learning. Your data set and package does not
+always come as ready packaged as a set of vectors.</p></li><li><p>If you watch some random video on the internet, it is not always
+clear which model they are using when they calculate the
+probabilities.</p></li></ul><p>The documentation to <a href=https://scikit-learn.org/stable/>scikit-learn</a>
+has a nice entry on <a href=https://scikit-learn.org/stable/modules/naive_bayes.html>naive
+Bayes</a>, which
+discusses the various options on modelling as well as links to various
+interesting articles on the different modelling approaches to naive
+Bayes.</p></div></article></main><footer id=footer class="mt-auto mb-2"><section class="container text-end">Powered by <a href=https://gohugo.io>Hugo</a> using the
+<a href=https://github.com/dvladek/hugo-uppsala>hugo-Uppsala</a> theme.
+&nbsp; &copy; Justin Pearson 2021 &ndash;2025.</section></footer><script src=https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js integrity=sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p crossorigin=anonymous></script><script src=https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js integrity=sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF crossorigin=anonymous></script></body></html>
