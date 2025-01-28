@@ -65,7 +65,7 @@ classification, decision trees, clustering), use of established tools
 for machine learning, application of the methods to real data, and
 practical aspects such as dimensionality reduction and cross
 validation. The course also introduces ethical aspects of bias in
-machine learning.&lt;/p></description></item><item><title>Old Posts</title><link>https://justinkennethpearson.github.io/post/2024/11/08/old-posts/</link><pubDate>Fri, 08 Nov 2024 00:00:00 +0000</pubDate><guid>https://justinkennethpearson.github.io/post/2024/11/08/old-posts/</guid><description>Links to old posts</description></item><item><title>Maximizing value yield in wood industry through flexible sawing and product grading based on wane and log shape</title><link>https://justinkennethpearson.github.io/pubs/astra_computers_agriculture_2023/</link><pubDate>Mon, 01 Jan 2024 00:00:00 +0000</pubDate><guid>https://justinkennethpearson.github.io/pubs/astra_computers_agriculture_2023/</guid><description/></item><item><title>Links to CP Solvers</title><link>https://justinkennethpearson.github.io/post/2023/06/14/links-to-cp-solvers/</link><pubDate>Wed, 14 Jun 2023 11:51:34 +0200</pubDate><guid>https://justinkennethpearson.github.io/post/2023/06/14/links-to-cp-solvers/</guid><description>&lt;p>Links to various repositories of some maybe less well known constraint
+machine learning.&lt;/p></description></item><item><title>Maximizing value yield in wood industry through flexible sawing and product grading based on wane and log shape</title><link>https://justinkennethpearson.github.io/pubs/astra_computers_agriculture_2023/</link><pubDate>Mon, 01 Jan 2024 00:00:00 +0000</pubDate><guid>https://justinkennethpearson.github.io/pubs/astra_computers_agriculture_2023/</guid><description/></item><item><title>Links to CP Solvers</title><link>https://justinkennethpearson.github.io/post/2023/06/14/links-to-cp-solvers/</link><pubDate>Wed, 14 Jun 2023 11:51:34 +0200</pubDate><guid>https://justinkennethpearson.github.io/post/2023/06/14/links-to-cp-solvers/</guid><description>&lt;p>Links to various repositories of some maybe less well known constraint
 solvers. This is mainly so that I can find them again.&lt;/p>
 &lt;ul>
 &lt;li>
@@ -88,7 +88,14 @@ includes support for proof logging.&lt;/p>
 &lt;a href="https://bitbucket.org/constraint-programming/fzn-minicpp/src/main/">minicpp&lt;/a>
 of &lt;a href="http://www.minicp.org/">MiniCP&lt;/a> developed by &lt;a href="https://ldm.engr.uconn.edu/">Laurent
 Michel&lt;/a> and his students. It is mainly
-used for research. It has a FlatZinc parser.&lt;/p></description></item><item><title>Setting up Python notebooks locally for Machine Learning</title><link>https://justinkennethpearson.github.io/post/2022/01/28/setting-up-python-notebooks-locally-for-machine-learning/</link><pubDate>Fri, 28 Jan 2022 00:00:00 +0000</pubDate><guid>https://justinkennethpearson.github.io/post/2022/01/28/setting-up-python-notebooks-locally-for-machine-learning/</guid><description>&lt;p>This is mainly for students on my machine learning course. I use a lot
+used for research. It has a FlatZinc parser.&lt;/p></description></item><item><title>Hugo: Linking to the static directory</title><link>https://justinkennethpearson.github.io/post/2022/12/13/hugo-linking-to-the-static-directory/</link><pubDate>Tue, 13 Dec 2022 16:36:57 +0100</pubDate><guid>https://justinkennethpearson.github.io/post/2022/12/13/hugo-linking-to-the-static-directory/</guid><description>&lt;p>I don&amp;rsquo;t know why this is so difficult. Hugo provides a &lt;code>static&lt;/code>
+directory where you can put stuff that is directly copied to your web
+directory. In theory you can have links &lt;code>[A link](&amp;quot;/file.pdf&amp;quot;)&lt;/code> and
+if you the file &lt;code>static/file.pdf&lt;/code> in your Hugo project base directory
+then all is well.&lt;/p>
+&lt;p>If your homepage has its root at some other location than the root,
+say &lt;code>example.com/Hugo&lt;/code> rather than just &lt;code>example.com&lt;/code>, then this does
+not always work. I really don&amp;rsquo;t understand why.&lt;/p></description></item><item><title>Setting up Python notebooks locally for Machine Learning</title><link>https://justinkennethpearson.github.io/post/2022/01/28/setting-up-python-notebooks-locally-for-machine-learning/</link><pubDate>Fri, 28 Jan 2022 00:00:00 +0000</pubDate><guid>https://justinkennethpearson.github.io/post/2022/01/28/setting-up-python-notebooks-locally-for-machine-learning/</guid><description>&lt;p>This is mainly for students on my machine learning course. I use a lot
 of Python notebooks either for examples from lectures or for
 assignments. While there are many options for hosting python notebooks
 for free remotely, but I prefer to do things locally. If you wish to do
