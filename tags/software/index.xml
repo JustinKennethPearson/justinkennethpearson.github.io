@@ -2,6 +2,9 @@
 solvers. This is mainly so that I can find them again.&lt;/p>
 &lt;ul>
 &lt;li>
+&lt;p>&lt;a href="https://github.com/huub-solver/huub/">Huub&lt;/a> New LCG Solver.&lt;/p>
+&lt;/li>
+&lt;li>
 &lt;p>&lt;a href="https://github.com/ConSol-Lab/Pumpkin/tree/main">Pumkin&lt;/a> a proof
 carrying lazy clause solver written in Rust.&lt;/p>
 &lt;/li>
