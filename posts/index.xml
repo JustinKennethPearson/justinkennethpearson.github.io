@@ -1,31 +1,28 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on Justin Pearson</title><link>https://justinkennethpearson.github.io/posts/</link><description>Recent content in Posts on Justin Pearson</description><generator>Hugo</generator><language>en-uk</language><lastBuildDate>Fri, 21 Feb 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://justinkennethpearson.github.io/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>Links to CP Solvers</title><link>https://justinkennethpearson.github.io/post/2023/06/14/links-to-cp-solvers/</link><pubDate>Wed, 14 Jun 2023 11:51:34 +0200</pubDate><guid>https://justinkennethpearson.github.io/post/2023/06/14/links-to-cp-solvers/</guid><description>&lt;p>Links to various repositories of some maybe less well known constraint
-solvers. This is mainly so that I can find them again.&lt;/p>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on Justin Pearson</title><link>https://justinkennethpearson.github.io/posts/</link><description>Recent content in Posts on Justin Pearson</description><generator>Hugo</generator><language>en-uk</language><lastBuildDate>Sat, 16 Aug 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://justinkennethpearson.github.io/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>Links to CP Solvers</title><link>https://justinkennethpearson.github.io/post/2023/06/14/links-to-cp-solvers/</link><pubDate>Wed, 14 Jun 2023 11:51:34 +0200</pubDate><guid>https://justinkennethpearson.github.io/post/2023/06/14/links-to-cp-solvers/</guid><description>&lt;p>Links to various repositories including some less well known constraint
+solvers. This is mainly so that I can find them again. I don&amp;rsquo;t make
+any claims that the list is complete.&lt;/p>
 &lt;ul>
-&lt;li>
-&lt;p>&lt;a href="https://github.com/huub-solver/huub/">Huub&lt;/a> New LCG Solver.&lt;/p>
-&lt;/li>
-&lt;li>
-&lt;p>&lt;a href="https://github.com/ConSol-Lab/Pumpkin/tree/main">Pumkin&lt;/a> a proof
-carrying lazy clause solver written in Rust.&lt;/p>
-&lt;/li>
-&lt;li>
-&lt;p>&lt;a href="https://github.com/ConSol-Lab/Munchkin/tree/main">Munchkin&lt;/a> a lazy
-caluse solver written in Rust for teaching purposes.&lt;/p>
-&lt;/li>
-&lt;li>
-&lt;p>&lt;a href="https://nucs.readthedocs.io/en/latest/">NuCS&lt;/a>: A native Python
-solver that uses numpy for speed.&lt;/p>
-&lt;/li>
-&lt;li>
-&lt;p>&lt;a href="https://github.com/ciaranm/glasgow-constraint-solver">The Glasgow Constraint
+&lt;li>&lt;a href="https://github.com/huub-solver/huub/">Huub&lt;/a> New LCG Solver.&lt;/li>
+&lt;li>&lt;a href="https://github.com/ConSol-Lab/Pumpkin/tree/main">Pumkin&lt;/a> a proof
+carrying lazy clause solver written in Rust.&lt;/li>
+&lt;li>&lt;a href="https://github.com/ConSol-Lab/Munchkin/tree/main">Munchkin&lt;/a> a lazy
+caluse solver written in Rust for teaching purposes.&lt;/li>
+&lt;li>&lt;a href="https://nucs.readthedocs.io/en/latest/">NuCS&lt;/a>: A native Python
+solver that uses numpy for speed.&lt;/li>
+&lt;li>&lt;a href="https://github.com/ciaranm/glasgow-constraint-solver">The Glasgow Constraint
 Solver&lt;/a> a
-proof logging constraint solver.&lt;/p>
-&lt;/li>
-&lt;li>
-&lt;p>&lt;a href="https://github.com/ciaranm/glasgow-subgraph-solver">The Glasgow Subgraph
-Solver&lt;/a>
-developed my &lt;a href="https://ciaranm.github.io/">Ciaran McCreesh&lt;/a> that
-includes support for proof logging.&lt;/p></description></item><item><title>Hugo: Linking to the static directory</title><link>https://justinkennethpearson.github.io/post/2022/12/13/hugo-linking-to-the-static-directory/</link><pubDate>Tue, 13 Dec 2022 16:36:57 +0100</pubDate><guid>https://justinkennethpearson.github.io/post/2022/12/13/hugo-linking-to-the-static-directory/</guid><description>&lt;p>I don&amp;rsquo;t know why this is so difficult. Hugo provides a &lt;code>static&lt;/code>
+proof logging constraint solver.&lt;/li>
+&lt;li>&lt;a href="https://github.com/ldmbouge/minicpp">MiniCP in C++&lt;/a> by &lt;a href="https://ldm.engr.uconn.edu/">Laurent
+Michel&lt;/a> and his students. It is mainly
+used for research. It has a FlatZinc parser. It also includes &lt;a href="https://dlnext.acm.org/doi/10.1007/978-3-030-58475-7_31">Haddock&lt;/a> a
+system for using MDDs for propagation.&lt;/li>
+&lt;li>Not really a constraint solver, but
+&lt;a href="https://github.com/CPMpy/cpmpy">CPMpy&lt;/a> is a python library for
+modelling constraint problems that interfaces to various constraint
+solvers.&lt;/li>
+&lt;li>&lt;a href="https://choco-solver.org/">Choco&lt;/a> is a constraint solver written in
+Java.&lt;/li>
+&lt;/ul></description></item><item><title>Hugo: Linking to the static directory</title><link>https://justinkennethpearson.github.io/post/2022/12/13/hugo-linking-to-the-static-directory/</link><pubDate>Tue, 13 Dec 2022 16:36:57 +0100</pubDate><guid>https://justinkennethpearson.github.io/post/2022/12/13/hugo-linking-to-the-static-directory/</guid><description>&lt;p>I don&amp;rsquo;t know why this is so difficult. Hugo provides a &lt;code>static&lt;/code>
 directory where you can put stuff that is directly copied to your web
 directory. In theory you can have links &lt;code>[A link](&amp;quot;/file.pdf&amp;quot;)&lt;/code> and
 if you the file &lt;code>static/file.pdf&lt;/code> in your Hugo project base directory
