@@ -7,6 +7,10 @@ any claims that the list is complete.&lt;/p>
 carrying lazy clause solver written in Rust.&lt;/li>
 &lt;li>&lt;a href="https://github.com/ConSol-Lab/Munchkin/tree/main">Munchkin&lt;/a> a lazy
 caluse solver written in Rust for teaching purposes.&lt;/li>
+&lt;li>&lt;a href="https://gitlab.laas.fr/roc/emmanuel-hebrard/tempo">Tempo&lt;/a> a
+constraint solver in C++ by &lt;a href="https://homepages.laas.fr/ehebrard/">Emmanuel
+Hebrard&lt;/a> for solving
+disjunctive scheduling problems.&lt;/li>
 &lt;li>&lt;a href="https://nucs.readthedocs.io/en/latest/">NuCS&lt;/a>: A native Python
 solver that uses numpy for speed.&lt;/li>
 &lt;li>&lt;a href="https://github.com/ciaranm/glasgow-constraint-solver">The Glasgow Constraint

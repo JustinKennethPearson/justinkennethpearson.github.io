@@ -1,4 +1,19 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on Justin Pearson</title><link>https://justinkennethpearson.github.io/posts/</link><description>Recent content in Posts on Justin Pearson</description><generator>Hugo</generator><language>en-uk</language><lastBuildDate>Sat, 16 Aug 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://justinkennethpearson.github.io/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>Links to CP Solvers</title><link>https://justinkennethpearson.github.io/post/2023/06/14/links-to-cp-solvers/</link><pubDate>Wed, 14 Jun 2023 11:51:34 +0200</pubDate><guid>https://justinkennethpearson.github.io/post/2023/06/14/links-to-cp-solvers/</guid><description>&lt;p>Links to various repositories including some less well known constraint
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on Justin Pearson</title><link>https://justinkennethpearson.github.io/posts/</link><description>Recent content in Posts on Justin Pearson</description><generator>Hugo</generator><language>en-uk</language><lastBuildDate>Sun, 17 Aug 2025 17:01:19 +0200</lastBuildDate><atom:link href="https://justinkennethpearson.github.io/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>Two new papers</title><link>https://justinkennethpearson.github.io/post/2025/08/17/two-new-papers/</link><pubDate>Sun, 17 Aug 2025 17:01:19 +0200</pubDate><guid>https://justinkennethpearson.github.io/post/2025/08/17/two-new-papers/</guid><description>&lt;p>Two new papers with my PhD student &lt;a href="https://www.uu.se/en/contact-and-organisation/staff?query=N11-2347">Frej Knutar
+Lewander&lt;/a>.&lt;/p>
+&lt;p>One is a very long journal article where we analyse implementations of
+invariant graphs in local search. Invariant graphs are incremental
+data structures that keep track of the current cost during local
+search as the solver explores neighbourhoods of moves.&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="https://www.jair.org/index.php/jair/article/view/17482">Invariant Graph Propagation in Constraint-Based Local
+Search&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;p>The other was presented at &lt;a href="https://cp2025.a4cp.org/">CP 2025&lt;/a> and is
+a simple technique for selecting freeze variables for large
+neighbourhood search. Even though the idea is simple, it is very
+effective and as far as we know hasn&amp;rsquo;t been tried before. We had the
+idea by looking at invariant graphs of constraint problems in local
+search.&lt;/p></description></item><item><title>Links to CP Solvers</title><link>https://justinkennethpearson.github.io/post/2023/06/14/links-to-cp-solvers/</link><pubDate>Wed, 14 Jun 2023 11:51:34 +0200</pubDate><guid>https://justinkennethpearson.github.io/post/2023/06/14/links-to-cp-solvers/</guid><description>&lt;p>Links to various repositories including some less well known constraint
 solvers. This is mainly so that I can find them again. I don&amp;rsquo;t make
 any claims that the list is complete.&lt;/p>
 &lt;ul>
@@ -7,6 +22,10 @@ any claims that the list is complete.&lt;/p>
 carrying lazy clause solver written in Rust.&lt;/li>
 &lt;li>&lt;a href="https://github.com/ConSol-Lab/Munchkin/tree/main">Munchkin&lt;/a> a lazy
 caluse solver written in Rust for teaching purposes.&lt;/li>
+&lt;li>&lt;a href="https://gitlab.laas.fr/roc/emmanuel-hebrard/tempo">Tempo&lt;/a> a
+constraint solver in C++ by &lt;a href="https://homepages.laas.fr/ehebrard/">Emmanuel
+Hebrard&lt;/a> for solving
+disjunctive scheduling problems.&lt;/li>
 &lt;li>&lt;a href="https://nucs.readthedocs.io/en/latest/">NuCS&lt;/a>: A native Python
 solver that uses numpy for speed.&lt;/li>
 &lt;li>&lt;a href="https://github.com/ciaranm/glasgow-constraint-solver">The Glasgow Constraint
