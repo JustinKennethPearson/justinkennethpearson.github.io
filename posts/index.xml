@@ -1,83 +1,83 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on Justin Pearson</title><link>https://justinkennethpearson.github.io/posts/</link><description>Recent content in Posts on Justin Pearson</description><generator>Hugo</generator><language>en-uk</language><lastBuildDate>Sun, 17 Aug 2025 17:01:19 +0200</lastBuildDate><atom:link href="https://justinkennethpearson.github.io/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>Two new papers</title><link>https://justinkennethpearson.github.io/post/2025/08/17/two-new-papers/</link><pubDate>Sun, 17 Aug 2025 17:01:19 +0200</pubDate><guid>https://justinkennethpearson.github.io/post/2025/08/17/two-new-papers/</guid><description>&lt;p>Two new papers with my PhD student &lt;a href="https://www.uu.se/en/contact-and-organisation/staff?query=N11-2347">Frej Knutar
-Lewander&lt;/a>.&lt;/p>
-&lt;p>One is a very long journal article where we analyse implementations of
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on Justin Pearson</title><link>https://justinkennethpearson.github.io/posts/</link><description>Recent content in Posts on Justin Pearson</description><generator>Hugo</generator><language>en-uk</language><lastBuildDate>Sun, 17 Aug 2025 17:01:19 +0200</lastBuildDate><atom:link href="https://justinkennethpearson.github.io/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>Two new papers</title><link>https://justinkennethpearson.github.io/post/2025/08/17/two-new-papers/</link><pubDate>Sun, 17 Aug 2025 17:01:19 +0200</pubDate><guid>https://justinkennethpearson.github.io/post/2025/08/17/two-new-papers/</guid><description>&lt;p&gt;Two new papers with my PhD student &lt;a href="https://www.uu.se/en/contact-and-organisation/staff?query=N11-2347"&gt;Frej Knutar
+Lewander&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;One is a very long journal article where we analyse implementations of
 invariant graphs in local search. Invariant graphs are incremental
 data structures that keep track of the current cost during local
-search as the solver explores neighbourhoods of moves.&lt;/p>
-&lt;ul>
-&lt;li>&lt;a href="https://www.jair.org/index.php/jair/article/view/17482">Invariant Graph Propagation in Constraint-Based Local
-Search&lt;/a>&lt;/li>
-&lt;/ul>
-&lt;p>The other was presented at &lt;a href="https://cp2025.a4cp.org/">CP 2025&lt;/a> and is
+search as the solver explores neighbourhoods of moves.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://www.jair.org/index.php/jair/article/view/17482"&gt;Invariant Graph Propagation in Constraint-Based Local
+Search&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The other was presented at &lt;a href="https://cp2025.a4cp.org/"&gt;CP 2025&lt;/a&gt; and is
 a simple technique for selecting freeze variables for large
 neighbourhood search. Even though the idea is simple, it is very
 effective and as far as we know hasn&amp;rsquo;t been tried before. We had the
 idea by looking at invariant graphs of constraint problems in local
-search.&lt;/p></description></item><item><title>Links to CP Solvers</title><link>https://justinkennethpearson.github.io/post/2023/06/14/links-to-cp-solvers/</link><pubDate>Wed, 14 Jun 2023 11:51:34 +0200</pubDate><guid>https://justinkennethpearson.github.io/post/2023/06/14/links-to-cp-solvers/</guid><description>&lt;p>Links to various repositories including some less well known constraint
+search.&lt;/p&gt;</description></item><item><title>Links to CP Solvers</title><link>https://justinkennethpearson.github.io/post/2023/06/14/links-to-cp-solvers/</link><pubDate>Wed, 14 Jun 2023 11:51:34 +0200</pubDate><guid>https://justinkennethpearson.github.io/post/2023/06/14/links-to-cp-solvers/</guid><description>&lt;p&gt;Links to various repositories including some less well known constraint
 solvers. This is mainly so that I can find them again. I don&amp;rsquo;t make
-any claims that the list is complete.&lt;/p>
-&lt;ul>
-&lt;li>&lt;a href="https://github.com/huub-solver/huub/">Huub&lt;/a> New LCG Solver.&lt;/li>
-&lt;li>&lt;a href="https://github.com/ConSol-Lab/Pumpkin/tree/main">Pumkin&lt;/a> a proof
-carrying lazy clause solver written in Rust.&lt;/li>
-&lt;li>&lt;a href="https://github.com/ConSol-Lab/Munchkin/tree/main">Munchkin&lt;/a> a lazy
-caluse solver written in Rust for teaching purposes.&lt;/li>
-&lt;li>&lt;a href="https://gitlab.laas.fr/roc/emmanuel-hebrard/tempo">Tempo&lt;/a> a
-constraint solver in C++ by &lt;a href="https://homepages.laas.fr/ehebrard/">Emmanuel
-Hebrard&lt;/a> for solving
-disjunctive scheduling problems.&lt;/li>
-&lt;li>&lt;a href="https://nucs.readthedocs.io/en/latest/">NuCS&lt;/a>: A native Python
-solver that uses numpy for speed.&lt;/li>
-&lt;li>&lt;a href="https://github.com/ciaranm/glasgow-constraint-solver">The Glasgow Constraint
-Solver&lt;/a> a
-proof logging constraint solver.&lt;/li>
-&lt;li>&lt;a href="https://github.com/ldmbouge/minicpp">MiniCP in C++&lt;/a> by &lt;a href="https://ldm.engr.uconn.edu/">Laurent
-Michel&lt;/a> and his students. It is mainly
-used for research. It has a FlatZinc parser. It also includes &lt;a href="https://dlnext.acm.org/doi/10.1007/978-3-030-58475-7_31">Haddock&lt;/a> a
-system for using MDDs for propagation.&lt;/li>
-&lt;li>Not really a constraint solver, but
-&lt;a href="https://github.com/CPMpy/cpmpy">CPMpy&lt;/a> is a python library for
+any claims that the list is complete.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://github.com/huub-solver/huub/"&gt;Huub&lt;/a&gt; New LCG Solver.&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/ConSol-Lab/Pumpkin/tree/main"&gt;Pumkin&lt;/a&gt; a proof
+carrying lazy clause solver written in Rust.&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/ConSol-Lab/Munchkin/tree/main"&gt;Munchkin&lt;/a&gt; a lazy
+caluse solver written in Rust for teaching purposes.&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://gitlab.laas.fr/roc/emmanuel-hebrard/tempo"&gt;Tempo&lt;/a&gt; a
+constraint solver in C++ by &lt;a href="https://homepages.laas.fr/ehebrard/"&gt;Emmanuel
+Hebrard&lt;/a&gt; for solving
+disjunctive scheduling problems.&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://nucs.readthedocs.io/en/latest/"&gt;NuCS&lt;/a&gt;: A native Python
+solver that uses numpy for speed.&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/ciaranm/glasgow-constraint-solver"&gt;The Glasgow Constraint
+Solver&lt;/a&gt; a
+proof logging constraint solver.&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/ldmbouge/minicpp"&gt;MiniCP in C++&lt;/a&gt; by &lt;a href="https://ldm.engr.uconn.edu/"&gt;Laurent
+Michel&lt;/a&gt; and his students. It is mainly
+used for research. It has a FlatZinc parser. It also includes &lt;a href="https://dlnext.acm.org/doi/10.1007/978-3-030-58475-7_31"&gt;Haddock&lt;/a&gt; a
+system for using MDDs for propagation.&lt;/li&gt;
+&lt;li&gt;Not really a constraint solver, but
+&lt;a href="https://github.com/CPMpy/cpmpy"&gt;CPMpy&lt;/a&gt; is a python library for
 modelling constraint problems that interfaces to various constraint
-solvers.&lt;/li>
-&lt;li>&lt;a href="https://choco-solver.org/">Choco&lt;/a> is a constraint solver written in
-Java.&lt;/li>
-&lt;/ul></description></item><item><title>Hugo: Linking to the static directory</title><link>https://justinkennethpearson.github.io/post/2022/12/13/hugo-linking-to-the-static-directory/</link><pubDate>Tue, 13 Dec 2022 16:36:57 +0100</pubDate><guid>https://justinkennethpearson.github.io/post/2022/12/13/hugo-linking-to-the-static-directory/</guid><description>&lt;p>I don&amp;rsquo;t know why this is so difficult. Hugo provides a &lt;code>static&lt;/code>
+solvers.&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://choco-solver.org/"&gt;Choco&lt;/a&gt; is a constraint solver written in
+Java.&lt;/li&gt;
+&lt;/ul&gt;</description></item><item><title>Hugo: Linking to the static directory</title><link>https://justinkennethpearson.github.io/post/2022/12/13/hugo-linking-to-the-static-directory/</link><pubDate>Tue, 13 Dec 2022 16:36:57 +0100</pubDate><guid>https://justinkennethpearson.github.io/post/2022/12/13/hugo-linking-to-the-static-directory/</guid><description>&lt;p&gt;I don&amp;rsquo;t know why this is so difficult. Hugo provides a &lt;code&gt;static&lt;/code&gt;
 directory where you can put stuff that is directly copied to your web
-directory. In theory you can have links &lt;code>[A link](&amp;quot;/file.pdf&amp;quot;)&lt;/code> and
-if you the file &lt;code>static/file.pdf&lt;/code> in your Hugo project base directory
-then all is well.&lt;/p>
-&lt;p>If your homepage has its root at some other location than the root,
-say &lt;code>example.com/Hugo&lt;/code> rather than just &lt;code>example.com&lt;/code>, then this does
-not always work. I really don&amp;rsquo;t understand why.&lt;/p></description></item><item><title>Setting up Python notebooks locally for Machine Learning</title><link>https://justinkennethpearson.github.io/post/2022/01/28/setting-up-python-notebooks-locally-for-machine-learning/</link><pubDate>Fri, 28 Jan 2022 00:00:00 +0000</pubDate><guid>https://justinkennethpearson.github.io/post/2022/01/28/setting-up-python-notebooks-locally-for-machine-learning/</guid><description>&lt;p>This is mainly for students on my machine learning course. I use a lot
+directory. In theory you can have links &lt;code&gt;[A link](&amp;quot;/file.pdf&amp;quot;)&lt;/code&gt; and
+if you the file &lt;code&gt;static/file.pdf&lt;/code&gt; in your Hugo project base directory
+then all is well.&lt;/p&gt;
+&lt;p&gt;If your homepage has its root at some other location than the root,
+say &lt;code&gt;example.com/Hugo&lt;/code&gt; rather than just &lt;code&gt;example.com&lt;/code&gt;, then this does
+not always work. I really don&amp;rsquo;t understand why.&lt;/p&gt;</description></item><item><title>Setting up Python notebooks locally for Machine Learning</title><link>https://justinkennethpearson.github.io/post/2022/01/28/setting-up-python-notebooks-locally-for-machine-learning/</link><pubDate>Fri, 28 Jan 2022 00:00:00 +0000</pubDate><guid>https://justinkennethpearson.github.io/post/2022/01/28/setting-up-python-notebooks-locally-for-machine-learning/</guid><description>&lt;p&gt;This is mainly for students on my machine learning course. I use a lot
 of Python notebooks either for examples from lectures or for
 assignments. While there are many options for hosting python notebooks
 for free remotely, but I prefer to do things locally. If you wish to do
 the same then please read on. Note that I did home some problems
-installing &lt;code>skikit-image&lt;/code> on a new Apple with M1 silicon, but after
+installing &lt;code&gt;skikit-image&lt;/code&gt; on a new Apple with M1 silicon, but after
 upgrading the latest version of the operating system and doing and
-updating my &lt;code>homebrew&lt;/code> setup everything works. Note that these
-instructions are for using &lt;code>pip&lt;/code>. If you are using an alternative
-package manager such as &lt;code>Anaconda&lt;/code> then you are on your own. I know
-nothing about setting up Python on a windows machine.&lt;/p></description></item><item><title>Using the Haskell State Monad</title><link>https://justinkennethpearson.github.io/post/2021/03/27/using-the-haskell-state-monad/</link><pubDate>Sat, 27 Mar 2021 19:45:37 +0100</pubDate><guid>https://justinkennethpearson.github.io/post/2021/03/27/using-the-haskell-state-monad/</guid><description>A short tutorial on using the built in state monad. I promise you will not build your own state monad.</description></item><item><title>Breadth First Search in Haskell</title><link>https://justinkennethpearson.github.io/post/2021/03/22/breadth-first-search-in-haskell/</link><pubDate>Mon, 22 Mar 2021 15:09:45 +0100</pubDate><guid>https://justinkennethpearson.github.io/post/2021/03/22/breadth-first-search-in-haskell/</guid><description>&lt;p>&lt;a href="https://www.haskell.org/">Haskell&lt;/a> is a really great programming
+updating my &lt;code&gt;homebrew&lt;/code&gt; setup everything works. Note that these
+instructions are for using &lt;code&gt;pip&lt;/code&gt;. If you are using an alternative
+package manager such as &lt;code&gt;Anaconda&lt;/code&gt; then you are on your own. I know
+nothing about setting up Python on a windows machine.&lt;/p&gt;</description></item><item><title>Using the Haskell State Monad</title><link>https://justinkennethpearson.github.io/post/2021/03/27/using-the-haskell-state-monad/</link><pubDate>Sat, 27 Mar 2021 19:45:37 +0100</pubDate><guid>https://justinkennethpearson.github.io/post/2021/03/27/using-the-haskell-state-monad/</guid><description>A short tutorial on using the built in state monad. I promise you will not build your own state monad.</description></item><item><title>Breadth First Search in Haskell</title><link>https://justinkennethpearson.github.io/post/2021/03/22/breadth-first-search-in-haskell/</link><pubDate>Mon, 22 Mar 2021 15:09:45 +0100</pubDate><guid>https://justinkennethpearson.github.io/post/2021/03/22/breadth-first-search-in-haskell/</guid><description>&lt;p&gt;&lt;a href="https://www.haskell.org/"&gt;Haskell&lt;/a&gt; is a really great programming
 language. It is elegant, the type system is beautiful, and nowadays
 the compiler is quite good. I&amp;rsquo;ve been using functional languages off
-and on for more than 30 years. I studied at the &lt;a href="https://www.kent.ac.uk/">University of
-Kent&lt;/a> which is the home
-&lt;a href="https://www.cs.kent.ac.uk/people/staff/dat/miranda/">Miranda&lt;/a> which
+and on for more than 30 years. I studied at the &lt;a href="https://www.kent.ac.uk/"&gt;University of
+Kent&lt;/a&gt; which is the home
+&lt;a href="https://www.cs.kent.ac.uk/people/staff/dat/miranda/"&gt;Miranda&lt;/a&gt; which
 is a precursor to Haskell. All this is a warning. I don&amp;rsquo;t use
 Haskell that much. The language has changed a lot since I last used it
-regularly, and so my code might not be optimal or idiomatic Haskell.&lt;/p></description></item><item><title>Naive Bayes for Spam Classification</title><link>https://justinkennethpearson.github.io/post/2020/12/22/naive-bayes-for-spam-classification/</link><pubDate>Tue, 22 Dec 2020 09:53:02 +0100</pubDate><guid>https://justinkennethpearson.github.io/post/2020/12/22/naive-bayes-for-spam-classification/</guid><description>&lt;p>There are a lot of tutorials and youtube videos out there on using
+regularly, and so my code might not be optimal or idiomatic Haskell.&lt;/p&gt;</description></item><item><title>Naive Bayes for Spam Classification</title><link>https://justinkennethpearson.github.io/post/2020/12/22/naive-bayes-for-spam-classification/</link><pubDate>Tue, 22 Dec 2020 09:53:02 +0100</pubDate><guid>https://justinkennethpearson.github.io/post/2020/12/22/naive-bayes-for-spam-classification/</guid><description>&lt;p&gt;There are a lot of tutorials and youtube videos out there on using
 Naive Bayes for document classification. None of these tutorials are
 wrong, but they often hide some subtle points that if you think too
 hard about you will get confused. In this posts I want to explain what
-is really going on in Naive Bayes for spam classification.&lt;/p>
-&lt;p>This post assumes that you are already familiar with &lt;a href="https://en.wikipedia.org/wiki/Bayes%27_theorem">Bayes&amp;rsquo; theorem&lt;/a>.&lt;/p></description></item><item><title>Creating and using Python Virtual Environments</title><link>https://justinkennethpearson.github.io/post/2020/12/10/creating-and-using-python-virtual-environments/</link><pubDate>Thu, 10 Dec 2020 13:51:33 +0100</pubDate><guid>https://justinkennethpearson.github.io/post/2020/12/10/creating-and-using-python-virtual-environments/</guid><description>&lt;p>In a lot of my courses I encourage students to use python virtual
+is really going on in Naive Bayes for spam classification.&lt;/p&gt;
+&lt;p&gt;This post assumes that you are already familiar with &lt;a href="https://en.wikipedia.org/wiki/Bayes%27_theorem"&gt;Bayes&amp;rsquo; theorem&lt;/a&gt;.&lt;/p&gt;</description></item><item><title>Creating and using Python Virtual Environments</title><link>https://justinkennethpearson.github.io/post/2020/12/10/creating-and-using-python-virtual-environments/</link><pubDate>Thu, 10 Dec 2020 13:51:33 +0100</pubDate><guid>https://justinkennethpearson.github.io/post/2020/12/10/creating-and-using-python-virtual-environments/</guid><description>&lt;p&gt;In a lot of my courses I encourage students to use python virtual
 environments. Virtual environments are a great way of making sure
 that you have the correct version of packages installed.
 This is very short cheat sheet on how to set them up. I
 will assume that we are using Python 3. Luckily Python 3 has virtual
 environments set up. It is all in the
-&lt;a href="https://docs.python.org/3/library/venv.html">documentation&lt;/a>, but then
+&lt;a href="https://docs.python.org/3/library/venv.html"&gt;documentation&lt;/a&gt;, but then
 sometimes people are too lazy to google, or do not know what to google
 for. Of course this assumes that you are a command line person. If you
-are using some IDE, then you are on your own.&lt;/p></description></item><item><title>Statistics, Probality and Category Theory</title><link>https://justinkennethpearson.github.io/post/2020/08/27/statistics-probality-and-category-theory/</link><pubDate>Thu, 27 Aug 2020 13:32:22 +0200</pubDate><guid>https://justinkennethpearson.github.io/post/2020/08/27/statistics-probality-and-category-theory/</guid><description>Links and references to Statistics, Probality and Category Theory</description></item><item><title>Sonic Writing</title><link>https://justinkennethpearson.github.io/post/2020/08/08/sonic-writing/</link><pubDate>Sat, 08 Aug 2020 09:36:18 +0200</pubDate><guid>https://justinkennethpearson.github.io/post/2020/08/08/sonic-writing/</guid><description>Short Review of Sonic Writing by Thor Magnusson.</description></item><item><title>Max and Javascript</title><link>https://justinkennethpearson.github.io/post/2020/07/23/max-and-javascript/</link><pubDate>Thu, 23 Jul 2020 16:38:17 +0200</pubDate><guid>https://justinkennethpearson.github.io/post/2020/07/23/max-and-javascript/</guid><description>Some hints and Tips on JavaScipt and Max</description></item><item><title>Software for Music Composition</title><link>https://justinkennethpearson.github.io/post/2020/06/30/software-for-music-composition/</link><pubDate>Tue, 30 Jun 2020 15:01:10 +0200</pubDate><guid>https://justinkennethpearson.github.io/post/2020/06/30/software-for-music-composition/</guid><description>Links to systems for compositing and performing electornic music.</description></item><item><title>Writing</title><link>https://justinkennethpearson.github.io/post/2020/06/18/writing/</link><pubDate>Thu, 18 Jun 2020 07:39:13 +0200</pubDate><guid>https://justinkennethpearson.github.io/post/2020/06/18/writing/</guid><description>Links on how to write.</description></item><item><title>Edward Nelson's Radical Probability</title><link>https://justinkennethpearson.github.io/post/2020/06/18/edward-nelsons-radical-probability/</link><pubDate>Thu, 18 Jun 2020 07:24:24 +0200</pubDate><guid>https://justinkennethpearson.github.io/post/2020/06/18/edward-nelsons-radical-probability/</guid><description>Links to Nelson&amp;rsquo;s publications.</description></item></channel></rss>
+are using some IDE, then you are on your own.&lt;/p&gt;</description></item><item><title>Statistics, Probality and Category Theory</title><link>https://justinkennethpearson.github.io/post/2020/08/27/statistics-probality-and-category-theory/</link><pubDate>Thu, 27 Aug 2020 13:32:22 +0200</pubDate><guid>https://justinkennethpearson.github.io/post/2020/08/27/statistics-probality-and-category-theory/</guid><description>Links and references to Statistics, Probality and Category Theory</description></item><item><title>Sonic Writing</title><link>https://justinkennethpearson.github.io/post/2020/08/08/sonic-writing/</link><pubDate>Sat, 08 Aug 2020 09:36:18 +0200</pubDate><guid>https://justinkennethpearson.github.io/post/2020/08/08/sonic-writing/</guid><description>Short Review of Sonic Writing by Thor Magnusson.</description></item><item><title>Max and Javascript</title><link>https://justinkennethpearson.github.io/post/2020/07/23/max-and-javascript/</link><pubDate>Thu, 23 Jul 2020 16:38:17 +0200</pubDate><guid>https://justinkennethpearson.github.io/post/2020/07/23/max-and-javascript/</guid><description>Some hints and Tips on JavaScipt and Max</description></item><item><title>Software for Music Composition</title><link>https://justinkennethpearson.github.io/post/2020/06/30/software-for-music-composition/</link><pubDate>Tue, 30 Jun 2020 15:01:10 +0200</pubDate><guid>https://justinkennethpearson.github.io/post/2020/06/30/software-for-music-composition/</guid><description>Links to systems for compositing and performing electornic music.</description></item><item><title>Writing</title><link>https://justinkennethpearson.github.io/post/2020/06/18/writing/</link><pubDate>Thu, 18 Jun 2020 07:39:13 +0200</pubDate><guid>https://justinkennethpearson.github.io/post/2020/06/18/writing/</guid><description>Links on how to write.</description></item><item><title>Edward Nelson's Radical Probability</title><link>https://justinkennethpearson.github.io/post/2020/06/18/edward-nelsons-radical-probability/</link><pubDate>Thu, 18 Jun 2020 07:24:24 +0200</pubDate><guid>https://justinkennethpearson.github.io/post/2020/06/18/edward-nelsons-radical-probability/</guid><description>Links to Nelson&amp;rsquo;s publications.</description></item></channel></rss>
