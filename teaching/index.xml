@@ -1,4 +1,19 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Teaching on Justin Pearson</title><link>https://justinkennethpearson.github.io/teaching/</link><description>Recent content in Teaching on Justin Pearson</description><generator>Hugo</generator><language>en-uk</language><atom:link href="https://justinkennethpearson.github.io/teaching/index.xml" rel="self" type="application/rss+xml"/><item><title>Artificial Intelligence.</title><link>https://justinkennethpearson.github.io/teaching/courses/ai/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://justinkennethpearson.github.io/teaching/courses/ai/</guid><description>&lt;ul&gt;
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Teaching on Justin Pearson</title><link>https://justinkennethpearson.github.io/teaching/</link><description>Recent content in Teaching on Justin Pearson</description><generator>Hugo</generator><language>en-uk</language><atom:link href="https://justinkennethpearson.github.io/teaching/index.xml" rel="self" type="application/rss+xml"/><item><title>Algorithms and Data Structures II</title><link>https://justinkennethpearson.github.io/teaching/courses/ad2/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://justinkennethpearson.github.io/teaching/courses/ad2/</guid><description>&lt;p&gt;Useful links:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://ad2-uu-se.github.io/"&gt;Slides and Assignments&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://uppsala.instructure.com/courses/107334"&gt;Studium Page&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.uu.se/utbildning/kurs?query=1DL231"&gt;Official
+Syllabus&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;This is a second course in algorithms that topics such as&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;solving recursive equations that describe the algorithm&amp;rsquo;s complexity&lt;/li&gt;
+&lt;li&gt;dynamic programming&lt;/li&gt;
+&lt;li&gt;greedy algorithms&lt;/li&gt;
+&lt;li&gt;graph algorithms: minimum spanning trees, shortest paths&lt;/li&gt;
+&lt;li&gt;string matching&lt;/li&gt;
+&lt;li&gt;union find.&lt;/li&gt;
+&lt;/ul&gt;</description></item><item><title>Artificial Intelligence.</title><link>https://justinkennethpearson.github.io/teaching/courses/ai/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://justinkennethpearson.github.io/teaching/courses/ai/</guid><description>&lt;ul&gt;
 &lt;li&gt;&lt;a href="https://uppsala.instructure.com/courses/96372"&gt;Studium Page&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://www.uu.se/en/study/course?query=1DL340"&gt;Official Syllabus&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
@@ -7,7 +22,35 @@ Rodriguez&lt;/a&gt;
 who is the main teacher. The course covers various aspects of AI that
 are not concerned with machine learning including heuristic search,
 planning and scheduling, statistical learning, Bayesian networks, AI
-in computer games.&lt;/p&gt;</description></item><item><title>Category Theory for Programmers.</title><link>https://justinkennethpearson.github.io/teaching/courses/category_theory/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://justinkennethpearson.github.io/teaching/courses/category_theory/</guid><description>&lt;p&gt;PhD reading course going through &lt;a href="https://github.com/BartoszMilewski"&gt;Bartosz
+in computer games.&lt;/p&gt;</description></item><item><title>Introduction to Machine Learning</title><link>https://justinkennethpearson.github.io/teaching/courses/intro_ml/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://justinkennethpearson.github.io/teaching/courses/intro_ml/</guid><description>&lt;p&gt;Useful links:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://intro-ml-1dl034-uu-se.github.io/"&gt;Slides and Assignments&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.uu.se/utbildning/kurs?query=1DL034"&gt;Official
+Syllabus&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://uppsala.instructure.com/courses/95098"&gt;Studium page&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;This is a first course in machine learning. The course covers
+basic supervised and unsupervised methods (for example, regression,
+classification, decision trees, clustering), use of established tools
+for machine learning, application of the methods to real data, and
+practical aspects such as dimensionality reduction and cross
+validation. The course also introduces ethical aspects of bias in
+machine learning.&lt;/p&gt;</description></item><item><title>Algorithms and Data-Structures III</title><link>https://justinkennethpearson.github.io/teaching/courses/ad3/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://justinkennethpearson.github.io/teaching/courses/ad3/</guid><description>&lt;p&gt;Useful links:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Slides and Assignments &amp;mdash; Coming Soon.&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.uu.se/en/study/course?query=1DL481"&gt;Official
+Syllabus&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Studium page - Coming Soon&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;This is a first course in machine learning. The course covers
+basic supervised and unsupervised methods (for example, regression,
+classification, decision trees, clustering), use of established tools
+for machine learning, application of the methods to real data, and
+practical aspects such as dimensionality reduction and cross
+validation. The course also introduces ethical aspects of bias in
+machine learning.&lt;/p&gt;</description></item><item><title>Category Theory for Programmers.</title><link>https://justinkennethpearson.github.io/teaching/courses/category_theory/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://justinkennethpearson.github.io/teaching/courses/category_theory/</guid><description>&lt;p&gt;This is an on demand course. If there are enough PhD students
+interested, then I will run the course.&lt;/p&gt;
+&lt;p&gt;PhD reading course going through &lt;a href="https://github.com/BartoszMilewski"&gt;Bartosz
 Milewski&lt;/a&gt;&amp;rsquo;s book on Category
 theory. Mostly organised by &lt;a href="https://www.uu.se/kontakt-och-organisation/personal?query=N19-2365"&gt;Nikolaus
 Huber&lt;/a&gt;.&lt;/p&gt;
@@ -29,40 +72,4 @@ is available free online.&lt;/p&gt;
 &lt;li&gt;
 &lt;p&gt;Some &lt;a href="https://arxiv.org/abs/1910.05172"&gt;notes&lt;/a&gt; that might be
 useful. If you don&amp;rsquo;t read the notes, then a look at the references,
-which has pointers to a lot of good resources.&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;a href="http://www.math.jhu.edu/~eriehl/"&gt;Emily Riehl&lt;/a&gt;&amp;rsquo;s
-&lt;a href="http://www.math.jhu.edu/~eriehl/context.pdf"&gt;Book&lt;/a&gt; Category Theory
-in Context contains lots of examples of common constructions in
-category theory. Some of the examples might require some background
-in algebra. You can also buy the book quite cheaply from
-&lt;a href="https://store.doverpublications.com/048680903x.html"&gt;Dover&lt;/a&gt;&lt;/p&gt;</description></item><item><title>Algorithms and Data Structures II</title><link>https://justinkennethpearson.github.io/teaching/courses/ad2/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://justinkennethpearson.github.io/teaching/courses/ad2/</guid><description>&lt;p&gt;Useful links:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://ad2-uu-se.github.io/"&gt;Slides and Assigments&lt;/a&gt;.&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://uppsala.instructure.com/courses/107334"&gt;Studium Page&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://www.uu.se/utbildning/kurs?query=1DL231"&gt;Official
-Syllabus&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;This is a second course in algorithms that topics such as&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;solving recursive equations that describe the algorithm&amp;rsquo;s complexity&lt;/li&gt;
-&lt;li&gt;dynamic programming&lt;/li&gt;
-&lt;li&gt;greedy algorithms&lt;/li&gt;
-&lt;li&gt;graph algorithms: minimum spanning trees, shortest paths&lt;/li&gt;
-&lt;li&gt;string matching&lt;/li&gt;
-&lt;li&gt;union find.&lt;/li&gt;
-&lt;/ul&gt;</description></item><item><title>Introduction to Machine Learning</title><link>https://justinkennethpearson.github.io/teaching/courses/intro_ml/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://justinkennethpearson.github.io/teaching/courses/intro_ml/</guid><description>&lt;p&gt;Useful links:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://intro-ml-1dl034-uu-se.github.io/"&gt;Slides and Assigments&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://www.uu.se/utbildning/kurs?query=1DL034"&gt;Official
-Syllabus&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://uppsala.instructure.com/courses/95098"&gt;Studium page&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;This is a first course in machine learning. The course covers
-basic supervised and unsupervised methods (for example, regression,
-classification, decision trees, clustering), use of established tools
-for machine learning, application of the methods to real data, and
-practical aspects such as dimensionality reduction and cross
-validation. The course also introduces ethical aspects of bias in
-machine learning.&lt;/p&gt;</description></item></channel></rss>
+which has pointers to a lot of good resources.&lt;/p&gt;</description></item></channel></rss>
