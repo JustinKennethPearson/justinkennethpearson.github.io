@@ -43,28 +43,7 @@ directory. In theory you can have links <code>[A link]("/file.pdf")</code> and
 if you the file <code>static/file.pdf</code> in your Hugo project base directory
 then all is well.</p><p>If your homepage has its root at some other location than the root,
 say <code>example.com/Hugo</code> rather than just <code>example.com</code>, then this does
-not always work. I really don&rsquo;t understand why.</p><p>After googling I found <a href=https://github.com/gohugoio/hugo/issues/3732>this
-solution</a> that creates a
-special short code. You use <code>[A link]({{&lt; static "/file.pdf" >}})</code> blah</p><p>You need to create the file <code>layouts/shortcodes/static.md</code> with the
-following content:</p><pre tabindex=0><code>{{- .Scratch.Set &#34;path&#34; (.Get 0) -}}
-{{- if hasPrefix (.Scratch.Get &#34;path&#34;) &#34;/&#34; -}}
-  {{- .Scratch.Set &#34;path&#34; (slicestr (.Scratch.Get &#34;path&#34;) 1) -}}
-{{- end -}}
-{{- .Scratch.Get &#34;path&#34; | absLangURL -}}
-</code></pre><p>It turns out that this rather long winded approach has its
-advantages. If you put all your papers in <code>static/papers/</code> then you
-can create a shortcode <code>layouts/shortcodes/paper.md</code> :</p><pre tabindex=0><code>{{- .Scratch.Set &#34;basedir&#34; &#34;papers/&#34; -}}
-{{- .Scratch.Set &#34;path&#34; (.Get 0) -}}
-{{- if hasPrefix (.Scratch.Get &#34;path&#34;) &#34;/&#34; -}}
-  {{- .Scratch.Set &#34;path&#34; (slicestr (.Scratch.Get &#34;path&#34;) 1) -}}
-{{- end -}}
-{{- .Scratch.Add &#34;basedir&#34; (.Scratch.Get &#34;path&#34;) -}}
-{{- .Scratch.Get &#34;basedir&#34; | absLangURL -}}
-</code></pre><p>You can the create links to your papers as :</p><pre tabindex=0><code>[This paper]({{&lt; paper &#34;2017_ICTAI.pdf&#34; &gt;}})
-</code></pre><p>Assuming that <code>2017_ICTAI.pdf</code> is in your <code>papers</code> directory.</p><p>Incidental, if you are having trouble showing unexpended short codes in
-code blocks, then
-<a href=https://discourse.gohugo.io/t/how-is-the-hugo-doc-site-showing-shortcodes-in-code-blocks/9074>this</a>
-thread will help.</p></div></article><article class="post-item row mb-5"><header class="post-title col-12 col-lg-10 offset-lg-2"><h2><a class="text-uppercase inv-link" href=../post/2022/01/28/setting-up-python-notebooks-locally-for-machine-learning/>Setting up Python notebooks locally for Machine Learning</a></h2></header><aside class="post-aside col-12 col-lg-2 pr-5 pt-2 lh-lg"><ul class=list-unstyled><li><h4 class=text-uppercase>January 28, 2022</h4></li><li><a class=post-tag href=https://justinkennethpearson.github.io/tags/python>Python</a>,
+not always work. I really don&rsquo;t understand why.</p></div></article><article class="post-item row mb-5"><header class="post-title col-12 col-lg-10 offset-lg-2"><h2><a class="text-uppercase inv-link" href=../post/2022/01/28/setting-up-python-notebooks-locally-for-machine-learning/>Setting up Python notebooks locally for Machine Learning</a></h2></header><aside class="post-aside col-12 col-lg-2 pr-5 pt-2 lh-lg"><ul class=list-unstyled><li><h4 class=text-uppercase>January 28, 2022</h4></li><li><a class=post-tag href=https://justinkennethpearson.github.io/tags/python>Python</a>,
 <a class=post-tag href=https://justinkennethpearson.github.io/tags/how-to>How To</a></li></ul></aside><div class="col-12 col-lg-10"><p>This is mainly for students on my machine learning course. I use a lot
 of Python notebooks either for examples from lectures or for
 assignments. While there are many options for hosting python notebooks

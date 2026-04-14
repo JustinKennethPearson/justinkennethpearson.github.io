@@ -10,25 +10,25 @@ updating my <code>homebrew</code> setup everything works. Note that these
 instructions are for using <code>pip</code>. If you are using an alternative
 package manager such as <code>Anaconda</code> then you are on your own. I know
 nothing about setting up Python on a windows machine.</p><h1 id=setting-up-the-virtual-environment>Setting up the Virtual Environment</h1><p>First it is better set up a virtual environment (see <a href=https://justinkennethpearson.github.io/post/2020/12/10/creating-and-using-python-virtual-environments/>Creating and
-Using Virtual Environments in Python</a>. In a suitable place on your machine do:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>python3 -m venv env
+Using Virtual Environments in Python</a>. In a suitable place on your machine do:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-bash data-lang=bash><span style=display:flex><span>python3 -m venv env
 </span></span><span style=display:flex><span>source ./env/bin/activate
 </span></span></code></pre></div><p>Note that you might be prompted to upgrade <code>pip</code>. If you are, then
 follow the instructions. You are only upgrading the version in your
 local virtual environment.</p><h1 id=installing-the-relevant-packages>Installing the relevant packages</h1><p>When you prompt changes to <code>(env)</code> you are inside your virtual
 environment. You can now use <code>pip</code> to install packages. For reasons
 that I&rsquo;m not going to explain your life is made a little easier if you
-install <code>wheel</code></p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>pip install wheel
-</span></span></code></pre></div><p>You can now install various useful packages for machine learning</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span> pip install numpy  scipy matplotlib scikit-learn pandas scikit-image
+install <code>wheel</code></p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-bash data-lang=bash><span style=display:flex><span>pip install wheel
+</span></span></code></pre></div><p>You can now install various useful packages for machine learning</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-bash data-lang=bash><span style=display:flex><span> pip install numpy  scipy matplotlib scikit-learn pandas scikit-image
 </span></span><span style=display:flex><span> treelib nltk
 </span></span></code></pre></div><p>This might take a while. The package <code>jupyter</code> drives the
-notebooks, so install that</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>pip install jupyter
+notebooks, so install that</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-bash data-lang=bash><span style=display:flex><span>pip install jupyter
 </span></span></code></pre></div><h1 id=emacs-key-bindings>Emacs key bindings</h1><p>I have been using the editor
 <a href=https://www.gnu.org/software/emacs/>Emacs</a> for over 30 years. The
 key binding are hardwired into my brain. If you are like me then
 installing the <code>jupyter-emacskeys</code> package will make your life a
-little less frustrating.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>pip install jupyter-emacskeys
+little less frustrating.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-bash data-lang=bash><span style=display:flex><span>pip install jupyter-emacskeys
 </span></span></code></pre></div><h1 id=launching-notebooks>Launching notebooks</h1><p>You talk to Python notebooks using the web browser when you are
-running them locally you start your own little server</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>jupyter notebook
+running them locally you start your own little server</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-bash data-lang=bash><span style=display:flex><span>jupyter notebook
 </span></span></code></pre></div><p>If you have thing configured then a web browser might open up. If not
 then look at the output on the terminal and you will see something
 like:</p><pre tabindex=0><code>[I 09:47:31.185 NotebookApp] Use Control-C to stop this server and shut down all kernels (twice to skip confirmation).

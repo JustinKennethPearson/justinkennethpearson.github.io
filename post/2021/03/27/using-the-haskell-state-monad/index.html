@@ -15,7 +15,7 @@ dependencies of the various type classes involved.</p><p>You have to make some c
 the <a href=https://hackage.haskell.org/package/mtl>mtl</a> library is the way
 to go. It seems to be easier to use. There are other choice, but I do
 not really understand what the different options give you.</p><p>The important thing about the state monad is that it should take code
-like this</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-haskell data-lang=haskell><span style=display:flex><span><span style=color:#66d9ef>import</span> System.Random
+like this</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-haskell data-lang=haskell><span style=display:flex><span><span style=color:#66d9ef>import</span> System.Random
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span><span style=color:#a6e22e>threeCoins</span> <span style=color:#f92672>::</span> <span style=color:#66d9ef>StdGen</span> <span style=color:#f92672>-&gt;</span> (<span style=color:#66d9ef>Bool</span>, <span style=color:#66d9ef>Bool</span>, <span style=color:#66d9ef>Bool</span>)  
 </span></span><span style=display:flex><span><span style=color:#a6e22e>threeCoins</span> gen <span style=color:#f92672>=</span>   
@@ -26,7 +26,7 @@ like this</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span><span style=color:#a6e22e>threeCoinsDemo</span> <span style=color:#f92672>=</span>
 </span></span><span style=display:flex><span>  threeCoins (mkStdGen <span style=color:#ae81ff>21</span>)
-</span></span></code></pre></div><p>and turn it into code that looks like this</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-haskell data-lang=haskell><span style=display:flex><span><span style=color:#66d9ef>import</span> System.Random
+</span></span></code></pre></div><p>and turn it into code that looks like this</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-haskell data-lang=haskell><span style=display:flex><span><span style=color:#66d9ef>import</span> System.Random
 </span></span><span style=display:flex><span><span style=color:#66d9ef>import</span> Control.Monad
 </span></span><span style=display:flex><span><span style=color:#66d9ef>import</span> Control.Monad.State
 </span></span><span style=display:flex><span>
@@ -49,7 +49,7 @@ then we can do <code>evalState threeCoinsState (mkStdGen 21)</code> which equals
 the <code>do</code> notation. The type annotations inside the function are
 optional, and are just there to make the code more readable. It took
 me a long time to actually get this code working, mostly because I did
-not trust Haskell to get the types correct.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-haskell data-lang=haskell><span style=display:flex><span><span style=color:#a6e22e>coinList</span> <span style=color:#f92672>::</span> <span style=color:#66d9ef>Integer</span> <span style=color:#f92672>-&gt;</span> <span style=color:#66d9ef>State</span> <span style=color:#66d9ef>StdGen</span> [<span style=color:#66d9ef>Bool</span>]
+not trust Haskell to get the types correct.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-haskell data-lang=haskell><span style=display:flex><span><span style=color:#a6e22e>coinList</span> <span style=color:#f92672>::</span> <span style=color:#66d9ef>Integer</span> <span style=color:#f92672>-&gt;</span> <span style=color:#66d9ef>State</span> <span style=color:#66d9ef>StdGen</span> [<span style=color:#66d9ef>Bool</span>]
 </span></span><span style=display:flex><span><span style=color:#a6e22e>coinList</span> <span style=color:#ae81ff>0</span> <span style=color:#f92672>=</span> return <span style=color:#66d9ef>[]</span>
 </span></span><span style=display:flex><span><span style=color:#a6e22e>coinList</span> n <span style=color:#f92672>=</span>
 </span></span><span style=display:flex><span>  <span style=color:#66d9ef>do</span>
@@ -67,7 +67,7 @@ pair that contains a value <code>a</code> and a new random state. If you want,
 for example, get a random Boolean value then you have to force the
 type:</p><pre tabindex=0><code>random (mkStdGen 21) :: (Bool, StdGen)
 (True,StdGen {unStdGen = SMGen 4660324227184490554 489215147674969543})
-</code></pre><p>So what is going on with</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-haskell data-lang=haskell><span style=display:flex><span><span style=color:#a6e22e>randomSt</span> <span style=color:#f92672>::</span> (<span style=color:#66d9ef>RandomGen</span> g, <span style=color:#66d9ef>Random</span>  a) <span style=color:#f92672>=&gt;</span> <span style=color:#66d9ef>State</span> g a
+</code></pre><p>So what is going on with</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-haskell data-lang=haskell><span style=display:flex><span><span style=color:#a6e22e>randomSt</span> <span style=color:#f92672>::</span> (<span style=color:#66d9ef>RandomGen</span> g, <span style=color:#66d9ef>Random</span>  a) <span style=color:#f92672>=&gt;</span> <span style=color:#66d9ef>State</span> g a
 </span></span><span style=display:flex><span><span style=color:#a6e22e>randomSt</span> <span style=color:#f92672>=</span> state random 
 </span></span></code></pre></div><p>We are using the <code>state</code> function from
 <a href=https://hackage.haskell.org/package/mtl>mtl</a>. This has the type <code>(s -> (a, s)) -> m a</code>. It takes a function, such as <code>random</code> and puts it
@@ -76,7 +76,7 @@ things like <code>State $ random</code> just won&rsquo;t work.</p><p>To really u
 bind operator <code>(=&lt;&lt;) :: Monad m => (a -> m b) -> m a -> m b</code> actually works. You
 will find plenty of tutorials on the web. The reason that you want to
 use the state monad is to avoid all the plumbing and write clean
-looking code using the <code>do</code> notation.</p><p>Let&rsquo;s write two equivalent functions:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-haskell data-lang=haskell><span style=display:flex><span><span style=color:#a6e22e>oneCoin</span> <span style=color:#f92672>::</span> <span style=color:#66d9ef>State</span> <span style=color:#66d9ef>StdGen</span> <span style=color:#66d9ef>Bool</span>
+looking code using the <code>do</code> notation.</p><p>Let&rsquo;s write two equivalent functions:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-haskell data-lang=haskell><span style=display:flex><span><span style=color:#a6e22e>oneCoin</span> <span style=color:#f92672>::</span> <span style=color:#66d9ef>State</span> <span style=color:#66d9ef>StdGen</span> <span style=color:#66d9ef>Bool</span>
 </span></span><span style=display:flex><span><span style=color:#a6e22e>oneCoin</span> <span style=color:#f92672>=</span>
 </span></span><span style=display:flex><span>  <span style=color:#66d9ef>do</span>
 </span></span><span style=display:flex><span>    v <span style=color:#f92672>&lt;-</span> randomSt
@@ -88,14 +88,14 @@ looking code using the <code>do</code> notation.</p><p>Let&rsquo;s write two equ
 </code></pre><p>and then <code>runState oneCoinEquiv (mkStdGen 21)</code></p><pre tabindex=0><code>(True,StdGen {unStdGen = SMGen 4660324227184490554 489215147674969543})
 </code></pre><p>The function <code>randomSt</code> takes the current state and produces state
 which is a pair containing the new random state and the actual
-value. It is all wrapped up in the state monad. Doing</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-haskell data-lang=haskell><span style=display:flex><span><span style=color:#a6e22e>v</span> <span style=color:#f92672>&lt;-</span> randomSt
+value. It is all wrapped up in the state monad. Doing</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-haskell data-lang=haskell><span style=display:flex><span><span style=color:#a6e22e>v</span> <span style=color:#f92672>&lt;-</span> randomSt
 </span></span></code></pre></div><p>Inside a <code>do</code> block binds the random value to <code>v</code>, but because of the
 way <code>do</code> blocks are transformed the state is transformed around. If
 you really want to understand what is going on, then you should go
 find some Haskell tutorial on desugaring the do notation. It is like
 lots of things in programming and mathematics. It is boring reading
 some explanation; you learn much more by working things out yourself.</p><p>Finally, the point of this (supposedly short) post. What is going on
-with</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-haskell data-lang=haskell><span style=display:flex><span><span style=color:#a6e22e>coinList</span> <span style=color:#f92672>::</span> <span style=color:#66d9ef>Integer</span> <span style=color:#f92672>-&gt;</span> <span style=color:#66d9ef>State</span> <span style=color:#66d9ef>StdGen</span> [<span style=color:#66d9ef>Bool</span>]
+with</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-haskell data-lang=haskell><span style=display:flex><span><span style=color:#a6e22e>coinList</span> <span style=color:#f92672>::</span> <span style=color:#66d9ef>Integer</span> <span style=color:#f92672>-&gt;</span> <span style=color:#66d9ef>State</span> <span style=color:#66d9ef>StdGen</span> [<span style=color:#66d9ef>Bool</span>]
 </span></span><span style=display:flex><span><span style=color:#a6e22e>coinList</span> <span style=color:#ae81ff>0</span> <span style=color:#f92672>=</span> return <span style=color:#66d9ef>[]</span>
 </span></span><span style=display:flex><span><span style=color:#a6e22e>coinList</span> n <span style=color:#f92672>=</span>
 </span></span><span style=display:flex><span>  <span style=color:#66d9ef>do</span>
@@ -112,7 +112,7 @@ extract from expression <code>coinList (n - 1)</code> a value of type <code>[Boo
 because of the type of the whole function and the fact that <code>rest</code>
 also appears in <code>return (a : rest)</code>. It was honestly a surprise to
 me that you could have <code>a</code> with the type <code>Bool</code> and <code>rest</code> with
-the type <code>[Bool]</code>. On reflection is it no more surprising that in</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-haskell data-lang=haskell><span style=display:flex><span><span style=color:#a6e22e>threeCoinsState</span> <span style=color:#f92672>::</span> <span style=color:#66d9ef>State</span> <span style=color:#66d9ef>StdGen</span> (<span style=color:#66d9ef>Bool</span>, <span style=color:#66d9ef>Bool</span> , <span style=color:#66d9ef>Bool</span>)
+the type <code>[Bool]</code>. On reflection is it no more surprising that in</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-haskell data-lang=haskell><span style=display:flex><span><span style=color:#a6e22e>threeCoinsState</span> <span style=color:#f92672>::</span> <span style=color:#66d9ef>State</span> <span style=color:#66d9ef>StdGen</span> (<span style=color:#66d9ef>Bool</span>, <span style=color:#66d9ef>Bool</span> , <span style=color:#66d9ef>Bool</span>)
 </span></span><span style=display:flex><span><span style=color:#a6e22e>threeCoinsState</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>do</span>
 </span></span><span style=display:flex><span>  a <span style=color:#f92672>&lt;-</span> randomSt <span style=color:#f92672>::</span> <span style=color:#66d9ef>State</span> <span style=color:#66d9ef>StdGen</span> <span style=color:#66d9ef>Bool</span> 
 </span></span><span style=display:flex><span>  b <span style=color:#f92672>&lt;-</span> randomSt
