@@ -55,6 +55,9 @@ solver that uses numpy for speed.&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://github.com/ciaranm/glasgow-constraint-solver"&gt;The Glasgow Constraint
 Solver&lt;/a&gt; a
 proof logging constraint solver.&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://www.maxicp.org/"&gt;MaxiCP&lt;/a&gt; is a full constraint solver
+inspired by &lt;a href="http://www.minicp.org/"&gt;MiniCP&lt;/a&gt; that is mainly used for
+teaching purposes.&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://github.com/ldmbouge/minicpp"&gt;MiniCP in C++&lt;/a&gt; by &lt;a href="https://ldm.engr.uconn.edu/"&gt;Laurent
 Michel&lt;/a&gt; and his students. It is mainly
 used for research. It has a FlatZinc parser. It also includes &lt;a href="https://dlnext.acm.org/doi/10.1007/978-3-030-58475-7_31"&gt;Haddock&lt;/a&gt; a
